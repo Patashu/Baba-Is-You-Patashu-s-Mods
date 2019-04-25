@@ -107,6 +107,7 @@ end
 
 mod.alltiles = {
 	"less",
+	"slide",
 }
 
 function mod.addblock(tile)
