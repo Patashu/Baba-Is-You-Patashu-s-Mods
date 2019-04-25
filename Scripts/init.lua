@@ -86,6 +86,9 @@ function mod.load(dir)
 		end
 	end
 	
+	--load files
+	loadscript(dir .. "movement")
+	
 	--hook functions
 	block = myBlock
 end
@@ -94,6 +97,9 @@ end
 function mod.unload(dir)
 	-- Remove custom tiles
 	loadscript("Data/values")
+	
+	--unload files
+	loadscript("Data/movement")
 
 	--unhook functions
 	block = vanillaBlock

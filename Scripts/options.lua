@@ -8,6 +8,7 @@ local mod = activemod
 
 -- Properties
 mod.enabled["less"] = true
+mod.enabled["slide"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -34,4 +35,18 @@ mod.tile["less"] = {
 	layer = 20,
 }
 
--- Current highest tile: {1, 12}
+mod.tile["slide"] = {
+	name = "text_slide",
+	sprite = "text_slide",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {4, 0},
+	active = {4, 1},
+	tile = {2, 12},
+	layer = 20,
+}
+
+
+-- Current highest tile: {2, 12}
