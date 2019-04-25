@@ -1,0 +1,8 @@
+[levels]
+levelid=1
+
+[general]
+name=patatest
+start=less
+firstlevel=less
+
