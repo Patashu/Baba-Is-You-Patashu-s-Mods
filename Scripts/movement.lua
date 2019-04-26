@@ -191,20 +191,24 @@ function movecommand(ox,oy,dir_,playerid_)
 								for a,b in ipairs(unitmap[tileid]) do
 									if (b ~= v) and floating(b,v) then
 										local newunit = mmf.newObject(b)
-										
-										updatedir(b, unit.values[DIR])
-										--newunit.values[DIR] = unit.values[DIR]
-										
 										local unitname = getname(newunit)
-										local moveadd = 1
+										local stuck = hasfeature(unitname,"is","stuck",b)
 										
-										if (been_seen[b] == nil) then
-											table.insert(moving_units, {unitid = b, reason = "shift", state = 0, moves = moveadd, dir = unit.values[DIR], xpos = x, ypos = y})
-											been_seen[b] = #moving_units
-										else
-											local id = been_seen[b]
-											local this = moving_units[id]
-											this.moves = this.moves + moveadd
+										if (stuck == nil) then
+											updatedir(b, unit.values[DIR])
+										
+											--newunit.values[DIR] = unit.values[DIR]
+											
+											local moveadd = 1
+											
+											if (been_seen[b] == nil) then
+												table.insert(moving_units, {unitid = b, reason = "shift", state = 0, moves = moveadd, dir = unit.values[DIR], xpos = x, ypos = y})
+												been_seen[b] = #moving_units
+											else
+												local id = been_seen[b]
+												local this = moving_units[id]
+												this.moves = this.moves + moveadd
+											end
 										end
 									end
 								end
@@ -220,10 +224,12 @@ function movecommand(ox,oy,dir_,playerid_)
 						
 					for a,unit in ipairs(units) do
 						local x,y = unit.values[XPOS],unit.values[YPOS]
+						local unitname = getname(unit)
+						local stuck = hasfeature(unitname,"is","stuck",unit.fixed)
 						
 						local moveadd = 1
 						
-						if floating_level(unit.fixed) then
+						if floating_level(unit.fixed) and stuck == nil then
 							updatedir(unit.fixed, leveldir)
 							table.insert(moving_units, {unitid = unit.fixed, reason = "shift", state = 0, moves = moveadd, dir = unit.values[DIR], xpos = x, ypos = y})
 						end
@@ -410,8 +416,13 @@ function movecommand(ox,oy,dir_,playerid_)
 								if (swap ~= nil) then
 									for a,b in ipairs(allobs) do
 										if (b ~= -1) and (b ~= 2) and (b ~= 0) then
-											addaction(b,{"update",x,y,nil})
-											swapped[b] = 1
+											local unit = mmf.newObject(b)
+											local unitname = getname(unit)
+											local stuck = hasfeature(unitname,"is","stuck",b)
+											if (stuck == nil) then
+												addaction(b,{"update",x,y,nil})
+												swapped[b] = 1
+											end
 										end
 									end
 								end
@@ -420,7 +431,12 @@ function movecommand(ox,oy,dir_,playerid_)
 								if (swaps ~= nil) then
 									for a,b in ipairs(swaps) do
 										if (swapped[b] == nil) then
-											addaction(b,{"update",x,y,nil})
+											local unit = mmf.newObject(b)
+											local unitname = getname(unit)
+											local stuck = hasfeature(unitname,"is","stuck",b)
+											if (stuck == nil) then
+												addaction(b,{"update",x,y,nil})
+											end
 										end
 									end
 								end
@@ -669,10 +685,17 @@ function check(unitid,x,y,dir,pulling_,reason)
 	local results = {}
 	local specials = {}
 	
+	--implement STUCK
+	local emptystuck = hasfeature("empty","is","stuck",2,x+ox,y+oy)
 	local emptystop = hasfeature("empty","is","stop",2,x+ox,y+oy)
 	local emptypush = hasfeature("empty","is","push",2,x+ox,y+oy)
 	local emptypull = hasfeature("empty","is","pull",2,x+ox,y+oy)
 	local emptyswap = hasfeature("empty","is","swap",2,x+ox,y+oy)
+	if (emptystuck ~= nil) then
+		emptystop = (emptypush ~= nil or emptystop ~= nil or emptypull ~= nil) and true or nil
+		emptypush = nil
+		emptypull = nil
+	end
 	
 	local unit = {}
 	local name = ""
@@ -754,14 +777,21 @@ function check(unitid,x,y,dir,pulling_,reason)
 				local added = false
 				
 				if valid then
-					--MF_alert("checking for solidity for " .. obsname .. " by " .. name .. " at " .. tostring(x) .. ", " .. tostring(y))
+					--print("checking for solidity for " .. obsname .. " by " .. name .. " at " .. tostring(x) .. ", " .. tostring(y))
 					
+					--implement STUCK
+					local isstuck = hasfeature(obsname,"is","stuck",id)
 					local isstop = hasfeature(obsname,"is","stop",id)
 					local ispush = hasfeature(obsname,"is","push",id)
 					local ispull = hasfeature(obsname,"is","pull",id)
 					local isswap = hasfeature(obsname,"is","swap",id)
+					if (isstuck ~= nil) then
+						isstop = (ispush ~= nil or isstop ~= nil or ispull ~= nil) and true or nil
+						ispush = nil
+						ispull = nil
+					end
 					
-					--MF_alert(obsname .. " -- stop: " .. tostring(isstop) .. ", push: " .. tostring(ispush))
+					--print(obsname .. " -- stop: " .. tostring(isstop) .. ", push: " .. tostring(ispush) .. ", stuck: " .. tostring(isstuck))
 					
 					if (isstop ~= nil) and (obsname == "level") and (obsunit.visible == false) then
 						isstop = nil
@@ -951,11 +981,18 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 	local swaps = findfeatureat(nil,"is","swap",x+ox,y+oy)
 	if (swaps ~= nil) and ((unitid ~= 2) or ((unitid == 2) and (pulling == false))) then
 		for a,b in ipairs(swaps) do
+			local unit = mmf.newObject(b)
+			local unitname = getname(unit)
+			local stuck = hasfeature(unitname,"is","stuck",b)
 			if (pulling == false) or (pulling and (b ~= pusherid)) then
 				local alreadymoving = findupdate(b,"update")
 				local valid = true
 				
 				if (#alreadymoving > 0) then
+					valid = false
+				end
+				
+				if (stuck ~= nil) then
 					valid = false
 				end
 				
@@ -973,10 +1010,17 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 			local swapthese = findallhere(x+ox,y+oy)
 			
 			for a,b in ipairs(swapthese) do
+				local unit = mmf.newObject(b)
+				local unitname = getname(unit)
+				local stuck = hasfeature(unitname,"is","stuck",b)
 				local alreadymoving = findupdate(b,"update")
 				local valid = true
 				
 				if (#alreadymoving > 0) then
+					valid = false
+				end
+				
+				if (stuck ~= nil) then
 					valid = false
 				end
 				
@@ -1126,7 +1170,13 @@ function move(unitid,ox,oy,dir,specials_,instant_,simulate_)
 	
 	if (unitid ~= 2) then
 		local unit = mmf.newObject(unitid)
+		local unitname = getname(unit);
 		local x,y = unit.values[XPOS],unit.values[YPOS]
+		
+		--implement STUCK
+		if (hasfeature(unitname,"is","stuck",unitid)) then
+			return false
+		end
 		
 		local specials = {}
 		if (specials_ ~= nil) then

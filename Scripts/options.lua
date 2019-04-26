@@ -9,6 +9,7 @@ local mod = activemod
 -- Properties
 mod.enabled["less"] = true
 mod.enabled["slide"] = true
+mod.enabled["stuck"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -48,5 +49,17 @@ mod.tile["slide"] = {
 	layer = 20,
 }
 
+mod.tile["stuck"] = {
+	name = "text_stuck",
+	sprite = "text_stuck",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {4, 0},
+	active = {4, 1},
+	tile = {3, 12},
+	layer = 20,
+}
 
--- Current highest tile: {2, 12}
+-- Current highest tile: {3, 12}
