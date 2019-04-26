@@ -906,6 +906,10 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 	local unit = {}
 	local name = ""
 	
+	if (unitid == 0) then
+		return false
+	end
+	
 	if (unitid ~= 2) then
 		unit = mmf.newObject(unitid)
 		x,y = unit.values[XPOS],unit.values[YPOS]
