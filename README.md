@@ -12,4 +12,6 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **TOPPLE** - __Property__ When a stack of topplers are on a tile, they eject themselves in the facing direction to form a line (first moves 0 tiles, second moves 1 tile, third moves 2 tiles, etc).
 
+**PHASE** - __Property__ If something would normally block your movement (STOP, an impossible PUSH or PULL) then with PHASE you can walk through it anyway.
+
 Baba is You Discord server: https://discord.gg/GGbUUse
