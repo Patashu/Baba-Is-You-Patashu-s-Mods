@@ -320,6 +320,7 @@ function movecommand(ox,oy,dir_,playerid_)
 			for i,data in ipairs(moving_units) do
 				local solved = false
 				smallest_state = math.min(smallest_state,data.state)
+				local inserted = false
 				
 				if (data.unitid == 0) then
 					solved = true
@@ -334,6 +335,7 @@ function movecommand(ox,oy,dir_,playerid_)
 						unit = mmf.newObject(data.unitid)
 						dir = unit.values[DIR]
 						name = getname(unit)
+						unitphase = hasfeature(name,"is","phase",data.unitid)
 						x,y = unit.values[XPOS],unit.values[YPOS]
 					else
 						dir = data.dir
@@ -451,6 +453,7 @@ function movecommand(ox,oy,dir_,playerid_)
 									end
 								end
 								
+								inserted = true
 								table.insert(movelist, {data.unitid,ox,oy,dir,specials, 1})
 								--move(data.unitid,ox,oy,dir,specials)
 								
@@ -574,6 +577,21 @@ function movecommand(ox,oy,dir_,playerid_)
 						end
 					else
 						solved = true
+					end
+				end
+				
+				--print(tostring(result))
+				
+				--Even if you can't successfully push/pull, phasers can still phase.
+				if (not inserted and unitphase ~= nil and result ~= 0) then
+					--As long as it's still in-bounds!
+					unit = mmf.newObject(data.unitid)
+					dir = unit.values[DIR]
+					x,y = unit.values[XPOS],unit.values[YPOS]
+					local finalresult = check(data.unitid,x,y,dir,false,data.reason)
+					--print(tostring(finalresult[1]))
+					if (finalresult[1] ~= -1) then
+						table.insert(movelist, {data.unitid,ox,oy,dir,specials, 1})
 					end
 				end
 				
@@ -739,6 +757,7 @@ function check(unitid,x,y,dir,pulling_,reason)
 		emptypull = nil
 	end
 	
+	
 	local unit = {}
 	local name = ""
 	
@@ -749,13 +768,19 @@ function check(unitid,x,y,dir,pulling_,reason)
 		name = "empty"
 	end
 	
+	unitphase = nil
+	
 	--implement STUCK
 	if (unitid ~= 2) then
 		local unitstuck = hasfeature(name,"is","stuck",unitid)
+		unitphase = hasfeature(name,"is","phase",unitid)
 		if (unitstuck ~= nil) then
 			table.insert(result, 1)
 			table.insert(results, id)
 			return result,results,specials
+		end
+		if (unitphase ~= nil) then
+			emptystop = nil
 		end
 	end
 	
@@ -842,8 +867,11 @@ function check(unitid,x,y,dir,pulling_,reason)
 						ispush = nil
 						ispull = nil
 					end
+					if (unitphase ~= nil) then
+						isstop = nil
+					end
 					
-					--print(obsname .. " -- stop: " .. tostring(isstop) .. ", push: " .. tostring(ispush) .. ", stuck: " .. tostring(isstuck))
+					print(obsname .. " -- stop: " .. tostring(isstop) .. ", push: " .. tostring(ispush) .. ", stuck: " .. tostring(isstuck))
 					
 					if (isstop ~= nil) and (obsname == "level") and (obsunit.visible == false) then
 						isstop = nil

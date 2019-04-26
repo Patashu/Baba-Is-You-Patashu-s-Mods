@@ -11,6 +11,7 @@ mod.enabled["less"] = true
 mod.enabled["slide"] = true
 mod.enabled["stuck"] = true
 mod.enabled["topple"] = true
+mod.enabled["phase"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -76,4 +77,17 @@ mod.tile["topple"] = {
 	layer = 20,
 }
 
--- Current highest tile: {4, 12}
+mod.tile["phase"] = {
+	name = "text_phase",
+	sprite = "text_phase",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {4, 0},
+	active = {4, 1},
+	tile = {5, 12},
+	layer = 20,
+}
+
+-- Current highest tile: {5, 12}

@@ -3,6 +3,6 @@ levelid=3
 
 [general]
 name=patatest
-start=toppletheworld
-firstlevel=toppletheworld
+start=less
+firstlevel=less
 
