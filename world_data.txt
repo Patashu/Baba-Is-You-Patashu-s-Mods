@@ -1,8 +1,8 @@
 [levels]
-levelid=1
+levelid=3
 
 [general]
 name=patatest
-start=less
-firstlevel=less
+start=toppletheworld
+firstlevel=toppletheworld
 

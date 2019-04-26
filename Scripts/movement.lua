@@ -235,6 +235,49 @@ function movecommand(ox,oy,dir_,playerid_)
 						end
 					end
 				end
+				
+				local topplers = findallfeature(nil,"is","topple",true)
+				for i,v in ipairs(topplers) do
+					if (v ~= 2) then
+						local affected = {}
+						local unit = mmf.newObject(v)
+						
+						local x,y = unit.values[XPOS],unit.values[YPOS]
+						local tileid = x + y * roomsizex
+						
+						if (unitmap[tileid] ~= nil) then
+							if (#unitmap[tileid] > 1) then
+								--deterministic toppling algorithm: move each toppler before us by 1, stop when we find ourselves.
+								local firsttoppler = false
+								for a,b in ipairs(unitmap[tileid]) do
+									local newunit = mmf.newObject(b)
+									local unitname = getname(newunit)
+									local topple = hasfeature(unitname,"is","topple",b)
+									if (b ~= v) then
+										local newunit = mmf.newObject(b)
+										local unitname = getname(newunit)
+										local stuck = hasfeature(unitname,"is","stuck",b)
+										
+										if (stuck == nil) then
+											local moveadd = 1
+											
+											if (been_seen[b] == nil) then
+												table.insert(moving_units, {unitid = b, reason = "topple", state = 0, moves = moveadd, dir = newunit.values[DIR], xpos = x, ypos = y})
+												been_seen[b] = #moving_units
+											else
+												local id = been_seen[b]
+												local this = moving_units[id]
+												this.moves = this.moves + moveadd
+											end
+										end
+									else
+										break
+									end
+								end
+							end
+						end
+					end
+				end
 			end
 		else
 			for i,data in ipairs(still_moving) do

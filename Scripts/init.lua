@@ -37,7 +37,8 @@ end
 mod.alltiles = {
 	"less",
 	"slide",
-	"stuck"
+	"stuck",
+	"topple"
 }
 
 function mod.addblock(tile)
