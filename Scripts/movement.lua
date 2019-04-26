@@ -685,7 +685,6 @@ function check(unitid,x,y,dir,pulling_,reason)
 	local results = {}
 	local specials = {}
 	
-	--implement STUCK
 	local emptystuck = hasfeature("empty","is","stuck",2,x+ox,y+oy)
 	local emptystop = hasfeature("empty","is","stop",2,x+ox,y+oy)
 	local emptypush = hasfeature("empty","is","push",2,x+ox,y+oy)
@@ -705,6 +704,16 @@ function check(unitid,x,y,dir,pulling_,reason)
 		name = getname(unit)
 	else
 		name = "empty"
+	end
+	
+	--implement STUCK
+	if (unitid ~= 2) then
+		local unitstuck = hasfeature(name,"is","stuck",unitid)
+		if (unitstuck ~= nil) then
+			table.insert(result, 1)
+			table.insert(results, id)
+			return result,results,specials
+		end
 	end
 	
 	local lockpartner = ""
