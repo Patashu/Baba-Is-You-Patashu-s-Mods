@@ -558,10 +558,15 @@ function movecommand(ox,oy,dir_,playerid_)
 					if (unitid ~= 2) then
 						unit = mmf.newObject(unitid)
 						unitname = getname(unit)
+						--temporarily move object to detination so I can check if it is "slide" on destination or not
+						unit.values[XPOS] = unit.values[XPOS] + movelist[i][2]
+						unit.values[YPOS] = unit.values[YPOS] + movelist[i][3]
 						if (hasfeature(unitname,"is","slide",unitid)) then
 							--print("Adding a move");
 							movesleft = movesleft + 1
 						end
+						unit.values[XPOS] = unit.values[XPOS] - movelist[i][2]
+						unit.values[YPOS] = unit.values[YPOS] - movelist[i][3]
 					end
 					--print("Success: " .. tostring(success) .. " movesleft: " .. tostring(movesleft) .. " unitid: " .. tostring(unitid))
 					movelist[i] = {data[1],data[2],data[3],data[4],data[5],movesleft}
