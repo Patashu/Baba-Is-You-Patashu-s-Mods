@@ -752,6 +752,112 @@ function block(small_)
 				end
 			end
 		end
+		
+		--Implement MULTIPLY
+		
+		local ismore = getunitswitheffect("multiply",delthese)
+		
+		for id,unit in ipairs(ismore) do
+			local x,y = unit.values[XPOS],unit.values[YPOS]
+			local name = unit.strings[UNITNAME]
+			local doblocks = {}
+			
+			for i=1,4 do
+				local drs = dirs_diagonals[i+4]
+				ox = drs[1]
+				oy = drs[2]
+				
+				local valid = true
+				local obs = findobstacle(x+ox,y+oy)
+				local tileid = (x+ox) + (y+oy) * roomsizex
+				
+				if (#obs > 0) then
+					for a,b in ipairs(obs) do
+						if (b == -1) then
+							valid = false
+						elseif (b ~= 0) and (b ~= -1) then
+							local bunit = mmf.newObject(b)
+							local obsname = bunit.strings[UNITNAME]
+							local obstype = bunit.strings[UNITTYPE]
+							
+							if (obstype == "text") then
+								obsname = "text"
+							end
+							
+							local obsstop = hasfeature(obsname,"is","stop",b,x+ox,y+oy)
+							local obspush = hasfeature(obsname,"is","push",b,x+ox,y+oy)
+							local obspull = hasfeature(obsname,"is","pull",b,x+ox,y+oy)
+							
+							if (obsstop ~= nil) or (obspush ~= nil) or (obspull ~= nil) or (obsname == name) or (obstype == "text") then
+								valid = false
+							end
+						end
+					end
+				end
+				
+				if valid then
+					local newunit = copy(unit.fixed,x+ox,y+oy)
+				end
+			end
+		end
+		
+		-- implement DIVIDE
+		
+		local isless = getunitswitheffect("divide",delthese)
+			
+		for id,unit in ipairs(isless) do
+			local x,y = unit.values[XPOS],unit.values[YPOS]
+			local name = unit.strings[UNITNAME]
+			
+			if (issafe(unit.fixed) == false) then		
+				local could_grow = false
+				
+				for i=1,4 do
+					local drs = dirs_diagonals[i+4]
+					ox = drs[1]
+					oy = drs[2]
+					
+					local valid = true
+					local obs = findobstacle(x+ox,y+oy)
+					local tileid = (x+ox) + (y+oy) * roomsizex
+					
+					if (#obs > 0) then
+						for a,b in ipairs(obs) do
+							if (b == -1) then
+								valid = false
+							elseif (b ~= 0) and (b ~= -1) then
+								local bunit = mmf.newObject(b)
+								local obsname = bunit.strings[UNITNAME]
+								local obstype = bunit.strings[UNITTYPE]
+								
+								if (obstype == "text") then
+									obsname = "text"
+								end
+								
+								local obsstop = hasfeature(obsname,"is","stop",b,x+ox,y+oy)
+								local obspush = hasfeature(obsname,"is","push",b,x+ox,y+oy)
+								local obspull = hasfeature(obsname,"is","pull",b,x+ox,y+oy)
+								
+								if (obsstop ~= nil) or (obspush ~= nil) or (obspull ~= nil) or (obsname == name) or (obstype == "text") then
+									valid = false
+								end
+							end
+						end
+					end
+					
+					if valid then
+						could_grow = true
+						break
+					end
+				end
+			
+				if (could_grow) then
+					local pmult,sound = checkeffecthistory("defeat")
+					MF_particles("destroy",x,y,5 * pmult,0,3,1,1)
+					table.insert(delthese, unit.fixed)
+				end
+			end
+		end
 
 		delthese,doremovalsound = handledels(delthese,doremovalsound)
 	end

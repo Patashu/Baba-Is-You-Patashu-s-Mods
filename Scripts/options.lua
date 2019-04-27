@@ -11,7 +11,9 @@ mod.enabled["less"] = true
 mod.enabled["slide"] = true
 mod.enabled["stuck"] = true
 mod.enabled["topple"] = true
-mod.enabled["phase"] = true
+mod.enabled["phase"] = false
+mod.enabled["multiply"] = true
+mod.enabled["divide"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -32,8 +34,8 @@ mod.tile["less"] = {
 	unittype = "text",
 	tiling = -1,
 	type = 2,
-	colour = {4, 0},
-	active = {4, 1},
+	colour = {2, 1},
+	active = {2, 2},
 	tile = {1, 12},
 	layer = 20,
 }
@@ -45,8 +47,8 @@ mod.tile["slide"] = {
 	unittype = "text",
 	tiling = -1,
 	type = 2,
-	colour = {4, 0},
-	active = {4, 1},
+	colour = {1, 3},
+	active = {1, 4},
 	tile = {2, 12},
 	layer = 20,
 }
@@ -58,8 +60,8 @@ mod.tile["stuck"] = {
 	unittype = "text",
 	tiling = -1,
 	type = 2,
-	colour = {4, 0},
-	active = {4, 1},
+	colour = {2, 0},
+	active = {2, 1},
 	tile = {3, 12},
 	layer = 20,
 }
@@ -71,8 +73,8 @@ mod.tile["topple"] = {
 	unittype = "text",
 	tiling = -1,
 	type = 2,
-	colour = {4, 0},
-	active = {4, 1},
+	colour = {3, 0},
+	active = {3, 1},
 	tile = {4, 12},
 	layer = 20,
 }
@@ -84,10 +86,34 @@ mod.tile["phase"] = {
 	unittype = "text",
 	tiling = -1,
 	type = 2,
-	colour = {4, 0},
-	active = {4, 1},
+	colour = {3, 2},
+	active = {3, 3},
 	tile = {5, 12},
 	layer = 20,
 }
 
--- Current highest tile: {5, 12}
+mod.tile["multiply"] = {
+	name = "text_multiply",
+	sprite = "text_multiply",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {4, 0},
+	active = {4, 1},
+	tile = {6, 12},
+	layer = 20,
+}
+
+mod.tile["divide"] = {
+	name = "text_divide",
+	sprite = "text_divide",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {2, 1},
+	active = {2, 2},
+	tile = {7, 12},
+	layer = 20,
+}

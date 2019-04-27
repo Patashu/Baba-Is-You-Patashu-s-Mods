@@ -1,8 +1,8 @@
-[levels]
-levelid=3
-
 [general]
+firstlevel=4level
+start=4level
 name=patatest
-start=less
-firstlevel=less
+
+[levels]
+levelid=4
 

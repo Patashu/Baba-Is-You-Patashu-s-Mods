@@ -39,7 +39,9 @@ mod.alltiles = {
 	"slide",
 	"stuck",
 	"topple",
-	"phase"
+	"phase",
+	"multiply",
+	"divide"
 }
 
 function mod.addblock(tile)
