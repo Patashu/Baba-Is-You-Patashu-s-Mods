@@ -871,7 +871,7 @@ function check(unitid,x,y,dir,pulling_,reason)
 						isstop = nil
 					end
 					
-					print(obsname .. " -- stop: " .. tostring(isstop) .. ", push: " .. tostring(ispush) .. ", stuck: " .. tostring(isstuck))
+					--print(obsname .. " -- stop: " .. tostring(isstop) .. ", push: " .. tostring(ispush) .. ", stuck: " .. tostring(isstuck))
 					
 					if (isstop ~= nil) and (obsname == "level") and (obsunit.visible == false) then
 						isstop = nil

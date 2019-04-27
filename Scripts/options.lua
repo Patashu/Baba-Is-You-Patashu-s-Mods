@@ -12,8 +12,10 @@ mod.enabled["slide"] = true
 mod.enabled["stuck"] = true
 mod.enabled["topple"] = true
 mod.enabled["phase"] = false
-mod.enabled["multiply"] = true
-mod.enabled["divide"] = true
+mod.enabled["multiply"] = false
+mod.enabled["divide"] = false
+mod.enabled["faceaway"] = true
+mod.enabled["faceside"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -115,5 +117,46 @@ mod.tile["divide"] = {
 	colour = {2, 1},
 	active = {2, 2},
 	tile = {7, 12},
+	layer = 20,
+}
+
+mod.tile["divide"] = {
+	name = "text_divide",
+	sprite = "text_divide",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {2, 1},
+	active = {2, 2},
+	tile = {7, 12},
+	layer = 20,
+}
+
+mod.tile["faceaway"] = {
+	name = "text_faceaway",
+	sprite = "text_faceaway",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 7,
+	operatortype = "cond_arg",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {8, 12},
+	layer = 20,
+}
+
+mod.tile["faceside"] = {
+	name = "text_faceside",
+	sprite = "text_faceside",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 7,
+	operatortype = "cond_arg",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {9, 12},
 	layer = 20,
 }
