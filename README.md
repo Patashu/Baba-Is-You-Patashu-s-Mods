@@ -14,4 +14,8 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **PHASE** - __Property__ If something would normally block your movement (STOP, an impossible PUSH or PULL) then with PHASE you can walk through it anyway.
 
+**MULTIPLY / DIVIDE** - __Property__ X shaped counterparts to MORE and LESS, growing and shrinking in checkerboard patterns.
+
+**FACEAWAY / FACESIDE** - __Condition (Prefix)__ Counterparts to FACING that check your back and your sides respectively.
+
 Baba is You Discord server: https://discord.gg/GGbUUse
