@@ -7,21 +7,22 @@ local mod = activemod
 ---------------------------------------------------
 
 -- Properties
-mod.enabled["less"] = false
-mod.enabled["slide"] = false
-mod.enabled["stuck"] = false
-mod.enabled["topple"] = false
-mod.enabled["phase"] = false
+mod.enabled["less"] = true
+mod.enabled["slide"] = true
+mod.enabled["stuck"] = true
+mod.enabled["topple"] = true
+mod.enabled["phase"] = true
 mod.enabled["multiply"] = false
 mod.enabled["divide"] = false
 mod.enabled["faceaway"] = false
 mod.enabled["faceside"] = false
-mod.enabled["singlet"] = true
-mod.enabled["capped"] = true
-mod.enabled["straight"] = true
-mod.enabled["corner"] = true
-mod.enabled["edge"] = true
-mod.enabled["inner"] = true
+mod.enabled["singlet"] = false
+mod.enabled["capped"] = false
+mod.enabled["straight"] = false
+mod.enabled["corner"] = false
+mod.enabled["edge"] = false
+mod.enabled["inner"] = false
+mod.enabled["noturn"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -248,5 +249,18 @@ mod.tile["inner"] = {
 	colour = {0, 1},
 	active = {0, 3},
 	tile = {2, 13},
+	layer = 20,
+}
+
+mod.tile["noturn"] = {
+	name = "text_noturn",
+	sprite = "text_noturn",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 1},
+	active = {1, 2},
+	tile = {2, 14},
 	layer = 20,
 }

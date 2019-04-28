@@ -474,7 +474,8 @@ function moveblock()
 						local newunit = mmf.newObject(f)
 						local name = newunit.strings[UNITNAME] 
 						local stuck = hasfeature(name,"is","stuck",f)
-						if (stuck == nil) then
+						local noturn = hasfeature(name,"is","noturn",f)
+						if (stuck == nil and noturn == nil) then
 							addundo({"update",name,x,y,newunit.values[DIR],x,y,unit.values[DIR],newunit.values[ID]})
 							newunit.values[DIR] = unit.values[DIR]
 						end

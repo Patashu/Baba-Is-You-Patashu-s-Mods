@@ -333,9 +333,10 @@ function movecommand(ox,oy,dir_,playerid_)
 					
 					if (data.unitid ~= 2) then
 						unit = mmf.newObject(data.unitid)
-						dir = unit.values[DIR]
 						name = getname(unit)
 						unitphase = hasfeature(name,"is","phase",data.unitid)
+						unitnoturn = hasfeature(name,"is","noturn",data.unitid)
+						dir = unitnoturn == nil and unit.values[DIR] or data.dir
 						x,y = unit.values[XPOS],unit.values[YPOS]
 					else
 						dir = data.dir
@@ -1256,6 +1257,7 @@ function move(unitid,ox,oy,dir,specials_,instant_,simulate_)
 		local unit = mmf.newObject(unitid)
 		local unitname = getname(unit);
 		local x,y = unit.values[XPOS],unit.values[YPOS]
+		local noturn = hasfeature(unitname,"is","noturn",unitid)
 		
 		--implement STUCK
 		if (hasfeature(unitname,"is","stuck",unitid)) then
@@ -1374,10 +1376,10 @@ function move(unitid,ox,oy,dir,specials_,instant_,simulate_)
 		if (gone == false) and (simulate == false) then
 			success = true
 			if instant then
-				update(unitid,x+ox,y+oy,dir)
+				update(unitid,x+ox,y+oy, noturn == nil and dir or unit.values[DIR])
 				MF_alert("Instant movement on " .. tostring(unitid))
 			else
-				addaction(unitid,{"update",x+ox,y+oy,dir})
+				addaction(unitid,{"update",x+ox,y+oy,noturn == nil and dir or unit.values[DIR]})
 			end
 			
 			if unit.visible and (#movelist < 700) then
@@ -1486,9 +1488,9 @@ function add_moving_units(rule,newdata,data,been_seen,empty_)
 				local x,y = -1,-1
 				if (v ~= 2) then
 					local unit = mmf.newObject(v)
-					x,y = unit.values[XPOS],unit.values[YPOS]
+					x,y,_dir = unit.values[XPOS],unit.values[YPOS],unit.values[DIR]
 					
-					table.insert(result, {unitid = v, reason = rule, state = 0, moves = moveadd, dir = dir_, xpos = x, ypos = y})
+					table.insert(result, {unitid = v, reason = rule, state = 0, moves = moveadd, dir = _dir, xpos = x, ypos = y})
 					seen[v] = #result
 				else
 					local thisempty = empty[i]
