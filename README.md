@@ -22,4 +22,6 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **NOTURN** - __Property__ Direction cannot change by any means. Like UP/DOWN/LEFT/RIGHT but keeping whatever direction it had instead of forcing it.
 
+**COLLECT** - __Property__ YOU destroys COLLECT it steps on. Then, if that was the last COLLECT, the puzzle is cleared.
+
 Baba is You Discord server: https://discord.gg/GGbUUse
