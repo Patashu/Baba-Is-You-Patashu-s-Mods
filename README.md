@@ -20,7 +20,7 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **SINGLET / CAPPED / STRAIGHT / CORNER / EDGE / INNER** - __Condition (Prefix) True for objects that are surrounded by themselves on 0/1/2 (straight)/2 (corner)/3/4 sides, respectively. Useful for creating multi-tile substances like DROD Tar and Mud.
 
-**NOTURN** - __Property__ Direction cannot change by any means. Like UP/DOWN/LEFT/RIGHT but keeping whatever direction it had instead of forcing it.
+**STRAFE** - __Property__ Direction cannot change by any means. Like UP/DOWN/LEFT/RIGHT but keeping whatever direction it had instead of forcing it.
 
 **COLLECT** - __Property__ YOU destroys COLLECT it steps on. Then, if that was the last COLLECT, the puzzle is cleared.
 
