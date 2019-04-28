@@ -259,9 +259,9 @@ function updatedir(unitid,dir)
 	local unitname = unit.strings[UNITNAME]
 	local unittype = unit.strings[UNITTYPE]
 	local olddir = unit.values[DIR]
-	local noturn = hasfeature(unitname,"is","noturn",unitid)
+	local strafe = hasfeature(unitname,"is","strafe",unitid)
 	
-	if (noturn == nil and dir ~= olddir) then
+	if (strafe == nil and dir ~= olddir) then
 		updateundo = true
 		addundo({"update",unitname,x,y,olddir,x,y,dir,unit.values[ID]})
 		unit.values[DIR] = dir

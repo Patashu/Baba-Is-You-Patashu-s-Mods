@@ -22,7 +22,7 @@ mod.enabled["straight"] = false
 mod.enabled["corner"] = false
 mod.enabled["edge"] = false
 mod.enabled["inner"] = false
-mod.enabled["noturn"] = false
+mod.enabled["strafe"] = false
 mod.enabled["collect"] = true
 
 ---------------------------------------------------
@@ -253,9 +253,9 @@ mod.tile["inner"] = {
 	layer = 20,
 }
 
-mod.tile["noturn"] = {
-	name = "text_noturn",
-	sprite = "text_noturn",
+mod.tile["strafe"] = {
+	name = "text_strafe",
+	sprite = "text_strafe",
 	sprite_in_root = false,
 	unittype = "text",
 	tiling = -1,

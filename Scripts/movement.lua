@@ -335,8 +335,8 @@ function movecommand(ox,oy,dir_,playerid_)
 						unit = mmf.newObject(data.unitid)
 						name = getname(unit)
 						unitphase = hasfeature(name,"is","phase",data.unitid)
-						unitnoturn = hasfeature(name,"is","noturn",data.unitid)
-						dir = unitnoturn == nil and unit.values[DIR] or data.dir
+						unitstrafe = hasfeature(name,"is","strafe",data.unitid)
+						dir = unitstrafe == nil and unit.values[DIR] or data.dir
 						x,y = unit.values[XPOS],unit.values[YPOS]
 					else
 						dir = data.dir
@@ -1257,7 +1257,7 @@ function move(unitid,ox,oy,dir,specials_,instant_,simulate_)
 		local unit = mmf.newObject(unitid)
 		local unitname = getname(unit);
 		local x,y = unit.values[XPOS],unit.values[YPOS]
-		local noturn = hasfeature(unitname,"is","noturn",unitid)
+		local strafe = hasfeature(unitname,"is","strafe",unitid)
 		
 		--implement STUCK
 		if (hasfeature(unitname,"is","stuck",unitid)) then
@@ -1376,10 +1376,10 @@ function move(unitid,ox,oy,dir,specials_,instant_,simulate_)
 		if (gone == false) and (simulate == false) then
 			success = true
 			if instant then
-				update(unitid,x+ox,y+oy, noturn == nil and dir or unit.values[DIR])
+				update(unitid,x+ox,y+oy, strafe == nil and dir or unit.values[DIR])
 				MF_alert("Instant movement on " .. tostring(unitid))
 			else
-				addaction(unitid,{"update",x+ox,y+oy,noturn == nil and dir or unit.values[DIR]})
+				addaction(unitid,{"update",x+ox,y+oy,strafe == nil and dir or unit.values[DIR]})
 			end
 			
 			if unit.visible and (#movelist < 700) then

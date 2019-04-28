@@ -56,7 +56,7 @@ mod.alltiles = {
 	"corner",
 	"edge",
 	"inner",
-	"noturn",
+	"strafe",
 	"collect"
 }
 

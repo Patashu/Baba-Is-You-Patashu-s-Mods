@@ -1,4 +1,8 @@
 *.l
 *.ld
 *.png
+!/Sprites
+!\Sprites
+!/Sprites*
+!\Sprites*
 world_data.txt
