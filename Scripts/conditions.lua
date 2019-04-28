@@ -815,6 +815,54 @@ function testcond(conds,unitid,x_,y_)
 					else
 						print("no parameters given!")
 					end
+				elseif (condtype == "singlet") then
+					valid = true
+					sides, sidecount = countsides(unitid, name, x, y)
+					result = sides == 0
+				elseif (condtype == "not singlet") then
+					valid = true
+					sides, sidecount = countsides(unitid, name, x, y)
+					result = sides ~= 0
+				elseif (condtype == "capped") then
+					valid = true
+					sides, sidecount = countsides(unitid, name, x, y)
+					result = sides == 1
+				elseif (condtype == "not capped") then
+					valid = true
+					sides, sidecount = countsides(unitid, name, x, y)
+					result = sides ~= 1
+				elseif (condtype == "straight") then
+					valid = true
+					sides, sidecount = countsides(unitid, name, x, y)
+					result = (sidecount == ((1 << 0) + (1 << 2)) or sidecount == ((1 << 1) + (1 << 3)))
+				elseif (condtype == "not straight") then
+					valid = true
+					sides, sidecount = countsides(unitid, name, x, y)
+					result = (sidecount ~= ((1 << 0) + (1 << 2)) and sidecount ~= ((1 << 1) + (1 << 3)))
+				elseif (condtype == "corner") then
+					valid = true
+					sides, sidecount = countsides(unitid, name, x, y)
+					result = (sidecount == ((1 << 0) + (1 << 1)) or sidecount == ((1 << 1) + (1 << 2)) or sidecount == ((1 << 2) + (1 << 3)) or sidecount == ((1 << 3) + (1 << 0)))
+				elseif (condtype == "not corner") then
+					valid = true
+					sides, sidecount = countsides(unitid, name, x, y)
+					result = (sidecount ~= ((1 << 0) + (1 << 1)) and sidecount ~= ((1 << 1) + (1 << 2)) and sidecount ~= ((1 << 2) + (1 << 3)) and sidecount ~= ((1 << 3) + (1 << 0)))
+				elseif (condtype == "edge") then
+					valid = true
+					sides, sidecount = countsides(unitid, name, x, y)
+					result = sides == 3
+				elseif (condtype == "not edge") then
+					valid = true
+					sides, sidecount = countsides(unitid, name, x, y)
+					result = sides ~= 3
+				elseif (condtype == "inner") then
+					valid = true
+					sides, sidecount = countsides(unitid, name, x, y)
+					result = sides == 4
+				elseif (condtype == "not inner") then
+					valid = true
+					sides, sidecount = countsides(unitid, name, x, y)
+					result = sides ~= 4
 				elseif (condtype == "lonely") then
 					valid = true
 					
@@ -858,4 +906,50 @@ function testcond(conds,unitid,x_,y_)
 	end
 	
 	return result
+end
+
+function countsides(unitid, name, x, y)
+	local sides = 0
+	local sidecount = 0
+	if (unitid ~= 1) then
+		for i = 1,4 do
+			local ndrs = ndirs[i]
+			local ox = ndrs[1]
+			local oy = ndrs[2]
+			local tileid = (x + ox) + (y + oy) * roomsizex
+			if (unitid ~= 2) then
+				if (unitmap[tileid] ~= nil) then
+					for c,d in ipairs(unitmap[tileid]) do
+						local unit = mmf.newObject(d)
+						local name_ = getname(unit)
+						if (name_ == name) then
+							sides = sides + 1
+							sidecount = sidecount + (1 << (i-1))
+							break
+						end
+					end
+				end
+			else
+				if (unitmap[tileid] == nil) or (#unitmap[tileid] == 0) then 
+					sides = sides + 1
+					sidecount = sidecount + (1 << (i-1))
+				end
+			end
+		end
+	else
+		local dirids = {"r","u","l","d"}
+		for i = 1,4 do
+			local dirid = dirids[i]
+			if (surrounds[dirid] ~= nil) then
+				for c,d in ipairs(surrounds[dirid]) do
+					if (d == unitid) then
+						sides = sides + 1
+						sidecount = sidecount + (1 << (i-1))
+						break
+					end
+				end
+			end
+		end
+	end
+	return sides, sidecount
 end

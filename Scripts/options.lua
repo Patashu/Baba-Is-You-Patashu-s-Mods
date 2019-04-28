@@ -7,15 +7,21 @@ local mod = activemod
 ---------------------------------------------------
 
 -- Properties
-mod.enabled["less"] = true
-mod.enabled["slide"] = true
-mod.enabled["stuck"] = true
-mod.enabled["topple"] = true
+mod.enabled["less"] = false
+mod.enabled["slide"] = false
+mod.enabled["stuck"] = false
+mod.enabled["topple"] = false
 mod.enabled["phase"] = false
 mod.enabled["multiply"] = false
 mod.enabled["divide"] = false
-mod.enabled["faceaway"] = true
-mod.enabled["faceside"] = true
+mod.enabled["faceaway"] = false
+mod.enabled["faceside"] = false
+mod.enabled["singlet"] = true
+mod.enabled["capped"] = true
+mod.enabled["straight"] = true
+mod.enabled["corner"] = true
+mod.enabled["edge"] = true
+mod.enabled["inner"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -158,5 +164,89 @@ mod.tile["faceside"] = {
 	colour = {0, 1},
 	active = {0, 3},
 	tile = {9, 12},
+	layer = 20,
+}
+
+mod.tile["singlet"] = {
+	name = "text_singlet",
+	sprite = "text_singlet",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {10, 12},
+	layer = 20,
+}
+
+mod.tile["capped"] = {
+	name = "text_capped",
+	sprite = "text_capped",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {11, 12},
+	layer = 20,
+}
+
+mod.tile["straight"] = {
+	name = "text_straight",
+	sprite = "text_straight",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {12, 12},
+	layer = 20,
+}
+
+mod.tile["corner"] = {
+	name = "text_corner",
+	sprite = "text_corner",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {0, 13},
+	layer = 20,
+}
+
+mod.tile["edge"] = {
+	name = "text_edge",
+	sprite = "text_edge",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {1, 13},
+	layer = 20,
+}
+
+mod.tile["inner"] = {
+	name = "text_inner",
+	sprite = "text_inner",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {2, 13},
 	layer = 20,
 }

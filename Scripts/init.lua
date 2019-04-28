@@ -45,7 +45,13 @@ mod.alltiles = {
 	"multiply",
 	"divide",
 	"faceaway",
-	"faceside"
+	"faceside",
+	"singlet",
+	"capped",
+	"straight",
+	"corner",
+	"edge",
+	"inner"
 }
 
 function mod.addblock(tile)
