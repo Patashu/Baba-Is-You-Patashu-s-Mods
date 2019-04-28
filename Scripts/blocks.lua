@@ -1022,6 +1022,46 @@ function block(small_)
 	
 	delthese,doremovalsound = handledels(delthese,doremovalsound)
 	
+	for id,unit in ipairs(isyou) do
+		local x,y = unit.values[XPOS],unit.values[YPOS]
+		local collect = findfeature(nil,"is","collect")
+		
+		if (collect ~= nil) then
+			for a,b in ipairs(collect) do
+				if (b[1] ~= "empty") then
+					local flag = findtype(b,x,y,0)
+					if (#flag > 0) then
+						for c,d in ipairs(flag) do
+							local doit = false
+							if (d ~= unit.fixed) then
+								if (floating(d,unit.fixed) and not issafe(d)) then
+									doit = true
+								end
+							else
+								doit = true
+							end
+							if doit then
+								local pmult,sound = checkeffecthistory("unlock")
+								setsoundname("turn",7,sound)
+								MF_particles("unlock",x,y,15 * pmult,2,4,1,1)
+								table.insert(delthese, d)
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	
+	if (#delthese > 0) then
+		delhese,doremovalsound = handledels(delthese,doremovalsound)
+		
+		local anycollectleft,emptycollectleft = findallfeature(nil,"is","collect")
+		if (#anycollectleft == 0 and #emptycollectleft == 0) then
+			MF_win()
+		end
+	end
+	
 	local isshut = getunitswitheffect("shut",delthese)
 	
 	for id,unit in ipairs(isshut) do

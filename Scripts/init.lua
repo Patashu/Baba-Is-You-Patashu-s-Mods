@@ -24,6 +24,7 @@ function mod.load(dir)
 	loadscript(dir .. "blocks")
 	loadscript(dir .. "conditions")
 	loadscript(dir .. "tools")
+	loadscript(dir .. "effects")
 end
 
 -- Calls when another world is loaded while this mod is active
@@ -36,6 +37,7 @@ function mod.unload(dir)
 	loadscript("Data/blocks")
 	loadscript("Data/conditions")
 	loadscript("Data/tools")
+	loadscript("Data/effects")
 end
 
 mod.alltiles = {
@@ -54,7 +56,8 @@ mod.alltiles = {
 	"corner",
 	"edge",
 	"inner",
-	"noturn"
+	"noturn",
+	"collect"
 }
 
 function mod.addblock(tile)

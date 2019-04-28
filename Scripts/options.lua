@@ -22,7 +22,8 @@ mod.enabled["straight"] = false
 mod.enabled["corner"] = false
 mod.enabled["edge"] = false
 mod.enabled["inner"] = false
-mod.enabled["noturn"] = true
+mod.enabled["noturn"] = false
+mod.enabled["collect"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -262,5 +263,18 @@ mod.tile["noturn"] = {
 	colour = {1, 1},
 	active = {1, 2},
 	tile = {2, 14},
+	layer = 20,
+}
+
+mod.tile["collect"] = {
+	name = "text_collect",
+	sprite = "text_collect",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {6, 1},
+	active = {2, 4},
+	tile = {2, 15},
 	layer = 20,
 }
