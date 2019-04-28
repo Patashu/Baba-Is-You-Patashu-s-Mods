@@ -1,8 +1,0 @@
-[general]
-firstlevel=6level
-start=6level
-name=patatest
-
-[levels]
-levelid=6
-
