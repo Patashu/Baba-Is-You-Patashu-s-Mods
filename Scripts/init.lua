@@ -57,7 +57,9 @@ mod.alltiles = {
 	"edge",
 	"inner",
 	"strafe",
-	"collect"
+	"collect",
+	"1st1",
+	"last1"
 }
 
 function mod.addblock(tile)

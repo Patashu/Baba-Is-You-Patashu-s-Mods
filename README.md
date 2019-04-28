@@ -24,4 +24,6 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **COLLECT** - __Property__ YOU destroys COLLECT it steps on. Then, if that was the last COLLECT, the puzzle is cleared.
 
+**1ST1 / LAST1** - __Property__ When there's more than one of an object, only the (first/last) survives, respectively.
+
 Baba is You Discord server: https://discord.gg/GGbUUse

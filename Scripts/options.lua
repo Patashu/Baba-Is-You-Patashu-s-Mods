@@ -11,7 +11,7 @@ mod.enabled["less"] = true
 mod.enabled["slide"] = true
 mod.enabled["stuck"] = true
 mod.enabled["topple"] = true
-mod.enabled["phase"] = true
+mod.enabled["phase"] = false
 mod.enabled["multiply"] = false
 mod.enabled["divide"] = false
 mod.enabled["faceaway"] = false
@@ -23,7 +23,9 @@ mod.enabled["corner"] = false
 mod.enabled["edge"] = false
 mod.enabled["inner"] = false
 mod.enabled["strafe"] = false
-mod.enabled["collect"] = true
+mod.enabled["collect"] = false
+mod.enabled["1st1"] = true
+mod.enabled["last1"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -262,7 +264,7 @@ mod.tile["strafe"] = {
 	type = 2,
 	colour = {1, 1},
 	active = {1, 2},
-	tile = {2, 14},
+	tile = {3, 13},
 	layer = 20,
 }
 
@@ -275,6 +277,32 @@ mod.tile["collect"] = {
 	type = 2,
 	colour = {6, 1},
 	active = {2, 4},
-	tile = {2, 15},
+	tile = {4, 13},
+	layer = 20,
+}
+
+mod.tile["1st1"] = {
+	name = "text_1st1",
+	sprite = "text_1st1",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {2, 1},
+	active = {2, 2},
+	tile = {5, 13},
+	layer = 20,
+}
+
+mod.tile["last1"] = {
+	name = "text_last1",
+	sprite = "text_last1",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {2, 1},
+	active = {2, 2},
+	tile = {6, 13},
 	layer = 20,
 }

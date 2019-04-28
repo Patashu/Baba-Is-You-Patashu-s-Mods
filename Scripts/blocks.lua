@@ -1102,6 +1102,46 @@ function block(small_)
 		end
 	end
 	
+	local is1st1 = getunitswitheffect("1st1",delthese)
+	
+	foundname = {}
+	
+	for i = 1, #is1st1 do
+		id,unit = i,is1st1[i]
+		name = getname(unit)
+		if (foundname[name] == nil) then
+			foundname[name] = true
+		else
+			local x,y = unit.values[XPOS],unit.values[YPOS]
+			local pmult,sound = checkeffecthistory("defeat")
+			MF_particles("destroy",x,y,5 * pmult,0,3,1,1)
+			generaldata.values[SHAKE] = 5
+			removalshort = sound
+			removalsound = 1
+			table.insert(delthese, unit.fixed)
+		end
+	end
+	
+	local islast1 = getunitswitheffect("last1",delthese)
+	
+	foundname = {}
+	
+	for i = #islast1, 1, -1 do
+		id,unit = i,islast1[i]
+		name = getname(unit)
+		if (foundname[name] == nil) then
+			foundname[name] = true
+		else
+			local x,y = unit.values[XPOS],unit.values[YPOS]
+			local pmult,sound = checkeffecthistory("defeat")
+			MF_particles("destroy",x,y,5 * pmult,0,3,1,1)
+			generaldata.values[SHAKE] = 5
+			removalshort = sound
+			removalsound = 1
+			table.insert(delthese, unit.fixed)
+		end
+	end
+	
 	delthese,doremovalsound = handledels(delthese,doremovalsound)
 	
 	local iseat = getunitswithverb("eat",delthese)
