@@ -937,11 +937,7 @@ function deterministic_rng(unitid, name, x, y, p)
 	--this is different each time you restart :(
 	--local stringyid = tostring((unitid-2)*1e21)
 	local levelname = MF_read("level","general","name")
-	print(turncount)
-	print(stringyid)
-	print(levelname)
 	local seed = CRC32.Hash("turncount:"..turncount.."|name:"..name.."|x:"..x.."|y:"..y.."|levelname:"..levelname)
-	print(tostring(seed))
 	math.randomseed(seed)
 	return math.random() <= p
 end
