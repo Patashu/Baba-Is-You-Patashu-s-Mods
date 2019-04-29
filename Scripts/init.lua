@@ -25,6 +25,7 @@ function mod.load(dir)
 	loadscript(dir .. "conditions")
 	loadscript(dir .. "tools")
 	loadscript(dir .. "effects")
+	loadscript(dir .. "crc32")
 end
 
 -- Calls when another world is loaded while this mod is active
@@ -59,7 +60,11 @@ mod.alltiles = {
 	"strafe",
 	"collect",
 	"1st1",
-	"last1"
+	"last1",
+	"maybe",
+	"rarely",
+	"megarare",
+	"gigarare"
 }
 
 function mod.addblock(tile)

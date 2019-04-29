@@ -11,7 +11,7 @@ mod.enabled["less"] = true
 mod.enabled["slide"] = true
 mod.enabled["stuck"] = true
 mod.enabled["topple"] = true
-mod.enabled["phase"] = false
+mod.enabled["phase"] = true
 mod.enabled["multiply"] = false
 mod.enabled["divide"] = false
 mod.enabled["faceaway"] = false
@@ -24,8 +24,12 @@ mod.enabled["edge"] = false
 mod.enabled["inner"] = false
 mod.enabled["strafe"] = false
 mod.enabled["collect"] = false
-mod.enabled["1st1"] = true
-mod.enabled["last1"] = true
+mod.enabled["1st1"] = false
+mod.enabled["last1"] = false
+mod.enabled["maybe"] = true
+mod.enabled["rarely"] = false
+mod.enabled["megarare"] = false
+mod.enabled["gigarare"] = false
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -304,5 +308,61 @@ mod.tile["last1"] = {
 	colour = {2, 1},
 	active = {2, 2},
 	tile = {6, 13},
+	layer = 20,
+}
+
+mod.tile["maybe"] = {
+	name = "text_maybe",
+	sprite = "text_maybe",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {7, 13},
+	layer = 20,
+}
+
+mod.tile["rarely"] = {
+	name = "text_rarely",
+	sprite = "text_rarely",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {9, 13},
+	layer = 20,
+}
+
+mod.tile["megarare"] = {
+	name = "text_megarare",
+	sprite = "text_megarare",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {10, 13},
+	layer = 20,
+}
+
+mod.tile["gigarare"] = {
+	name = "text_gigarare",
+	sprite = "text_gigarare",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {11, 13},
 	layer = 20,
 }

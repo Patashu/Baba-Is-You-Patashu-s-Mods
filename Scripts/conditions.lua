@@ -863,9 +863,33 @@ function testcond(conds,unitid,x_,y_)
 					valid = true
 					sides, sidecount = countsides(unitid, name, x, y)
 					result = sides ~= 4
+				elseif (condtype == "maybe") then
+					valid = true
+					result = deterministic_rng(unitid, name, x, y, 0.5)
+				elseif (condtype == "not maybe") then
+					valid = true
+					result = deterministic_rng(unitid, name, x, y, 1-0.5)
+				elseif (condtype == "rarely") then
+					valid = true
+					result = deterministic_rng(unitid, name, x, y, 0.1)
+				elseif (condtype == "not rarely") then
+					valid = true
+					result = deterministic_rng(unitid, name, x, y, 1-0.1)
+				elseif (condtype == "megarare") then
+					valid = true
+					result = deterministic_rng(unitid, name, x, y, 0.01)
+				elseif (condtype == "not megarare") then
+					valid = true
+					result = deterministic_rng(unitid, name, x, y, 1-0.01)
+				elseif (condtype == "gigarare") then
+					valid = true
+					result = deterministic_rng(unitid, name, x, y, 0.001)
+				elseif (condtype == "not gigarare") then
+					valid = true
+					result = deterministic_rng(unitid, name, x, y, 1-0.001)
 				elseif (condtype == "lonely") then
 					valid = true
-					
+				
 					if (unitid ~= 1) then
 						local tileid = x + y * roomsizex
 						if (unitmap[tileid] ~= nil) then
@@ -906,6 +930,20 @@ function testcond(conds,unitid,x_,y_)
 	end
 	
 	return result
+end
+
+function deterministic_rng(unitid, name, x, y, p)
+	local turncount = tostring(#undobuffer)
+	--this is different each time you restart :(
+	--local stringyid = tostring((unitid-2)*1e21)
+	local levelname = MF_read("level","general","name")
+	print(turncount)
+	print(stringyid)
+	print(levelname)
+	local seed = CRC32.Hash("turncount:"..turncount.."|name:"..name.."|x:"..x.."|y:"..y.."|levelname:"..levelname)
+	print(tostring(seed))
+	math.randomseed(seed)
+	return math.random() <= p
 end
 
 function countsides(unitid, name, x, y)
