@@ -25,6 +25,9 @@ function mod.load(dir)
 	loadscript(dir .. "conditions")
 	loadscript(dir .. "tools")
 	loadscript(dir .. "effects")
+	loadscript(dir .. "syntax")
+	
+	--and new stuff
 	loadscript(dir .. "crc32")
 end
 
@@ -39,6 +42,7 @@ function mod.unload(dir)
 	loadscript("Data/conditions")
 	loadscript("Data/tools")
 	loadscript("Data/effects")
+	loadscript("Data/syntax")
 end
 
 mod.alltiles = {

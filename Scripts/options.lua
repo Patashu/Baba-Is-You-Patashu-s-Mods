@@ -35,6 +35,8 @@ mod.enabled["gigarare"] = false
 --[[           MECHANIC OPTIONS                ]]--
 ---------------------------------------------------
 
+--If true, restarting/starting a puzzle will generate a new rng seed for use with MAYBE et all, instead of using the puzzle's name as the seed.
+activemod.seed_rng_on_restart = true
 activemod.condition_stacking = true
 activemod.auto_speed = 20
 

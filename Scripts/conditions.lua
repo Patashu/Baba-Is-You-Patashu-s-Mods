@@ -936,8 +936,16 @@ function deterministic_rng(unitid, name, x, y, p)
 	local turncount = tostring(#undobuffer)
 	--this is different each time you restart :(
 	--local stringyid = tostring((unitid-2)*1e21)
-	local levelname = MF_read("level","general","name")
-	local seed = CRC32.Hash("turncount:"..turncount.."|name:"..name.."|x:"..x.."|y:"..y.."|levelname:"..levelname)
+	local base_seed
+	if (activemod.seed_rng_on_restart) then
+		if (rng_seed == -1) then
+			rng_seed = math.random()
+		end
+		base_seed = tostring(rng_seed)
+	else
+		base_seed = MF_read("level","general","name")
+	end
+	local seed = CRC32.Hash("turncount:"..turncount.."|name:"..name.."|x:"..x.."|y:"..y.."|levelname:"..base_seed)
 	math.randomseed(seed)
 	return math.random() <= p
 end
