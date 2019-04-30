@@ -28,4 +28,6 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **MAYBE / RARELY / MEGARARE / GIGARARE** - __Condition (Prefix)__ Deterministic RNG (50%, 10%, 1% and 0.1% respectively) based on unit name, x, y, turn count and name of the level - so every time you do the same things, you get the same results, and if the puzzle creator needs a different seed, you can change the level name. (I tried using unitid but it is sadly non-deterministic, I think this is the best I can do.) Note that if nothing happens after waiting a turn, Baba Is You will ignore further waiting inputs, even if a different random thing could happen - so have something changing state every turn (like MOVE). NEW: Instead of using the level seed, you can generate a seed each time you start a puzzle by turning on 'seed_rng_on_restart' in options.lua.
 
+**COLLIDE** - __Verb__ x COLLIDE y means y acts as STOP to x.
+
 Baba is You Discord server: https://discord.gg/GGbUUse

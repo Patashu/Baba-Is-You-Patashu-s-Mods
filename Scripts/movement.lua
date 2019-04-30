@@ -789,6 +789,7 @@ function check(unitid,x,y,dir,pulling_,reason)
 	local open = hasfeature(name,"is","open",unitid,x,y)
 	local shut = hasfeature(name,"is","shut",unitid,x,y)
 	local eat = hasfeature(name,"eat",nil,unitid,x,y)
+	local collide = hasfeature(name,"collide",nil,unitid,x,y)
 	
 	if (open ~= nil) then
 		lockpartner = "shut"
@@ -839,6 +840,7 @@ function check(unitid,x,y,dir,pulling_,reason)
 					local eats = hasfeature(name,"eat",obsname,unitid)
 					
 					if (eats ~= nil) and (issafe(id) == false) then
+						print("eat")
 						valid = false
 						table.insert(specials, {id, "eat"})
 					end
@@ -849,6 +851,18 @@ function check(unitid,x,y,dir,pulling_,reason)
 					if (issafe(id) == false) then
 						--valid = false
 						table.insert(specials, {id, "weak"})
+					end
+				end
+				
+				local iscollide
+				print("a")
+				if (collide ~= nil) and (pulling == false) then
+					print(name .. "..." .. obsname .. "..." .. tostring(unitid))
+					local collides = hasfeature(name,"collide",obsname,unitid)
+					
+					if (collides ~= nil) then
+						print("c")
+						iscollide = true
 					end
 				end
 				
@@ -867,6 +881,10 @@ function check(unitid,x,y,dir,pulling_,reason)
 						isstop = (ispush ~= nil or isstop ~= nil or ispull ~= nil) and true or nil
 						ispush = nil
 						ispull = nil
+					end
+					if (iscollide ~= nil) then
+						print("d")
+						isstop = true
 					end
 					if (unitphase ~= nil) then
 						isstop = nil

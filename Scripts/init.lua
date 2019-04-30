@@ -68,7 +68,8 @@ mod.alltiles = {
 	"maybe",
 	"rarely",
 	"megarare",
-	"gigarare"
+	"gigarare",
+	"collide"
 }
 
 function mod.addblock(tile)

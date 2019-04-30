@@ -7,7 +7,7 @@ local mod = activemod
 ---------------------------------------------------
 
 -- Properties
-mod.enabled["less"] = true
+mod.enabled["less"] = false
 mod.enabled["slide"] = true
 mod.enabled["stuck"] = true
 mod.enabled["topple"] = true
@@ -30,6 +30,7 @@ mod.enabled["maybe"] = true
 mod.enabled["rarely"] = false
 mod.enabled["megarare"] = false
 mod.enabled["gigarare"] = false
+mod.enabled["collide"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -366,5 +367,19 @@ mod.tile["gigarare"] = {
 	colour = {0, 1},
 	active = {0, 3},
 	tile = {11, 13},
+	layer = 20,
+}
+
+mod.tile["collide"] = {
+	name = "text_collide",
+	sprite = "text_collide",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 1,
+	operatortype = "verb",
+	colour = {5, 0},
+	active = {5, 1},
+	tile = {11, 14},
 	layer = 20,
 }
