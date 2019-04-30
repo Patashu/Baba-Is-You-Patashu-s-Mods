@@ -1340,6 +1340,6 @@ function seed_rng(unitid, name, x, y)
 	else
 		base_seed = MF_read("level","general","name")
 	end
-	local seed = CRC32.Hash("turncount:"..turncount.."|name:"..name.."|x:"..x.."|y:"..y.."|levelname:"..base_seed)
+	local seed = CRC32.Hash("turncount:"..turncount.."|name:"..tostring(name).."|x:"..x.."|y:"..y.."|levelname:"..base_seed)
 	math.randomseed(seed)
 end

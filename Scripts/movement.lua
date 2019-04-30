@@ -866,13 +866,11 @@ function check(unitid,x,y,dir,pulling_,reason)
 				end
 				
 				local iscollide
-				print("a")
 				if (collide ~= nil) and (pulling == false) then
 					print(name .. "..." .. obsname .. "..." .. tostring(unitid))
 					local collides = hasfeature(name,"collide",obsname,unitid)
 					
 					if (collides ~= nil) then
-						print("c")
 						iscollide = true
 					end
 				end

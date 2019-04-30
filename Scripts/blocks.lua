@@ -946,7 +946,7 @@ function block(small_)
 	for id,unit in ipairs(isdestroy) do
 		if (issafe(unit.fixed) == false) then
 			local x,y = unit.values[XPOS],unit.values[YPOS]
-			local pmult,sound = checkeffecthistory("weak")
+			local pmult,sound = checkeffecthistory("destroy")
 			MF_particles("destroy",x,y,5 * pmult,0,3,1,1)
 			removalshort = sound
 			removalsound = 1
@@ -954,6 +954,26 @@ function block(small_)
 			table.insert(delthese, unit.fixed)
 		end
 	end
+	
+	--handle EMPTY is DESTROY and EMPTY has foo
+	
+	--[[if (activemod.enabled["destroy"]) then
+		for x=0,roomsizex-1 do
+			for y=0,roomsizey-1 do
+				local emptydestroy = hasfeature("empty","is","destroy",2,x,y)
+				local emptysafe = hasfeature("empty","is","safe",2,x,y)
+				local emptyhas = hasfeature("empty","has",nil,2,x,y)
+				if (emptydestroy ~= nil and emptysafe == nil and emptyhas ~= nil) then
+					local pmult,sound = checkeffecthistory("destroy")
+					MF_particles("destroy",x,y,5 * pmult,0,3,1,1)
+					removalshort = sound
+					removalsound = 1
+					generaldata.values[SHAKE] = 4
+					delete(2,x,y)
+				end
+			end
+		end
+	end]]
 	
 	delthese,doremovalsound = handledels(delthese,doremovalsound)
 	
@@ -1118,6 +1138,8 @@ function block(small_)
 		end
 	end
 	
+	delthese,doremovalsound = handledels(delthese,doremovalsound)
+	
 	local is1st1 = getunitswitheffect("1st1",delthese)
 	
 	foundname = {}
@@ -1137,6 +1159,8 @@ function block(small_)
 			table.insert(delthese, unit.fixed)
 		end
 	end
+	
+	delthese,doremovalsound = handledels(delthese,doremovalsound)
 	
 	local islast1 = getunitswitheffect("last1",delthese)
 	
@@ -1740,6 +1764,8 @@ function levelblock()
 							end
 						end
 					end
+				elseif (action == "destroy") then
+					destroylevel()
 				elseif (action == "open") then
 					local shuts = findfeature(nil,"is","shut")
 					

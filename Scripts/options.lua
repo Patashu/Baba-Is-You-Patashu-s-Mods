@@ -26,11 +26,11 @@ mod.enabled["strafe"] = false
 mod.enabled["collect"] = false
 mod.enabled["1st1"] = false
 mod.enabled["last1"] = false
-mod.enabled["maybe"] = false
+mod.enabled["maybe"] = true
 mod.enabled["rarely"] = false
 mod.enabled["megarare"] = false
 mod.enabled["gigarare"] = false
-mod.enabled["collide"] = true
+mod.enabled["collide"] = false
 mod.enabled["saccade"] = false
 mod.enabled["destroy"] = true
 
