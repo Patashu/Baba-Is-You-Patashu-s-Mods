@@ -941,6 +941,22 @@ function block(small_)
 	
 	delthese,doremovalsound = handledels(delthese,doremovalsound)
 	
+	local isdestroy = getunitswitheffect("destroy",delthese)
+	
+	for id,unit in ipairs(isdestroy) do
+		if (issafe(unit.fixed) == false) then
+			local x,y = unit.values[XPOS],unit.values[YPOS]
+			local pmult,sound = checkeffecthistory("weak")
+			MF_particles("destroy",x,y,5 * pmult,0,3,1,1)
+			removalshort = sound
+			removalsound = 1
+			generaldata.values[SHAKE] = 4
+			table.insert(delthese, unit.fixed)
+		end
+	end
+	
+	delthese,doremovalsound = handledels(delthese,doremovalsound)
+	
 	local ismelt = getunitswitheffect("melt",delthese)
 	
 	for id,unit in ipairs(ismelt) do

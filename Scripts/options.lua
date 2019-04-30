@@ -31,7 +31,8 @@ mod.enabled["rarely"] = false
 mod.enabled["megarare"] = false
 mod.enabled["gigarare"] = false
 mod.enabled["collide"] = true
-mod.enabled["saccade"] = true
+mod.enabled["saccade"] = false
+mod.enabled["destroy"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -394,5 +395,18 @@ mod.tile["saccade"] = {
 	colour = {1, 1},
 	active = {1, 2},
 	tile = {13, 13},
+	layer = 20,
+}
+
+mod.tile["destroy"] = {
+	name = "text_destroy",
+	sprite = "text_destroy",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {2, 1},
+	active = {2, 2},
+	tile = {0, 14},
 	layer = 20,
 }

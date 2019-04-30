@@ -32,4 +32,6 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **SACCADE** - __Property__ Randomly faces a direction before any movement for the turn. Uses deterministic RNG like MAYBE.
 
+**DESTROY** - __Property__ Objects that are DESTROY are destroyed immediately.
+
 Baba is You Discord server: https://discord.gg/GGbUUse

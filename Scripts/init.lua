@@ -70,7 +70,8 @@ mod.alltiles = {
 	"megarare",
 	"gigarare",
 	"collide",
-	"saccade"
+	"saccade",
+	"destroy"
 }
 
 function mod.addblock(tile)
