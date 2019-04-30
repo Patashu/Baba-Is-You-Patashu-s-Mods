@@ -26,11 +26,12 @@ mod.enabled["strafe"] = false
 mod.enabled["collect"] = false
 mod.enabled["1st1"] = false
 mod.enabled["last1"] = false
-mod.enabled["maybe"] = true
+mod.enabled["maybe"] = false
 mod.enabled["rarely"] = false
 mod.enabled["megarare"] = false
 mod.enabled["gigarare"] = false
 mod.enabled["collide"] = true
+mod.enabled["saccade"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -44,7 +45,6 @@ activemod.auto_speed = 20
 --------------------------------
 --[[ ADVANCED BLOCK OPTIONS ]]--
 --------------------------------
-
 
 mod.tile["less"] = {
 	name = "text_less",
@@ -380,6 +380,19 @@ mod.tile["collide"] = {
 	operatortype = "verb",
 	colour = {5, 0},
 	active = {5, 1},
-	tile = {11, 14},
+	tile = {12, 13},
+	layer = 20,
+}
+
+mod.tile["saccade"] = {
+	name = "text_saccade",
+	sprite = "text_saccade",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 1},
+	active = {1, 2},
+	tile = {13, 13},
 	layer = 20,
 }

@@ -30,4 +30,6 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **COLLIDE** - __Verb__ x COLLIDE y means y acts as STOP to x.
 
+**SACCADE** - __Property__ Randomly faces a direction before any movement for the turn. Uses deterministic RNG like MAYBE.
+
 Baba is You Discord server: https://discord.gg/GGbUUse

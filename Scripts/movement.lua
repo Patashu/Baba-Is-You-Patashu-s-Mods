@@ -23,6 +23,17 @@ function movecommand(ox,oy,dir_,playerid_)
 		updateundo = true
 	end
 	
+	local saccade = findallfeature(nil,"is","saccade",true)
+	for _,v in ipairs(saccade) do
+		if v ~= 2 then
+			local unit = mmf.newObject(v)
+			local name = getname(unit);
+			x,y = unit.values[XPOS],unit.values[YPOS]
+			seed_rng(v, name, x, y)
+			updatedir(unit.fixed,math.random(0,3))
+		end
+	end
+	
 	while (take <= takecount) or finaltake do
 		local moving_units = {}
 		local been_seen = {}
