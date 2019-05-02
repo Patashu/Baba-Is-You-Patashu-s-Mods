@@ -37,6 +37,10 @@ function testcond(conds,unitid,x_,y_)
 			for i,cond in ipairs(conds) do
 				local condtype = cond[1]
 				local params = cond[2]
+				local ids = cond[3]
+				--print(tostring(ids))
+				--local randomunit = mmf.newObject(ids[1])
+				--print(tostring(getname(randomunit)))
 				
 				local extras = {}
 				

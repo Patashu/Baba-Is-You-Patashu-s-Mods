@@ -8,9 +8,9 @@ local mod = activemod
 
 -- Properties
 mod.enabled["less"] = false
-mod.enabled["slide"] = true
-mod.enabled["stuck"] = true
-mod.enabled["topple"] = true
+mod.enabled["slide"] = false
+mod.enabled["stuck"] = false
+mod.enabled["topple"] = false
 mod.enabled["phase"] = true
 mod.enabled["multiply"] = false
 mod.enabled["divide"] = false
@@ -27,9 +27,9 @@ mod.enabled["collect"] = false
 mod.enabled["1st1"] = false
 mod.enabled["last1"] = false
 mod.enabled["maybe"] = true
-mod.enabled["rarely"] = false
-mod.enabled["megarare"] = false
-mod.enabled["gigarare"] = false
+mod.enabled["rarely"] = true
+mod.enabled["megarare"] = true
+mod.enabled["gigarare"] = true
 mod.enabled["collide"] = false
 mod.enabled["saccade"] = false
 mod.enabled["destroy"] = true

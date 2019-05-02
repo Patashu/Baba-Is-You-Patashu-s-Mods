@@ -957,7 +957,7 @@ function block(small_)
 	
 	--handle EMPTY is DESTROY and EMPTY has foo
 	
-	--[[if (activemod.enabled["destroy"]) then
+	--[[if (featureindex["destroy"] ~= nil) then
 		for x=0,roomsizex-1 do
 			for y=0,roomsizey-1 do
 				local emptydestroy = hasfeature("empty","is","destroy",2,x,y)
