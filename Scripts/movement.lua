@@ -892,7 +892,6 @@ function check(unitid,x,y,dir,pulling_,reason)
 						ispull = nil
 					end
 					if (iscollide ~= nil) then
-						print("d")
 						isstop = true
 					end
 					if (unitphase ~= nil) then

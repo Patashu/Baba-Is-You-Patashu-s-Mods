@@ -813,10 +813,10 @@ end
 
 function addoption(option,conds_,ids,visible,notrule)
 
-	for i =1,#ids do
+	--[[for i =1,#ids do
 		print(tostring(mmf.newObject(ids[i][1]).strings[UNITNAME]))
 	end
-	print("done.")
+	print("done.")]]
 	--MF_alert(option[1] .. ", " .. option[2] .. ", " .. option[3])
 	
 	local visual = true
