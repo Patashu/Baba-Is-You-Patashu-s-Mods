@@ -564,6 +564,8 @@ function create(name,x,y,dir,oldx_,oldy_,float_)
 	
 	local unitname = unitreference[name]
 	
+	--print(tostring(unitname)..","..tostring(name))
+	if unitname == nil then return end
 	local newunitid = MF_emptycreate(unitname,oldx,oldy)
 	local newunit = mmf.newObject(newunitid)
 	

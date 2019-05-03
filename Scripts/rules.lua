@@ -687,6 +687,7 @@ function docode(firstwords)
 								condids = copytable(condids, group_cond[1][3])
 								
 								table.insert(conds, {rule_cond,{},group_cond[1][3][1]}) -- group_cond[1][3][1] for THOSE (ID of the word object)
+								local condgroup = conds[#conds][2]
 								
 								for e,condword in ipairs(group_cond[2]) do
 									local rule_condword = condword[1]
