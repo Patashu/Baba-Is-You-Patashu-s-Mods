@@ -686,8 +686,7 @@ function docode(firstwords)
 								
 								condids = copytable(condids, group_cond[1][3])
 								
-								table.insert(conds, {rule_cond,{}})
-								local condgroup = conds[#conds][2]
+								table.insert(conds, {rule_cond,{},group_cond[1][3][1]}) -- group_cond[1][3][1] for THOSE (ID of the word object)
 								
 								for e,condword in ipairs(group_cond[2]) do
 									local rule_condword = condword[1]
@@ -724,7 +723,7 @@ function docode(firstwords)
 										anticond = "not " .. cond[1]
 									end
 									
-									local newcond = {anticond, anticondwords}
+									local newcond = {anticond, anticondwords, cond[3]} -- cond[3] for THOSE
 									
 									table.insert(conds, newcond)
 									
@@ -753,7 +752,7 @@ function docode(firstwords)
 										
 										local finalconds = {}
 										for g,finalcond in ipairs(conds) do
-											table.insert(finalconds, {finalcond[1], finalcond[2]})
+											table.insert(finalconds, {finalcond[1], finalcond[2], finalcond[3]}) -- finalcond[3] for THOSE
 										end
 										
 										local rule = {rule_object,rule_verb,rule_target}
@@ -812,12 +811,6 @@ function codecheck(unitid,ox,oy)
 end
 
 function addoption(option,conds_,ids,visible,notrule)
-
-	--[[for i =1,#ids do
-		print(tostring(mmf.newObject(ids[i][1]).strings[UNITNAME]))
-	end
-	print("done.")]]
-	--MF_alert(option[1] .. ", " .. option[2] .. ", " .. option[3])
 	
 	local visual = true
 	
@@ -1047,7 +1040,7 @@ function postrules()
 				
 				if (#conds > 0) then
 					for a,cond in ipairs(conds) do
-						local newcond = {cond[1],cond[2]}
+						local newcond = {cond[1],cond[2],cond[3]} -- cond[3] for THOSE
 						local condname = cond[1]
 						local params = cond[2]
 						
@@ -1360,6 +1353,12 @@ function copyrule(rule)
 					table.insert(newcond[2], b)
 				end
 			end
+			
+			-- THOSE START
+			if (cond[3] ~= nil) then
+				newcond[3] = cond[3]
+			end
+			-- THOSE END
 			
 			table.insert(newconds, newcond)
 		end

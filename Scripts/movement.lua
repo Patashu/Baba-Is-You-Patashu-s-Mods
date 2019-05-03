@@ -29,7 +29,7 @@ function movecommand(ox,oy,dir_,playerid_)
 			local unit = mmf.newObject(v)
 			local name = getname(unit);
 			x,y = unit.values[XPOS],unit.values[YPOS]
-			seed_rng(v, name, x, y)
+			seed_rng(v, name, x, y, "text_saccade")
 			updatedir(unit.fixed,math.random(0,3))
 		end
 	end

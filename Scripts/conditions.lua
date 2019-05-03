@@ -37,10 +37,7 @@ function testcond(conds,unitid,x_,y_)
 			for i,cond in ipairs(conds) do
 				local condtype = cond[1]
 				local params = cond[2]
-				local ids = cond[3]
-				--print(tostring(ids))
-				--local randomunit = mmf.newObject(ids[1])
-				--print(tostring(getname(randomunit)))
+				local condid = cond[3]
 				
 				local extras = {}
 				
@@ -869,28 +866,28 @@ function testcond(conds,unitid,x_,y_)
 					result = sides ~= 4
 				elseif (condtype == "maybe") then
 					valid = true
-					result = deterministic_rng(unitid, name, x, y, 0.5)
+					result = deterministic_rng(unitid, name, x, y, 0.5, condid, false)
 				elseif (condtype == "not maybe") then
 					valid = true
-					result = deterministic_rng(unitid, name, x, y, 1-0.5)
+					result = deterministic_rng(unitid, name, x, y, 0.5, condid, true)
 				elseif (condtype == "rarely") then
 					valid = true
-					result = deterministic_rng(unitid, name, x, y, 0.1)
+					result = deterministic_rng(unitid, name, x, y, 0.1, condid, false)
 				elseif (condtype == "not rarely") then
 					valid = true
-					result = deterministic_rng(unitid, name, x, y, 1-0.1)
+					result = deterministic_rng(unitid, name, x, y, 0.1, condid, true)
 				elseif (condtype == "megarare") then
 					valid = true
-					result = deterministic_rng(unitid, name, x, y, 0.01)
+					result = deterministic_rng(unitid, name, x, y, 0.01, condid, false)
 				elseif (condtype == "not megarare") then
 					valid = true
-					result = deterministic_rng(unitid, name, x, y, 1-0.01)
+					result = deterministic_rng(unitid, name, x, y, 0.01, condid, true)
 				elseif (condtype == "gigarare") then
 					valid = true
-					result = deterministic_rng(unitid, name, x, y, 0.001)
+					result = deterministic_rng(unitid, name, x, y, 0.001, condid, false)
 				elseif (condtype == "not gigarare") then
 					valid = true
-					result = deterministic_rng(unitid, name, x, y, 1-0.001)
+					result = deterministic_rng(unitid, name, x, y, 0.001, condid, true)
 				elseif (condtype == "lonely") then
 					valid = true
 				
@@ -936,9 +933,17 @@ function testcond(conds,unitid,x_,y_)
 	return result
 end
 
-function deterministic_rng(unitid, name, x, y, p)
-	seed_rng(unitid, name, x, y)
-	return math.random() <= p
+function deterministic_rng(unitid, name, x, y, p, condid, inverted)
+	condunit = mmf.newObject(condid)
+	if (condunit ~= nil) then
+		reason = condunit.strings[UNITNAME]
+		reason_x = condunit.values[XPOS]
+		reason_y = condunit.values[YPOS]
+	end
+	seed_rng(unitid, name, x, y, reason, reason_x, reason_y)
+	local result = math.random()
+	--print (tostring(result)..","..tostring(p)..","..tostring(inverted))
+	if (inverted) then return result > p else return result <= p end
 end
 
 function countsides(unitid, name, x, y)

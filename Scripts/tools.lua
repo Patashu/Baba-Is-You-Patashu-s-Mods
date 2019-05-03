@@ -1327,7 +1327,7 @@ function genflowercolour()
 	return result,c1,c2
 end
 
-function seed_rng(unitid, name, x, y)
+function seed_rng(unitid, name, x, y, reason, reason_x, reason_y)
 	local turncount = tostring(#undobuffer)
 	--this is different each time you restart :(
 	--local stringyid = tostring((unitid-2)*1e21)
@@ -1338,8 +1338,13 @@ function seed_rng(unitid, name, x, y)
 		end
 		base_seed = tostring(rng_seed)
 	else
-		base_seed = MF_read("level","general","name")
+		base_seed = generaldata.strings[CURRLEVEL]
 	end
-	local seed = CRC32.Hash("turncount:"..turncount.."|name:"..tostring(name).."|x:"..x.."|y:"..y.."|levelname:"..base_seed)
-	math.randomseed(seed)
+	local seedstring = "t:"..turncount.."|n:"..tostring(name).."|x:"..tostring(x).."|y:"..tostring(y).."|l:"..base_seed.."|r:"..tostring(reason)
+	if (reason_x ~= nil and reason_y ~= nil) then
+		seedstring = seedstring.."|rx:"..tostring(reason_x).."|ry:"..tostring(reason_y)
+	end
+	seedhash = CRC32.Hash(seedstring)
+	--print(seedstring..","..seedhash)
+	math.randomseed(seedhash)
 end
