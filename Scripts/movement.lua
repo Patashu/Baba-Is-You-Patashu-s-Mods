@@ -29,8 +29,8 @@ function movecommand(ox,oy,dir_,playerid_)
 			local unit = mmf.newObject(v)
 			local name = getname(unit);
 			x,y = unit.values[XPOS],unit.values[YPOS]
-			seed_rng(v, name, x, y, "text_saccade")
-			updatedir(unit.fixed,math.random(0,3))
+			local rng = seed_rng(v, name, x, y, "text_saccade")
+			updatedir(unit.fixed,math.floor(rng*4)) --equal chance of 0, 1, 2 and 3
 		end
 	end
 	

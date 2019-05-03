@@ -1344,7 +1344,14 @@ function seed_rng(unitid, name, x, y, reason, reason_x, reason_y)
 	if (reason_x ~= nil and reason_y ~= nil) then
 		seedstring = seedstring.."|rx:"..tostring(reason_x).."|ry:"..tostring(reason_y)
 	end
+	local cache = cached_seeds[seedstring]
+	if (cache ~= nil) then
+		return cache
+	end
 	seedhash = CRC32.Hash(seedstring)
 	--print(seedstring..","..seedhash)
 	math.randomseed(seedhash)
+	local result = math.random()
+	cached_seeds[seedstring] = result
+	return result
 end

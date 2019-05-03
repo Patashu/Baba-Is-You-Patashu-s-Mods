@@ -52,6 +52,7 @@ function init(tilemapid,roomsizex_,roomsizey_,tilesize_,Xoffset_,Yoffset_,genera
 	HACK_MOVES = 0
 	
 	rng_seed = -1
+	cached_seeds = {}
 	
 	generatetiles()
 end
@@ -205,6 +206,7 @@ function clear()
 	HACK_MOVES = 0
 	
 	rng_seed = -1
+	cached_seeds = {}
 	
 	print("clear")
 	

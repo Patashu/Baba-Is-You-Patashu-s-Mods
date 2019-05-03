@@ -940,8 +940,7 @@ function deterministic_rng(unitid, name, x, y, p, condid, inverted)
 		reason_x = condunit.values[XPOS]
 		reason_y = condunit.values[YPOS]
 	end
-	seed_rng(unitid, name, x, y, reason, reason_x, reason_y)
-	local result = math.random()
+	local result = seed_rng(unitid, name, x, y, reason, reason_x, reason_y)
 	--print (tostring(result)..","..tostring(p)..","..tostring(inverted))
 	if (inverted) then return result > p else return result <= p end
 end

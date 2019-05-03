@@ -11,7 +11,7 @@ mod.enabled["less"] = false
 mod.enabled["slide"] = false
 mod.enabled["stuck"] = false
 mod.enabled["topple"] = false
-mod.enabled["phase"] = true
+mod.enabled["phase"] = false
 mod.enabled["multiply"] = false
 mod.enabled["divide"] = false
 mod.enabled["faceaway"] = false
@@ -31,7 +31,7 @@ mod.enabled["rarely"] = true
 mod.enabled["megarare"] = true
 mod.enabled["gigarare"] = true
 mod.enabled["collide"] = false
-mod.enabled["saccade"] = false
+mod.enabled["saccade"] = true
 mod.enabled["destroy"] = true
 
 ---------------------------------------------------
