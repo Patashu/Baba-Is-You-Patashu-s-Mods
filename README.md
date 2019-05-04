@@ -34,6 +34,6 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **DESTROY** - __Property__ Objects that are DESTROY are destroyed immediately.
 
-**SEND/RECEIVE:** __Property_ If LEVEL IS SEND when you leave it, Baba Is You stores its rules at the point of exit. If LEVEL IS RECEIVE and the previous level was LEVEL IS SEND, then all other rules from that level will apply in this level!
+**SEND/RECEIVE:** __Property_ LEVEL IS SEND sends the rules to the next level you enter, LEVEL IS RECEIVE causes them to take effect. Create meta puzzles spanning multiple levels!
 
 Baba is You Discord server: https://discord.gg/GGbUUse

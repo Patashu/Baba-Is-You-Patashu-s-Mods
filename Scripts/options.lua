@@ -10,7 +10,7 @@ local mod = activemod
 mod.enabled["less"] = false
 mod.enabled["slide"] = true
 mod.enabled["stuck"] = false
-mod.enabled["topple"] = true
+mod.enabled["topple"] = false
 mod.enabled["phase"] = true
 mod.enabled["multiply"] = false
 mod.enabled["divide"] = false
@@ -30,7 +30,7 @@ mod.enabled["maybe"] = true
 mod.enabled["rarely"] = false
 mod.enabled["megarare"] = false
 mod.enabled["gigarare"] = false
-mod.enabled["collide"] = false
+mod.enabled["collide"] = true
 mod.enabled["saccade"] = false
 mod.enabled["destroy"] = false
 mod.enabled["send"] = true
@@ -42,6 +42,9 @@ mod.enabled["receive"] = true
 
 --If true, restarting/starting a puzzle will generate a new rng seed for use with MAYBE et all, instead of using the puzzle's name as the seed.
 activemod.seed_rng_on_restart = true
+--If true, MORE and related properties (LESS, MULTIPLY, DIVIDE, PRINT, MASSPROD) check empty as well as obstacles.
+activemod.more_checks_empty = true
+--debris copied from lily's mods, probably unnecessary?
 activemod.condition_stacking = true
 activemod.auto_speed = 20
 

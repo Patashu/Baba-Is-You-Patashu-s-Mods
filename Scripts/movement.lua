@@ -867,7 +867,7 @@ function check(unitid,x,y,dir,pulling_,reason)
 				
 				local iscollide
 				if (collide ~= nil) and (pulling == false) then
-					print(name .. "..." .. obsname .. "..." .. tostring(unitid))
+					--print(name .. "..." .. obsname .. "..." .. tostring(unitid))
 					local collides = hasfeature(name,"collide",obsname,unitid)
 					
 					if (collides ~= nil) then
@@ -964,6 +964,22 @@ function check(unitid,x,y,dir,pulling_,reason)
 				--valid = false
 				table.insert(specials, {2, "weak"})
 			end
+		end
+		
+		local iscollide
+		if (collide ~= nil) and (pulling == false) then
+			--print(name .. "..." .. obsname .. "..." .. tostring(unitid))
+			local collides = hasfeature(name,"collide","empty",unitid)
+			
+			if (collides ~= nil) then
+				iscollide = true
+			end
+		end
+		if (iscollide ~= nil) then
+			emptystop = true
+		end
+		if (unitphase ~= nil) then
+			emptystop = nil
 		end
 		
 		local added = false

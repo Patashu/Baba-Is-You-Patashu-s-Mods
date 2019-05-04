@@ -455,6 +455,95 @@ function findwalls(x,y)
 	return result
 end
 
+function simplecouldenter(unitid, x, y, ox, oy, name_is_wall, text_is_wall, check_empty)
+	--not actually that simple, but I like irony. for use with MORE and variants.
+	--not the same logic as check!
+	local unit, name, unit_x, unit_y, unitphase
+	unit_x = x
+	unit_y = y
+	x = x+ox
+	y = y+oy
+	if (unitid ~= 2) then
+		unit = mmf.newObject(unitid)
+		name = getname(unit)
+		unitphase = hasfeature(name,"is","phase",unitid)
+	else
+		unit = nil
+		name = "empty"
+		unitphase = hasfeature("empty","is","phase", 2, x, y)
+	end
+
+	local obs = findobstacle(x,y)
+	local collide = hasfeature(name,"collide",nil,unitid)
+	
+	if (#obs > 0) then
+		for a,b in ipairs(obs) do
+			if (b == -1) then
+				return false
+			elseif (b ~= 0) and (b ~= -1) then
+				local bunit = mmf.newObject(b)
+				local obsname = bunit.strings[UNITNAME]
+				local obstype = bunit.strings[UNITTYPE]
+				
+				if (obstype == "text") then
+					obsname = "text"
+				end
+				
+				local obsstop = hasfeature(obsname,"is","stop",b,x,y)
+				local obspush = hasfeature(obsname,"is","push",b,x,y)
+				local obspull = hasfeature(obsname,"is","pull",b,x,y)
+				local iscollide = false
+				if (collide ~= nil) then
+					--print(name .. "..." .. obsname .. "..." .. tostring(unitid))
+					local collides = hasfeature(name,"collide",obsname,unitid)
+					
+					if (collides ~= nil) then
+						iscollide = true
+					end
+				end
+				if (iscollide == true) then
+					obsstop = true
+				end
+				if (unitphase ~= nil) then
+					obsstop = nil
+					obspush = nil
+					obspull = nil
+				end
+				
+				if (obsstop ~= nil) or (obspush ~= nil) or (obspull ~= nil) or (name_is_wall and obsname == name) or (text_is_wall and obstype == "text") then
+					return false
+				end
+			end
+		end
+	elseif (check_empty) then
+		local emptystop = hasfeature("empty","is","stop",2,x,y)
+		local emptypush = hasfeature("empty","is","push",2,x,y)
+		local emptypull = hasfeature("empty","is","pull",2,x,y)
+		local iscollide = false
+		if (collide ~= nil) then
+			--print(name .. "..." .. obsname .. "..." .. tostring(unitid))
+			local collides = hasfeature(name,"collide","empty",unitid)
+			
+			if (collides ~= nil) then
+				iscollide = true
+			end
+		end
+		if (iscollide == true) then
+			emptystop = true
+		end
+		if (unitphase ~= nil) then
+			emptystop = nil
+			emptypush = nil
+			emptypull = nil
+		end
+		if (emptystop ~= nil) or (emptypush ~= nil) or (emptypull ~= nil) or (name_is_wall and "empty" == name) then
+			return false
+		end
+	end
+	
+	return true
+end
+
 function writerules(parent,name,x_,y_)
 	local basex = x_
 	local basey = y_

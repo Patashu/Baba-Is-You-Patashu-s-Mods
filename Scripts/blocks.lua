@@ -660,33 +660,7 @@ function block(small_)
 				ox = drs[1]
 				oy = drs[2]
 				
-				local valid = true
-				local obs = findobstacle(x+ox,y+oy)
-				local tileid = (x+ox) + (y+oy) * roomsizex
-				
-				if (#obs > 0) then
-					for a,b in ipairs(obs) do
-						if (b == -1) then
-							valid = false
-						elseif (b ~= 0) and (b ~= -1) then
-							local bunit = mmf.newObject(b)
-							local obsname = bunit.strings[UNITNAME]
-							local obstype = bunit.strings[UNITTYPE]
-							
-							if (obstype == "text") then
-								obsname = "text"
-							end
-							
-							local obsstop = hasfeature(obsname,"is","stop",b,x+ox,y+oy)
-							local obspush = hasfeature(obsname,"is","push",b,x+ox,y+oy)
-							local obspull = hasfeature(obsname,"is","pull",b,x+ox,y+oy)
-							
-							if (obsstop ~= nil) or (obspush ~= nil) or (obspull ~= nil) or (obsname == name) or (obstype == "text") then
-								valid = false
-							end
-						end
-					end
-				end
+				local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
 				
 				if valid then
 					local newunit = copy(unit.fixed,x+ox,y+oy)
@@ -712,33 +686,7 @@ function block(small_)
 					ox = drs[1]
 					oy = drs[2]
 					
-					local valid = true
-					local obs = findobstacle(x+ox,y+oy)
-					local tileid = (x+ox) + (y+oy) * roomsizex
-					
-					if (#obs > 0) then
-						for a,b in ipairs(obs) do
-							if (b == -1) then
-								valid = false
-							elseif (b ~= 0) and (b ~= -1) then
-								local bunit = mmf.newObject(b)
-								local obsname = bunit.strings[UNITNAME]
-								local obstype = bunit.strings[UNITTYPE]
-								
-								if (obstype == "text") then
-									obsname = "text"
-								end
-								
-								local obsstop = hasfeature(obsname,"is","stop",b,x+ox,y+oy)
-								local obspush = hasfeature(obsname,"is","push",b,x+ox,y+oy)
-								local obspull = hasfeature(obsname,"is","pull",b,x+ox,y+oy)
-								
-								if (obsstop ~= nil) or (obspush ~= nil) or (obspull ~= nil) or (obsname == name) or (obstype == "text") then
-									valid = false
-								end
-							end
-						end
-					end
+					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
 					
 					if valid then
 						could_grow = true
@@ -768,33 +716,7 @@ function block(small_)
 				ox = drs[1]
 				oy = drs[2]
 				
-				local valid = true
-				local obs = findobstacle(x+ox,y+oy)
-				local tileid = (x+ox) + (y+oy) * roomsizex
-				
-				if (#obs > 0) then
-					for a,b in ipairs(obs) do
-						if (b == -1) then
-							valid = false
-						elseif (b ~= 0) and (b ~= -1) then
-							local bunit = mmf.newObject(b)
-							local obsname = bunit.strings[UNITNAME]
-							local obstype = bunit.strings[UNITTYPE]
-							
-							if (obstype == "text") then
-								obsname = "text"
-							end
-							
-							local obsstop = hasfeature(obsname,"is","stop",b,x+ox,y+oy)
-							local obspush = hasfeature(obsname,"is","push",b,x+ox,y+oy)
-							local obspull = hasfeature(obsname,"is","pull",b,x+ox,y+oy)
-							
-							if (obsstop ~= nil) or (obspush ~= nil) or (obspull ~= nil) or (obsname == name) or (obstype == "text") then
-								valid = false
-							end
-						end
-					end
-				end
+				local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
 				
 				if valid then
 					local newunit = copy(unit.fixed,x+ox,y+oy)
@@ -818,33 +740,7 @@ function block(small_)
 					ox = drs[1]
 					oy = drs[2]
 					
-					local valid = true
-					local obs = findobstacle(x+ox,y+oy)
-					local tileid = (x+ox) + (y+oy) * roomsizex
-					
-					if (#obs > 0) then
-						for a,b in ipairs(obs) do
-							if (b == -1) then
-								valid = false
-							elseif (b ~= 0) and (b ~= -1) then
-								local bunit = mmf.newObject(b)
-								local obsname = bunit.strings[UNITNAME]
-								local obstype = bunit.strings[UNITTYPE]
-								
-								if (obstype == "text") then
-									obsname = "text"
-								end
-								
-								local obsstop = hasfeature(obsname,"is","stop",b,x+ox,y+oy)
-								local obspush = hasfeature(obsname,"is","push",b,x+ox,y+oy)
-								local obspull = hasfeature(obsname,"is","pull",b,x+ox,y+oy)
-								
-								if (obsstop ~= nil) or (obspush ~= nil) or (obspull ~= nil) or (obsname == name) or (obstype == "text") then
-									valid = false
-								end
-							end
-						end
-					end
+					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
 					
 					if valid then
 						could_grow = true
