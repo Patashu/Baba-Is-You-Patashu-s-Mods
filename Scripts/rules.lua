@@ -96,7 +96,7 @@ function code()
 		end
 		
 		if (generaldata.strings[CURRLEVEL] ~= last_levelname) then
-			print(tostring(last_levelrules)..","..tostring(current_levelrules)..","..tostring(was_sending)..","..tostring(#current_levelrules))
+			--print(tostring(last_levelrules)..","..tostring(current_levelrules)..","..tostring(was_sending)..","..tostring(#current_levelrules))
 			if (was_sending) then
 				last_levelrules = current_levelrules
 			else
@@ -106,7 +106,7 @@ function code()
 		end
 		
 		local is_sending = findfeature("level","is","send")
-		print("is_sending: "..tostring(is_sending))
+		--print("is_sending: "..tostring(is_sending))
 		
 		current_levelrules = {}
 		if (is_sending ~= nil) then
@@ -115,15 +115,23 @@ function code()
 		
 		was_sending = is_sending ~= nil;
 		local is_receiving = findfeature("level","is","receive")
-		print("is_receiving: "..tostring(is_receiving))
+		--print("is_receiving: "..tostring(is_receiving))
 		
 		if (is_receiving ~= nil) then
 			for k,v in ipairs(last_levelrules) do
-				if (v[1][3] ~= "send") then
-				--print(tostring(v[1][1]))
-				--print(tostring(v[2][1]))
-				--print(tostring(v[3][1]))
-					addoption(v[1], v[2], v[3])
+				local rule = v[1]
+				if (rule[3] ~= "send" and not
+				(rule[1] == "text" and rule[2] == "is" and rule[3] == "push") and not
+				(rule[1] == "level" and rule[2] == "is" and rule[3] == "stop")
+				) then
+					--print(tostring(v[1][1]))
+					--print(tostring(v[2][1]))
+					--print(tostring(v[3][1]))
+					local finalconds = v[2]
+					for k,v in ipairs(finalconds) do
+						v[3] = nil
+					end
+					addoption(rule, finalconds, {{"received"}})
 				end
 			end
 		end

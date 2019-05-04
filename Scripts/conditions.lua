@@ -934,7 +934,7 @@ function testcond(conds,unitid,x_,y_)
 end
 
 function deterministic_rng(unitid, name, x, y, p, condid, inverted)
-	condunit = mmf.newObject(condid)
+	local condunit = mmf.newObject(condid)
 	if (condunit ~= nil) then
 		reason = condunit.strings[UNITNAME]
 		reason_x = condunit.values[XPOS]
