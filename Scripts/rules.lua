@@ -88,14 +88,13 @@ function code()
 			end
 			
 			docode(firstwords,wordunits)
-			grouprules()
 			
 			local is_sending = findfeature("level","is","send")
 			--print("is_sending: "..tostring(is_sending))
 			
 			current_levelrules = {}
 			if (is_sending ~= nil) then
-				current_levelrules = deepcopy(features)
+				current_levelrules = deepcopy(visualfeatures)
 			end
 			
 			was_sending = is_sending ~= nil;
@@ -121,6 +120,7 @@ function code()
 				end
 			end
 			
+			grouprules()
 			postrules()
 			updatecode = 0
 			
