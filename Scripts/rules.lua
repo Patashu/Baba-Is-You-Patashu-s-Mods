@@ -94,6 +94,39 @@ function code()
 				domaprotation()
 			end
 		end
+		
+		if (generaldata.strings[CURRLEVEL] ~= last_levelname) then
+			print(tostring(last_levelrules)..","..tostring(current_levelrules)..","..tostring(was_sending)..","..tostring(#current_levelrules))
+			if (was_sending) then
+				last_levelrules = current_levelrules
+			else
+				last_levelrules = {}
+			end
+			last_levelname = generaldata.strings[CURRLEVEL]
+		end
+		
+		local is_sending = findfeature("level","is","send")
+		print("is_sending: "..tostring(is_sending))
+		
+		current_levelrules = {}
+		if (is_sending ~= nil) then
+			current_levelrules = features
+		end
+		
+		was_sending = is_sending ~= nil;
+		local is_receiving = findfeature("level","is","receive")
+		print("is_receiving: "..tostring(is_receiving))
+		
+		if (is_receiving ~= nil) then
+			for k,v in ipairs(last_levelrules) do
+				if (v[1][3] ~= "send") then
+				--print(tostring(v[1][1]))
+				--print(tostring(v[2][1]))
+				--print(tostring(v[3][1]))
+					addoption(v[1], v[2], v[3])
+				end
+			end
+		end
 	end
 end
 

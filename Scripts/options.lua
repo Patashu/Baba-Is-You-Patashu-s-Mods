@@ -8,9 +8,9 @@ local mod = activemod
 
 -- Properties
 mod.enabled["less"] = false
-mod.enabled["slide"] = false
+mod.enabled["slide"] = true
 mod.enabled["stuck"] = false
-mod.enabled["topple"] = false
+mod.enabled["topple"] = true
 mod.enabled["phase"] = true
 mod.enabled["multiply"] = false
 mod.enabled["divide"] = false
@@ -27,12 +27,14 @@ mod.enabled["collect"] = false
 mod.enabled["1st1"] = false
 mod.enabled["last1"] = false
 mod.enabled["maybe"] = true
-mod.enabled["rarely"] = true
-mod.enabled["megarare"] = true
+mod.enabled["rarely"] = false
+mod.enabled["megarare"] = false
 mod.enabled["gigarare"] = false
 mod.enabled["collide"] = false
-mod.enabled["saccade"] = true
-mod.enabled["destroy"] = true
+mod.enabled["saccade"] = false
+mod.enabled["destroy"] = false
+mod.enabled["send"] = true
+mod.enabled["receive"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -408,5 +410,31 @@ mod.tile["destroy"] = {
 	colour = {2, 1},
 	active = {2, 2},
 	tile = {0, 14},
+	layer = 20,
+}
+
+mod.tile["send"] = {
+	name = "text_send",
+	sprite = "text_send",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {4, 0},
+	active = {4, 1},
+	tile = {1, 14},
+	layer = 20,
+}
+
+mod.tile["receive"] = {
+	name = "text_receive",
+	sprite = "text_receive",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {4, 0},
+	active = {4, 1},
+	tile = {2, 14},
 	layer = 20,
 }

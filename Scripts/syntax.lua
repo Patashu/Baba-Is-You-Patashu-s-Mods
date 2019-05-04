@@ -54,6 +54,11 @@ function init(tilemapid,roomsizex_,roomsizey_,tilesize_,Xoffset_,Yoffset_,genera
 	rng_seed = -1
 	cached_seeds = {}
 	
+	last_levelname = nil
+	current_levelrules = {}
+	last_levelrules = {}
+	was_sending = false
+	
 	generatetiles()
 end
 

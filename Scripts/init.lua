@@ -73,7 +73,9 @@ mod.alltiles = {
 	"gigarare",
 	"collide",
 	"saccade",
-	"destroy"
+	"destroy",
+	"send",
+	"receive"
 }
 
 function mod.addblock(tile)
