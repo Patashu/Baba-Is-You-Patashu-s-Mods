@@ -607,9 +607,9 @@ function writerules(parent,name,x_,y_)
 			
 			text = text .. rule[2] .. " " .. rule[3]
 			
-			local ids = rules[3]
-			if (ids ~= nil and #ids == 1 and ids[1][1] == "received") then
-				text = text .. " (received)"
+			print (#rule)
+			if (#rule >= 4) then
+				text = text .. " (" .. rule[4] .. ")"
 			end
 			
 			writetext(text,0,x,y,name,true,2,true)

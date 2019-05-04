@@ -42,6 +42,15 @@ function code()
 		table.insert(featureindex["stop"], fulllevelstop)
 		table.insert(featureindex["is"], fulllevelstop)
 		
+		if (generaldata.strings[CURRLEVEL] ~= last_levelname) then		--print(tostring(last_levelrules)..","..tostring(current_levelrules)..","..tostring(was_sending)..","..tostring(#current_levelrules))
+			if (was_sending) then
+				last_levelrules = current_levelrules
+			else
+				last_levelrules = {}
+			end
+			last_levelname = generaldata.strings[CURRLEVEL]
+		end
+		
 		if (#codeunits > 0) then
 			for i,v in ipairs(codeunits) do
 				table.insert(checkthese, v)
@@ -80,6 +89,38 @@ function code()
 			
 			docode(firstwords,wordunits)
 			grouprules()
+			
+			local is_sending = findfeature("level","is","send")
+			--print("is_sending: "..tostring(is_sending))
+			
+			current_levelrules = {}
+			if (is_sending ~= nil) then
+				current_levelrules = deepcopy(features)
+			end
+			
+			was_sending = is_sending ~= nil;
+			local is_receiving = findfeature("level","is","receive")
+			--print("is_receiving: "..tostring(is_receiving))
+			
+			if (is_receiving ~= nil) then
+				for k,v in ipairs(last_levelrules) do
+					local rule = v[1]
+					if (rule[3] ~= "send" and not
+					(rule[1] == "text" and rule[2] == "is" and rule[3] == "push") and not
+					(rule[1] == "level" and rule[2] == "is" and rule[3] == "stop")
+					) then
+						--print(tostring(v[1][1]))
+						--print(tostring(v[2][1]))
+						--print(tostring(v[3][1]))
+						local finalconds = v[2]
+						for k,v in ipairs(finalconds) do
+							v[3] = nil
+						end
+						addoption(rule, deepcopy(finalconds), {}, true, nil, "received")
+					end
+				end
+			end
+			
 			postrules()
 			updatecode = 0
 			
@@ -92,47 +133,6 @@ function code()
 				code()
 			else
 				domaprotation()
-			end
-		end
-		
-		if (generaldata.strings[CURRLEVEL] ~= last_levelname) then
-			--print(tostring(last_levelrules)..","..tostring(current_levelrules)..","..tostring(was_sending)..","..tostring(#current_levelrules))
-			if (was_sending) then
-				last_levelrules = current_levelrules
-			else
-				last_levelrules = {}
-			end
-			last_levelname = generaldata.strings[CURRLEVEL]
-		end
-		
-		local is_sending = findfeature("level","is","send")
-		--print("is_sending: "..tostring(is_sending))
-		
-		current_levelrules = {}
-		if (is_sending ~= nil) then
-			current_levelrules = deepcopy(features)
-		end
-		
-		was_sending = is_sending ~= nil;
-		local is_receiving = findfeature("level","is","receive")
-		--print("is_receiving: "..tostring(is_receiving))
-		
-		if (is_receiving ~= nil) then
-			for k,v in ipairs(last_levelrules) do
-				local rule = v[1]
-				if (rule[3] ~= "send" and not
-				(rule[1] == "text" and rule[2] == "is" and rule[3] == "push") and not
-				(rule[1] == "level" and rule[2] == "is" and rule[3] == "stop")
-				) then
-					--print(tostring(v[1][1]))
-					--print(tostring(v[2][1]))
-					--print(tostring(v[3][1]))
-					local finalconds = v[2]
-					for k,v in ipairs(finalconds) do
-						v[3] = nil
-					end
-					addoption(rule, finalconds, {{"received"}})
-				end
 			end
 		end
 	end
@@ -867,7 +867,7 @@ function codecheck(unitid,ox,oy)
 	return result
 end
 
-function addoption(option,conds_,ids,visible,notrule)
+function addoption(option,conds_,ids,visible,notrule,extra)
 	
 	local visual = true
 	
@@ -884,7 +884,7 @@ function addoption(option,conds_,ids,visible,notrule)
 	end
 	
 	if (#option == 3) then
-		local rule = {option,conds,ids}
+		local rule = {option,conds,ids,extra}
 		table.insert(features, rule)
 		local target = option[1]
 		local verb = option[2]
@@ -1391,12 +1391,14 @@ function copyrule(rule)
 	local baserule = rule[1]
 	local conds = rule[2]
 	local ids = rule[3]
+	local extra = rule[4]
 	
 	local newbaserule = {}
 	local newconds = {}
 	local newids = {}
 	
-	newbaserule = {baserule[1],baserule[2],baserule[3]}
+	print(extra)
+	newbaserule = {baserule[1],baserule[2],baserule[3],extra}
 	
 	if (#conds > 0) then
 		for i,cond in ipairs(conds) do
