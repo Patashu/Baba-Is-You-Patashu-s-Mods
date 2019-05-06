@@ -22,7 +22,7 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **STRAFE** - __Property__ Direction cannot change by any means. Like UP/DOWN/LEFT/RIGHT but keeping whatever direction it had instead of forcing it.
 
-**COLLECT** - __Property__ YOU destroys COLLECT it steps on. Then, if that was the last COLLECT, the puzzle is cleared.
+**COLLECT** - __Property__ YOU destroys COLLECT it steps on. Then, if that was the last COLLECT, the puzzle is cleared. (Unlike WIN, you can simultaneously die and win by getting the last COLLECT.)
 
 **1ST1 / LAST1** - __Property__ When there's more than one of an object, only the (first/last) survives, respectively.
 
