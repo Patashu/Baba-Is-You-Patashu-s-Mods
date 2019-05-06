@@ -75,7 +75,8 @@ mod.alltiles = {
 	"saccade",
 	"destroy",
 	"send",
-	"receive"
+	"receive",
+	"crash"
 }
 
 function mod.addblock(tile)

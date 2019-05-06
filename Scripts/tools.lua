@@ -1451,3 +1451,15 @@ function seed_rng(unitid, name, x, y, reason, reason_x, reason_y)
 	cached_seeds[seedstring] = result
 	return result
 end
+
+function crash_the_game()
+	for i = 0, 100 do
+		MF_create(math.random())
+	end
+	MF_create("edge")
+	MF_create("level")
+	MF_create("empty")
+	MF_create("text")
+	MF_create("text_text")
+	MF_create("text_text_text")
+end

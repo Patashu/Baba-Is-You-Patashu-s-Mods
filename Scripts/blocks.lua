@@ -952,6 +952,44 @@ function block(small_)
 		end
 	end
 	
+		for id,unit in ipairs(isyou) do
+		local x,y = unit.values[XPOS],unit.values[YPOS]
+		local crash = findfeature(nil,"is","crash")
+		
+		if (crash ~= nil) then
+			for a,b in ipairs(crash) do
+				if (b[1] ~= "empty") then
+					local skull = findtype(b,x,y,0)
+					
+					if (#skull > 0) and (issafe(unit.fixed) == false) then
+						for c,d in ipairs(skull) do
+							local doit = false
+							
+							if (d ~= unit.fixed) then
+								if floating(d,unit.fixed) then
+									local kunit = mmf.newObject(d)
+									local kname = getname(kunit)
+									
+									local weakskull = hasfeature(kname,"is","weak",d)
+									
+									if (weakskull == nil) or ((weakskull ~= nil) and issafe(d)) then
+										doit = true
+									end
+								end
+							else
+								doit = true
+							end
+							
+							if doit then
+								crash_the_game()
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	
 	delthese,doremovalsound = handledels(delthese,doremovalsound)
 	
 	for id,unit in ipairs(isyou) do
@@ -1566,7 +1604,7 @@ function levelblock()
 					if canwin then
 						MF_win()
 					end
-				elseif (action == "defeat") then
+				elseif (action == "defeat" or action == "collect" or action == "crash") then
 					local yous = findfeature(nil,"is","you")
 					local yous2 = findfeature(nil,"is","you2")
 					
@@ -1600,6 +1638,12 @@ function levelblock()
 								end
 							else
 								destroylevel()
+								if (action == "crash") then
+									 crash_the_game()
+								end
+								if (action == "collect") then
+									MF_win()
+								end
 							end
 						end
 					end

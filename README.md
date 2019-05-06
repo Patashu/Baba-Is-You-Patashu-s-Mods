@@ -36,4 +36,6 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **SEND/RECEIVE:** __Property_ LEVEL IS SEND sends the rules to the next level you enter, LEVEL IS RECEIVE causes them to take effect. Create meta puzzles spanning multiple levels!
 
+**CRASH:** __Property__ If YOU is on CRASH, Baba Is You crashes.
+
 Baba is You Discord server: https://discord.gg/GGbUUse

@@ -11,7 +11,7 @@ mod.enabled["less"] = false
 mod.enabled["slide"] = true
 mod.enabled["stuck"] = false
 mod.enabled["topple"] = false
-mod.enabled["phase"] = true
+mod.enabled["phase"] = false
 mod.enabled["multiply"] = false
 mod.enabled["divide"] = false
 mod.enabled["faceaway"] = false
@@ -35,6 +35,7 @@ mod.enabled["saccade"] = false
 mod.enabled["destroy"] = false
 mod.enabled["send"] = true
 mod.enabled["receive"] = true
+mod.enabled["crash"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -439,5 +440,18 @@ mod.tile["receive"] = {
 	colour = {4, 0},
 	active = {4, 1},
 	tile = {2, 14},
+	layer = 20,
+}
+
+mod.tile["crash"] = {
+	name = "text_crash",
+	sprite = "text_crash",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 0},
+	active = {1, 1},
+	tile = {3, 14},
 	layer = 20,
 }
