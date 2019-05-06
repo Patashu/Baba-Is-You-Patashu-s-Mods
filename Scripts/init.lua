@@ -28,6 +28,7 @@ function mod.load(dir)
 	loadscript(dir .. "syntax")
 	loadscript(dir .. "rules")
 	loadscript(dir .. "map")
+	loadscript(dir .. "changes")
 	
 	--and new stuff
 	loadscript(dir .. "crc32")
@@ -47,6 +48,7 @@ function mod.unload(dir)
 	loadscript("Data/syntax")
 	loadscript("Data/rules")
 	loadscript("Data/map")
+	loadscript("Data/changes")
 end
 
 mod.alltiles = {
