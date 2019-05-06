@@ -1563,7 +1563,7 @@ function levelblock()
 			if testcond(conds,1) and (rule[2] == "is") then
 				local action = rule[3]
 				
-				if (action == "win") then
+				if (action == "win" or action == "collect") then
 					local yous = findfeature(nil,"is","you")
 					local yous2 = findfeature(nil,"is","you2")
 					
@@ -1602,9 +1602,12 @@ function levelblock()
 					end
 					
 					if canwin then
+						if (action == "collect") then
+							destroylevel()
+						end
 						MF_win()
 					end
-				elseif (action == "defeat" or action == "collect" or action == "crash") then
+				elseif (action == "defeat" or action == "crash") then
 					local yous = findfeature(nil,"is","you")
 					local yous2 = findfeature(nil,"is","you2")
 					
@@ -1633,6 +1636,9 @@ function levelblock()
 											setsoundname("removal",1,sound)
 											generaldata.values[SHAKE] = 2
 											delete(d)
+											if (action == "crash") then
+												crash_the_game()
+											end
 										end
 									end
 								end
@@ -1640,9 +1646,6 @@ function levelblock()
 								destroylevel()
 								if (action == "crash") then
 									 crash_the_game()
-								end
-								if (action == "collect") then
-									MF_win()
 								end
 							end
 						end

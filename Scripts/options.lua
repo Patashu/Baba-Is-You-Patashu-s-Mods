@@ -23,7 +23,7 @@ mod.enabled["corner"] = false
 mod.enabled["edge"] = false
 mod.enabled["inner"] = false
 mod.enabled["strafe"] = false
-mod.enabled["collect"] = false
+mod.enabled["collect"] = true
 mod.enabled["1st1"] = false
 mod.enabled["last1"] = false
 mod.enabled["maybe"] = true
@@ -35,7 +35,7 @@ mod.enabled["saccade"] = false
 mod.enabled["destroy"] = false
 mod.enabled["send"] = true
 mod.enabled["receive"] = true
-mod.enabled["crash"] = true
+mod.enabled["crash"] = false
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
