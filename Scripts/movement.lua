@@ -655,12 +655,6 @@ function movecommand(ox,oy,dir_,playerid_)
 							movesleft = movesleft + 1
 						end
 						
-						--also check BOUNCE, TWIST, UNTWIST and REFLECT
-						
-						if (success) then
-							apply_reflect(unitid)
-						end
-						
 						unit.values[XPOS] = unit.values[XPOS] - movelist[i][2]
 						unit.values[YPOS] = unit.values[YPOS] - movelist[i][3]
 					end
@@ -1458,8 +1452,14 @@ function move(unitid,ox,oy,dir,specials_,instant_,simulate_)
 			if instant then
 				update(unitid,x+ox,y+oy, strafe == nil and dir or unit.values[DIR])
 				MF_alert("Instant movement on " .. tostring(unitid))
+				if (strafe ~= nil then) then
+					apply_reflect(unitid,x,y)
+				end
 			else
 				addaction(unitid,{"update",x+ox,y+oy,strafe == nil and dir or unit.values[DIR]})
+				if (strafe ~= nil then) then
+					apply_reflect(unitid,x+ox,y+oy)
+				end
 			end
 			
 			if unit.visible and (#movelist < 700) then
