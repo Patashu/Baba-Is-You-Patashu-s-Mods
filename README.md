@@ -30,7 +30,7 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **COLLIDE** - __Verb__ x COLLIDE y means y acts as STOP to x.
 
-**SACCADE** - __Property__ Randomly faces a direction before any movement for the turn. Uses deterministic RNG like MAYBE.
+**SACCADE / DIZZY / FLINCH** - __Property__ SACCADE Randomly faces a direction before any movement for the turn. DIZZY picks any direction except the one previously faced. FLINCH picks any direction that doesn't face the unit towards a solid. Uses deterministic RNG like MAYBE.
 
 **DESTROY** - __Property__ Objects that are DESTROY are destroyed immediately.
 

@@ -40,6 +40,8 @@ mod.enabled["bounce"] = true
 mod.enabled["twist"] = true
 mod.enabled["untwist"] = true
 mod.enabled["reflect"] = true
+mod.enabled["dizzy"] = false
+mod.enabled["flinch"] = false
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -509,5 +511,31 @@ mod.tile["reflect"] = {
 	colour = {1, 3},
 	active = {1, 4},
 	tile = {7, 14},
+	layer = 20,
+}
+
+mod.tile["dizzy"] = {
+	name = "text_dizzy",
+	sprite = "text_dizzy",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 1},
+	active = {1, 2},
+	tile = {8, 14},
+	layer = 20,
+}
+
+mod.tile["flinch"] = {
+	name = "text_flinch",
+	sprite = "text_flinch",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 1},
+	active = {1, 2},
+	tile = {9, 14},
 	layer = 20,
 }
