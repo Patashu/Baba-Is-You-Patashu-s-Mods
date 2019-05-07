@@ -85,6 +85,7 @@ mod.alltiles = {
 	"twist",
 	"untwist",
 	"reflect",
+	"funnel",
 	"dizzy",
 	"flinch"
 }

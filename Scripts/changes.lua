@@ -126,9 +126,8 @@ function savechange(target,params,updateid_)
 				end
 			end
 		end
-	end
-	
-	if (operatortype ~= nil) then
+
+		if (operatortype ~= nil) then
 			if (string.len(operatortype) > 0) then
 				this.operatortype = operatortype
 

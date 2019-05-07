@@ -34,6 +34,45 @@ function movecommand(ox,oy,dir_,playerid_)
 		end
 	end
 	
+	local dizzy = findallfeature(nil,"is","dizzy",true)
+	for _,v in ipairs(dizzy) do
+		if v ~= 2 then
+			local unit = mmf.newObject(v)
+			local name = getname(unit);
+			x,y = unit.values[XPOS],unit.values[YPOS]
+			local rng = seed_rng(v, name, x, y, "text_dizzy")
+			local newdir = math.floor(rng*3); --equal chance of 0, 1, 2
+			if (newdir >= unit.values[DIR]) then --skip the direction equal to our current one
+				newdir = newdir + 1
+			end
+			updatedir(unit.fixed,newdir) 
+		end
+	end
+	
+	local flinch = findallfeature(nil,"is","flinch",true)
+	for _,v in ipairs(flinch) do
+		if v ~= 2 then
+			local unit = mmf.newObject(v)
+			local name = getname(unit);
+			x,y = unit.values[XPOS],unit.values[YPOS]
+			local rng = seed_rng(v, name, x, y, "text_flinch")
+			local possible_dirs = {}
+			for i=1,4 do
+				local drs = ndirs[i]
+				ox = drs[1]
+				oy = drs[2]
+				
+				local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+				
+				if valid then
+					table.insert(possible_dirs, drs-1)
+				end
+			end
+			local newdir = possible_dirs[math.floor(rng*#possible_dirs)];
+			updatedir(unit.fixed,newdir) 
+		end
+	end
+	
 	while (take <= takecount) or finaltake do
 		local moving_units = {}
 		local been_seen = {}
@@ -644,12 +683,15 @@ function movecommand(ox,oy,dir_,playerid_)
 					end
 					--Implement SLIDE
 					unitid = movelist[i][1]
+					local unit = nil
 					if (unitid ~= 2) then
 						unit = mmf.newObject(unitid)
 						unitname = getname(unit)
+						print(unit.values[DIR])
 						--temporarily move object to destination so I can check if it is "slide" on destination or not
 						unit.values[XPOS] = unit.values[XPOS] + movelist[i][2]
 						unit.values[YPOS] = unit.values[YPOS] + movelist[i][3]
+						
 						if (hasfeature(unitname,"is","slide",unitid)) then
 							--print("Adding a move");
 							movesleft = movesleft + 1
@@ -660,7 +702,7 @@ function movecommand(ox,oy,dir_,playerid_)
 					end
 					
 					--print("Success: " .. tostring(success) .. " movesleft: " .. tostring(movesleft) .. " unitid: " .. tostring(unitid))
-					movelist[i] = {data[1],data[2],data[3],data[4],data[5],movesleft}
+					movelist[i] = {data[1],data[2],data[3],unit == nil and data[4] or unit.values[DIR],data[5],movesleft}
 				end
 				for i=#movelist,1,-1 do
 					if (movelist[i][6] <= 0) then
@@ -744,10 +786,15 @@ end
 
 function apply_reflect(unitid,x,y)
 	unit = mmf.newObject(unitid)
-	if (x == nil) then (x = unit.values[XPOS]) end
-	if (y == nil) then (y = unit.values[YPOS]) end
+	if (x == nil) then 
+		x = unit.values[XPOS]
+	end
+	if (y == nil) then
+		y = unit.values[YPOS]
+	end
 	local bounce = findfeatureat(nil,"is","bounce",x,y)
 	if (bounce ~= nil) then
+		print(unit.values[DIR].."=>"..(unit.values[DIR] + 2) % 4)
 		updatedir(unit.fixed, (unit.values[DIR] + 2) % 4)
 	end
 	local twist = findfeatureat(nil,"is","twist",x,y)
@@ -761,14 +808,19 @@ function apply_reflect(unitid,x,y)
 	local reflect = findfeatureat(nil,"is","reflect",x,y)
 	if (reflect ~= nil) then
 		local first_reflect = mmf.newObject(reflect[1]);
-		local reflect_type = first_reflect.values[DIR] mod 2;
+		local reflect_type = first_reflect.values[DIR] % 2;
 		if (reflect_type == 0) then
 			local reflect_table = {3, 2, 1, 0}
-			updatedir(unit.fixed, (reflect_table[unit.values[DIR]])
+			updatedir(unit.fixed, reflect_table[unit.values[DIR]])
 		else
 			local reflect_table = {1, 0, 3, 2}
-			updatedir(unit.fixed, (reflect_table[unit.values[DIR]])
+			updatedir(unit.fixed, reflect_table[unit.values[DIR]])
 		end
+	end
+	local funnel = findfeatureat(nil,"is","funnel",x,y)
+	if (funnel ~= nil) then
+		local first_funnel = mmf.newObject(funnel[1]);
+		updatedir(unit.fixed, first_funnel.values[DIR])
 	end
 end
 
@@ -1452,12 +1504,12 @@ function move(unitid,ox,oy,dir,specials_,instant_,simulate_)
 			if instant then
 				update(unitid,x+ox,y+oy, strafe == nil and dir or unit.values[DIR])
 				MF_alert("Instant movement on " .. tostring(unitid))
-				if (strafe ~= nil then) then
+				if (strafe == nil) then
 					apply_reflect(unitid,x,y)
 				end
 			else
 				addaction(unitid,{"update",x+ox,y+oy,strafe == nil and dir or unit.values[DIR]})
-				if (strafe ~= nil then) then
+				if (strafe == nil) then
 					apply_reflect(unitid,x+ox,y+oy)
 				end
 			end

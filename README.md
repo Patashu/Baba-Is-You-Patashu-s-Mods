@@ -38,6 +38,6 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **CRASH:** __Property__ If YOU is on CRASH, Baba Is You crashes.
 
-**BOUNCE / TWIST / UNTWIST / REFLECT:** __Property__ Any objects entering these tiles (even in the middle of a long SLIDE move) will have their direction altered as follows: BOUNCE rotates it 180 degrees, TWIST rotates it 90 degrees clockwise, UNTWIST rotates it 90 degrees counterclockwise, REFLECT mirrors it along the UL-DR axis if the REFLECT is facing horizontally or the DL-UR axis if the REFLECT is facing vertically (make appropriate sprites to indicate this).
+**BOUNCE / TWIST / UNTWIST / REFLECT / FUNNEL:** __Property__ Any objects entering these tiles (even in the middle of a long SLIDE move) will have their direction altered as follows: BOUNCE rotates it 180 degrees, TWIST rotates it 90 degrees clockwise, UNTWIST rotates it 90 degrees counterclockwise, REFLECT mirrors it along the UL-DR axis if the REFLECT is facing horizontally or the DL-UR axis if the REFLECT is facing vertically (make appropriate sprites to indicate this), FUNNEL points it in the direction of the funnel.
 
 Baba is You Discord server: https://discord.gg/GGbUUse

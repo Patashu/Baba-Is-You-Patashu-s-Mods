@@ -26,7 +26,7 @@ mod.enabled["strafe"] = false
 mod.enabled["collect"] = false
 mod.enabled["1st1"] = false
 mod.enabled["last1"] = false
-mod.enabled["maybe"] = true
+mod.enabled["maybe"] = false
 mod.enabled["rarely"] = false
 mod.enabled["megarare"] = false
 mod.enabled["gigarare"] = false
@@ -40,6 +40,7 @@ mod.enabled["bounce"] = true
 mod.enabled["twist"] = true
 mod.enabled["untwist"] = true
 mod.enabled["reflect"] = true
+mod.enabled["funnel"] = true
 mod.enabled["dizzy"] = false
 mod.enabled["flinch"] = false
 
@@ -514,6 +515,19 @@ mod.tile["reflect"] = {
 	layer = 20,
 }
 
+mod.tile["funnel"] = {
+	name = "text_funnel",
+	sprite = "text_funnel",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 3},
+	active = {1, 4},
+	tile = {8, 14},
+	layer = 20,
+}
+
 mod.tile["dizzy"] = {
 	name = "text_dizzy",
 	sprite = "text_dizzy",
@@ -523,7 +537,7 @@ mod.tile["dizzy"] = {
 	type = 2,
 	colour = {1, 1},
 	active = {1, 2},
-	tile = {8, 14},
+	tile = {9, 14},
 	layer = 20,
 }
 
@@ -536,6 +550,6 @@ mod.tile["flinch"] = {
 	type = 2,
 	colour = {1, 1},
 	active = {1, 2},
-	tile = {9, 14},
+	tile = {10, 14},
 	layer = 20,
 }
