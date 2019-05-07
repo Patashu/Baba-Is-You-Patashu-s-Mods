@@ -550,6 +550,10 @@ function fallblock(things)
 							gone = move(unitid,0,1,dir,specials,true,true)
 						end
 						
+						if (gone) then
+							apply_reflect(unitid)
+						end
+						
 						-- Poista tästä kommenttimerkit jos haluat, että fall tsekkaa juttuja per pudottu tile
 						if (gone == false) then
 							y = y + 1

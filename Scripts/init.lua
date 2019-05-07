@@ -80,7 +80,11 @@ mod.alltiles = {
 	"destroy",
 	"send",
 	"receive",
-	"crash"
+	"crash",
+	"bounce",
+	"twist",
+	"untwist",
+	"reflect"
 }
 
 function mod.addblock(tile)

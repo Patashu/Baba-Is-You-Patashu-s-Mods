@@ -23,19 +23,23 @@ mod.enabled["corner"] = false
 mod.enabled["edge"] = false
 mod.enabled["inner"] = false
 mod.enabled["strafe"] = false
-mod.enabled["collect"] = true
+mod.enabled["collect"] = false
 mod.enabled["1st1"] = false
 mod.enabled["last1"] = false
 mod.enabled["maybe"] = true
 mod.enabled["rarely"] = false
 mod.enabled["megarare"] = false
 mod.enabled["gigarare"] = false
-mod.enabled["collide"] = true
+mod.enabled["collide"] = false
 mod.enabled["saccade"] = false
 mod.enabled["destroy"] = false
-mod.enabled["send"] = true
-mod.enabled["receive"] = true
+mod.enabled["send"] = false
+mod.enabled["receive"] = false
 mod.enabled["crash"] = false
+mod.enabled["bounce"] = true
+mod.enabled["twist"] = true
+mod.enabled["untwist"] = true
+mod.enabled["reflect"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -453,5 +457,57 @@ mod.tile["crash"] = {
 	colour = {1, 0},
 	active = {1, 1},
 	tile = {3, 14},
+	layer = 20,
+}
+
+mod.tile["bounce"] = {
+	name = "text_bounce",
+	sprite = "text_bounce",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 3},
+	active = {1, 4},
+	tile = {4, 14},
+	layer = 20,
+}
+
+mod.tile["twist"] = {
+	name = "text_twist",
+	sprite = "text_twist",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 3},
+	active = {1, 4},
+	tile = {5, 14},
+	layer = 20,
+}
+
+mod.tile["untwist"] = {
+	name = "text_untwist",
+	sprite = "text_untwist",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 3},
+	active = {1, 4},
+	tile = {6, 14},
+	layer = 20,
+}
+
+mod.tile["reflect"] = {
+	name = "text_reflect",
+	sprite = "text_reflect",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 3},
+	active = {1, 4},
+	tile = {7, 14},
 	layer = 20,
 }

@@ -647,16 +647,24 @@ function movecommand(ox,oy,dir_,playerid_)
 					if (unitid ~= 2) then
 						unit = mmf.newObject(unitid)
 						unitname = getname(unit)
-						--temporarily move object to detination so I can check if it is "slide" on destination or not
+						--temporarily move object to destination so I can check if it is "slide" on destination or not
 						unit.values[XPOS] = unit.values[XPOS] + movelist[i][2]
 						unit.values[YPOS] = unit.values[YPOS] + movelist[i][3]
 						if (hasfeature(unitname,"is","slide",unitid)) then
 							--print("Adding a move");
 							movesleft = movesleft + 1
 						end
+						
+						--also check BOUNCE, TWIST, UNTWIST and REFLECT
+						
+						if (success) then
+							apply_reflect(unitid)
+						end
+						
 						unit.values[XPOS] = unit.values[XPOS] - movelist[i][2]
 						unit.values[YPOS] = unit.values[YPOS] - movelist[i][3]
 					end
+					
 					--print("Success: " .. tostring(success) .. " movesleft: " .. tostring(movesleft) .. " unitid: " .. tostring(unitid))
 					movelist[i] = {data[1],data[2],data[3],data[4],data[5],movesleft}
 				end
@@ -737,6 +745,36 @@ function movecommand(ox,oy,dir_,playerid_)
 	
 	if (dir_ ~= nil) then
 		MF_mapcursor(ox,oy,dir_)
+	end
+end
+
+function apply_reflect(unitid,x,y)
+	unit = mmf.newObject(unitid)
+	if (x == nil) then (x = unit.values[XPOS]) end
+	if (y == nil) then (y = unit.values[YPOS]) end
+	local bounce = findfeatureat(nil,"is","bounce",x,y)
+	if (bounce ~= nil) then
+		updatedir(unit.fixed, (unit.values[DIR] + 2) % 4)
+	end
+	local twist = findfeatureat(nil,"is","twist",x,y)
+	if (twist ~= nil) then
+		updatedir(unit.fixed, (unit.values[DIR] + 1) % 4)
+	end
+	local untwist = findfeatureat(nil,"is","untwist",x,y)
+	if (untwist ~= nil) then
+		updatedir(unit.fixed, (unit.values[DIR] + 3) % 4)
+	end
+	local reflect = findfeatureat(nil,"is","reflect",x,y)
+	if (reflect ~= nil) then
+		local first_reflect = mmf.newObject(reflect[1]);
+		local reflect_type = first_reflect.values[DIR] mod 2;
+		if (reflect_type == 0) then
+			local reflect_table = {3, 2, 1, 0}
+			updatedir(unit.fixed, (reflect_table[unit.values[DIR]])
+		else
+			local reflect_table = {1, 0, 3, 2}
+			updatedir(unit.fixed, (reflect_table[unit.values[DIR]])
+		end
 	end
 end
 
