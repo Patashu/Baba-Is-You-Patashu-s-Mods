@@ -65,11 +65,13 @@ function movecommand(ox,oy,dir_,playerid_)
 				local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
 				
 				if valid then
-					table.insert(possible_dirs, drs-1)
+					table.insert(possible_dirs, i-1)
 				end
 			end
-			local newdir = possible_dirs[math.floor(rng*#possible_dirs)];
-			updatedir(unit.fixed,newdir) 
+			if (#possible_dirs > 0) then
+				local newdir = possible_dirs[math.floor(rng*#possible_dirs)+1];
+				updatedir(unit.fixed,newdir) 
+			end
 		end
 	end
 	
