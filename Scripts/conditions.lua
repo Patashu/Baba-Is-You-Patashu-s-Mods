@@ -888,6 +888,12 @@ function testcond(conds,unitid,x_,y_)
 				elseif (condtype == "not gigarare") then
 					valid = true
 					result = deterministic_rng(unitid, name, x, y, 0.001, condid, true)
+				elseif (condtype == "eventurn" or condtype == "not oddturn") then
+					valid = true
+					result = #undobuffer % 2 == 0
+				elseif (condtype == "oddturn" or condtype == "not eventurn") then
+					valid = true
+					result = #undobuffer % 2 == 1
 				elseif (condtype == "lonely") then
 					valid = true
 				

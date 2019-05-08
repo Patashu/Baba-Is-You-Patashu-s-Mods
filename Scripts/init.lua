@@ -87,7 +87,9 @@ mod.alltiles = {
 	"reflect",
 	"funnel",
 	"dizzy",
-	"flinch"
+	"flinch",
+	"eventurn",
+	"oddturn"
 }
 
 function mod.addblock(tile)

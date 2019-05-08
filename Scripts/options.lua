@@ -37,12 +37,14 @@ mod.enabled["send"] = false
 mod.enabled["receive"] = false
 mod.enabled["crash"] = false
 mod.enabled["bounce"] = true
-mod.enabled["twist"] = true
-mod.enabled["untwist"] = true
+mod.enabled["twist"] = false
+mod.enabled["untwist"] = false
 mod.enabled["reflect"] = true
 mod.enabled["funnel"] = true
 mod.enabled["dizzy"] = false
 mod.enabled["flinch"] = false
+mod.enabled["eventurn"] = true
+mod.enabled["oddturn"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -551,5 +553,33 @@ mod.tile["flinch"] = {
 	colour = {1, 1},
 	active = {1, 2},
 	tile = {10, 14},
+	layer = 20,
+}
+
+mod.tile["eventurn"] = {
+	name = "text_eventurn",
+	sprite = "text_eventurn",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {3, 2},
+	active = {3, 3},
+	tile = {11, 14},
+	layer = 20,
+}
+
+mod.tile["oddturn"] = {
+	name = "text_oddturn",
+	sprite = "text_oddturn",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {3, 2},
+	active = {3, 3},
+	tile = {12, 14},
 	layer = 20,
 }
