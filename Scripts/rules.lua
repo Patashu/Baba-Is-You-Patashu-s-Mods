@@ -89,32 +89,44 @@ function code()
 			
 			docode(firstwords,wordunits)
 			
-			local is_sending = findfeature("level","is","send")
+			local is_sending = findfeature(nil,"is","send")
 			--print("is_sending: "..tostring(is_sending))
 			
 			current_levelrules = {}
 			if (is_sending ~= nil) then
-				current_levelrules = deepcopy(visualfeatures)
+				local level_send = findfeature("level","is","send")
+				for k,v in ipairs(visualfeatures) do
+					if (v[1][3] ~= "send") then
+						if (level_send) then
+							v[4] = "sending"
+							table.insert(current_levelrules, copyrule(v))
+						else
+							for a,b in ipairs(v[3]) do
+								local unitid = b[1]
+								local unit = mmf.newObject(unitid)
+								if hasfeature(getname(unit), "is", "send", unitid) then
+									v[4] = "sending"
+									table.insert(current_levelrules, copyrule(v))
+									break
+								end
+							end
+						end
+					end
+				end
 			end
 			
 			was_sending = is_sending ~= nil;
-			local is_receiving = findfeature("level","is","receive")
-			--print("is_receiving: "..tostring(is_receiving))
+			local is_receiving = findfeature(nil,"is","receive")
 			
 			if (is_receiving ~= nil) then
 				for k,v in ipairs(last_levelrules) do
 					local rule = v[1]
-					if (rule[3] ~= "send" and not
-					(rule[1] == "text" and rule[2] == "is" and rule[3] == "push") and not
-					(rule[1] == "level" and rule[2] == "is" and rule[3] == "stop")
-					) then
-						--print(tostring(v[1][1]))
-						--print(tostring(v[2][1]))
-						--print(tostring(v[3][1]))
+					if (rule[3] ~= "send") then
 						local finalconds = v[2]
 						for k,v in ipairs(finalconds) do
 							v[3] = nil
 						end
+						--print("a")
 						addoption(rule, deepcopy(finalconds), {}, true, nil, "received")
 					end
 				end
@@ -134,8 +146,65 @@ function code()
 			else
 				domaprotation()
 			end
+			
+			--blindly copied from https://github.com/cg5-/baba-mods/blob/master/wrap/Scripts/rules.lua#L206 ... hopefully it doesn't cause any bugs with WORD lol
+			
+			-- The global `wordunits` tracks objects which require an updatecode = 1 when they change.
+			-- We don't use this table during rule parsing, but we still need to build it.
+			-- Notice that this doesn't only contain units which are WORD, but also portals etc. I don't want to rename it
+			-- because then I'd have to add lots of files to the mod.
+			local alreadyhandled = {["text"] = 1}
+			local function addwordunits(noun)
+				if alreadyhandled[noun] == nil then
+					alreadyhandled[noun] = 1
+					for _, unitid in ipairs(findall({noun, {}})) do
+						table.insert(wordunits, {unitid, {}})
+					end
+				end
+			end
+			wordunits = {}
+			codeaffectingfeatures = getcodeaffectingfeatures()
+			for _, feature in ipairs(codeaffectingfeatures) do
+				-- E.g. for ROCK IS WORD, add all rocks to wordunits.
+				-- Test if there is no "never" condition? I'm not too bothered, since adding too much
+				-- to wordunits just means you sometimes reparse rules when you don't need to, it doesn't cause a bug.
+				addwordunits(feature[1][1])
+
+				-- Also add any condition parameters, e.g. ROCK NEAR BABA IS WORD, add all babas to
+				-- wordunits. (Vanilla doesn't do this, and it causes a bug.)
+				for _, cond in ipairs(feature[2]) do
+					if cond[2] ~= nil then
+						for _, param in ipairs(cond[2]) do
+							-- param == "not x" or "group"?
+							addwordunits(param)
+						end
+					end
+				end
+			end
 		end
 	end
+end
+
+function getcodeaffectingfeatures()
+	local result = {}
+
+	if featureindex["word"] ~= nil then
+		for _, feature in ipairs(featureindex["word"]) do
+			if feature[1][2] == "is" and feature[1][3] == "word" then
+				table.insert(result, feature)
+			end
+		end
+	end
+
+	if featureindex["send"] ~= nil then
+		for _, feature in ipairs(featureindex["send"]) do
+			if feature[1][2] == "is" and feature[1][3] == "send" then
+				table.insert(result, feature)
+			end
+		end
+	end
+	
+	return result
 end
 
 function deepcopy(orig)
@@ -883,6 +952,7 @@ function addoption(option,conds_,ids,visible,notrule,extra)
 		print("nil conditions in rule: " .. option[1] .. ", " .. option[2] .. ", " .. option[3])
 	end
 	
+	--print (#option)
 	if (#option == 3) then
 		local rule = {option,conds,ids,extra}
 		table.insert(features, rule)
@@ -901,6 +971,8 @@ function addoption(option,conds_,ids,visible,notrule,extra)
 		if (featureindex[verb] == nil) then
 			featureindex[verb] = {}
 		end
+		
+		--print(target..verb..effect)
 		
 		table.insert(featureindex[effect], rule)
 		
@@ -1398,7 +1470,7 @@ function copyrule(rule)
 	local newids = {}
 	
 	print(extra)
-	newbaserule = {baserule[1],baserule[2],baserule[3],extra}
+	newbaserule = {baserule[1],baserule[2],baserule[3]}
 	
 	if (#conds > 0) then
 		for i,cond in ipairs(conds) do
@@ -1435,7 +1507,7 @@ function copyrule(rule)
 		end
 	end
 	
-	local newrule = {newbaserule,newconds,newids}
+	local newrule = {newbaserule,newconds,newids,extra}
 	
 	return newrule
 end

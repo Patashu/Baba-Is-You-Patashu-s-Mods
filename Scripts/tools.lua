@@ -575,6 +575,7 @@ function writerules(parent,name,x_,y_)
 			
 			local text = ""
 			local rule = rules[1]
+			local extras = rules[4]
 			
 			text = text .. rule[1] .. " "
 			
@@ -613,9 +614,9 @@ function writerules(parent,name,x_,y_)
 			
 			text = text .. rule[2] .. " " .. rule[3]
 			
-			print (#rule)
-			if (#rule >= 4) then
-				text = text .. " (" .. rule[4] .. ")"
+			--print (#rule)
+			if (extras ~= nil) then
+				text = text .. " (" .. extras .. ")"
 			end
 			
 			writetext(text,0,x,y,name,true,2,true)
