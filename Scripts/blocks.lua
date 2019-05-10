@@ -649,8 +649,204 @@ function block(small_)
 		end
 		
 		local ismore = getunitswitheffect("more",delthese)
+		local isless = getunitswitheffect("less",delthese)
+		local ismult = getunitswitheffect("multiply",delthese)
+		local isdiv = getunitswitheffect("divide",delthese)
 		
-		for id,unit in ipairs(ismore) do
+		local ismoreness = {}
+		local ismultness = {}
+		local anythingness = {}
+		
+		for i,unit in ipairs(ismore) do
+			id = unit.fixed
+			anythingness[id] = true
+			if (ismoreness[id] == nil) then
+				ismoreness[id] = 1
+				ismultness[id] = 0
+			else
+				ismoreness[id] = ismoreness[id] + 1
+			end
+		end
+		for i,unit in ipairs(isless) do
+			id = unit.fixed
+			anythingness[id] = true
+			if (ismoreness[id] == nil) then
+				ismoreness[id] = -1
+				ismultness[id] = 0
+			else
+				ismoreness[id] = ismoreness[id] - 1
+			end
+		end
+		for i,unit in ipairs(ismult) do
+			id = unit.fixed 
+			anythingness[id] = true
+			if (ismoreness[id] == nil) then
+				ismoreness[id] = 0
+				ismultness[id] = 1
+			else
+				ismultness[id] = ismultness[id] + 1
+			end
+		end
+		for i,unit in ipairs(isdiv) do
+			id = unit.fixed
+			anythingness[id] = true
+			if (ismoreness[id] == nil) then
+				ismoreness[id] = 0
+				ismultness[id] = -1
+			else
+				ismultness[id] = ismultness[id] - 1
+			end
+		end
+		
+		delthese = {}
+		
+		for id,dummy in pairs(anythingness) do
+			local unit = mmf.newObject(id)
+			local x,y = unit.values[XPOS],unit.values[YPOS]
+			local name = unit.strings[UNITNAME]
+			local moreness = ismoreness[id]
+			local multness = ismultness[id]
+			print(tostring(moreness)..","..tostring(multness))
+			
+			--handle 8-way growth
+			
+			while (moreness > 0 and multness > 0) do
+				moreness = moreness - 1
+				multness = multness - 1
+				
+				for i=1,8 do
+					local drs = dirs_diagonals[i]
+					ox = drs[1]
+					oy = drs[2]
+					
+					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+					
+					if valid then
+						local newunit = copy(unit.fixed,x+ox,y+oy)
+					end
+				end
+			end
+			
+			--handle MORE
+			while (moreness > 0) do
+				moreness = moreness - 1
+				
+				for i=1,4 do
+					local drs = dirs_diagonals[i]
+					ox = drs[1]
+					oy = drs[2]
+					
+					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+					
+					if valid then
+						local newunit = copy(unit.fixed,x+ox,y+oy)
+					end
+				end
+			end
+			
+			--handle MULTIPLY
+			while (multness > 0) do
+				multness = multness - 1
+				
+				for i=1,4 do
+					local drs = dirs_diagonals[i+4]
+					ox = drs[1]
+					oy = drs[2]
+					
+					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+					
+					if valid then
+						local newunit = copy(unit.fixed,x+ox,y+oy)
+					end
+				end
+			end
+			
+			--handle 8-way shrink
+			while (moreness < 0 and multness < 0) do
+				moreness = moreness + 1
+				multness = multness + 1
+				if (issafe(unit.fixed) == false) then	
+					local could_grow = false
+					
+					for i=1,8 do
+						local drs = dirs_diagonals[i]
+						ox = drs[1]
+						oy = drs[2]
+						
+						local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+						
+						if valid then
+							could_grow = true
+							break
+						end
+					end
+				
+					if (could_grow) then
+						local pmult,sound = checkeffecthistory("defeat")
+						MF_particles("destroy",x,y,5 * pmult,0,3,1,1)
+						table.insert(delthese, unit.fixed)
+					end
+				end
+			end
+			
+			--handle LESS
+			while (moreness < 0) do
+				moreness = moreness + 1
+				if (issafe(unit.fixed) == false) then	
+					local could_grow = false
+					
+					for i=1,4 do
+						local drs = dirs_diagonals[i]
+						ox = drs[1]
+						oy = drs[2]
+						
+						local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+						
+						if valid then
+							could_grow = true
+							break
+						end
+					end
+				
+					if (could_grow) then
+						local pmult,sound = checkeffecthistory("defeat")
+						MF_particles("destroy",x,y,5 * pmult,0,3,1,1)
+						table.insert(delthese, unit.fixed)
+					end
+				end
+			end
+			
+			--handle DIVIDE
+			while (multness < 0) do
+				multness = multness + 1
+				if (issafe(unit.fixed) == false) then	
+					local could_grow = false
+					
+					for i=1,4 do
+						local drs = dirs_diagonals[i+4]
+						ox = drs[1]
+						oy = drs[2]
+						
+						local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+						
+						if valid then
+							could_grow = true
+							break
+						end
+					end
+				
+					if (could_grow) then
+						local pmult,sound = checkeffecthistory("defeat")
+						MF_particles("destroy",x,y,5 * pmult,0,3,1,1)
+						table.insert(delthese, unit.fixed)
+					end
+				end
+			end
+		end
+		
+		delthese,doremovalsound = handledels(delthese,doremovalsound)
+		
+		--[[for id,unit in ipairs(ismore) do
 			local x,y = unit.values[XPOS],unit.values[YPOS]
 			local name = unit.strings[UNITNAME]
 			local doblocks = {}
@@ -756,7 +952,7 @@ function block(small_)
 			end
 		end
 
-		delthese,doremovalsound = handledels(delthese,doremovalsound)
+		delthese,doremovalsound = handledels(delthese,doremovalsound)]]--
 	end
 	
 	local issink = getunitswitheffect("sink",delthese)
