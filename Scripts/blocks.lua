@@ -648,53 +648,62 @@ function block(small_)
 			end
 		end
 		
-		local ismore = getunitswitheffect("more",delthese)
-		local isless = getunitswitheffect("less",delthese)
-		local ismult = getunitswitheffect("multiply",delthese)
-		local isdiv = getunitswitheffect("divide",delthese)
+		
+		local ismore = findallfeature(nil,"is","more")
+		local isless = findallfeature(nil,"is","less")
+		local ismult = findallfeature(nil,"is","multiply")
+		local isdiv =findallfeature(nil,"is","divide")
 		
 		local ismoreness = {}
 		local ismultness = {}
 		local anythingness = {}
 		
 		for i,unit in ipairs(ismore) do
-			id = unit.fixed
-			anythingness[id] = true
-			if (ismoreness[id] == nil) then
-				ismoreness[id] = 1
-				ismultness[id] = 0
-			else
-				ismoreness[id] = ismoreness[id] + 1
+			id = unit
+			if (id > 2) then
+				anythingness[id] = true
+				if (ismoreness[id] == nil) then
+					ismoreness[id] = 1
+					ismultness[id] = 0
+				else
+					ismoreness[id] = ismoreness[id] + 1
+				end
 			end
 		end
 		for i,unit in ipairs(isless) do
-			id = unit.fixed
-			anythingness[id] = true
-			if (ismoreness[id] == nil) then
-				ismoreness[id] = -1
-				ismultness[id] = 0
-			else
-				ismoreness[id] = ismoreness[id] - 1
+			id = unit
+			if (id > 2) then
+				anythingness[id] = true
+				if (ismoreness[id] == nil) then
+					ismoreness[id] = -1
+					ismultness[id] = 0
+				else
+					ismoreness[id] = ismoreness[id] - 1
+				end
 			end
 		end
 		for i,unit in ipairs(ismult) do
-			id = unit.fixed 
-			anythingness[id] = true
-			if (ismoreness[id] == nil) then
-				ismoreness[id] = 0
-				ismultness[id] = 1
-			else
-				ismultness[id] = ismultness[id] + 1
+			id = unit
+			if (id > 2) then
+				anythingness[id] = true
+				if (ismoreness[id] == nil) then
+					ismoreness[id] = 0
+					ismultness[id] = 1
+				else
+					ismultness[id] = ismultness[id] + 1
+				end
 			end
 		end
 		for i,unit in ipairs(isdiv) do
-			id = unit.fixed
-			anythingness[id] = true
-			if (ismoreness[id] == nil) then
-				ismoreness[id] = 0
-				ismultness[id] = -1
-			else
-				ismultness[id] = ismultness[id] - 1
+			id = unit
+			if (id > 2) then
+				anythingness[id] = true
+				if (ismoreness[id] == nil) then
+					ismoreness[id] = 0
+					ismultness[id] = -1
+				else
+					ismultness[id] = ismultness[id] - 1
+				end
 			end
 		end
 		

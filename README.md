@@ -2,7 +2,7 @@
 
 To install: Extract the "Scripts" and "Sprites" folders into the world you wish to use the mod with. **Make sure lilybeeveeeeee's modloader is installed! (in #assets-are-share pins on Baba is You Discord server: https://discord.gg/GGbUUse)** Check Scripts/options.lua to enable or disable features!
 
-**LESS** - __Property__ The opposite of MORE. If an object *could* expand to surrounding tiles under MORE rules, then it is destroyed.
+**LESS / MULTIPLY / DIVIDE** - __Property__ LESS is the opposite of MORE. If an object *could* expand to surrounding tiles under MORE rules, then it is destroyed. MULTIPLY and DIVIDE are X shaped counterparts to MORE and LESS, growing and shrinking in checkerboard patterns. MORE/LESS and MULTIPLY/DIVIDE cancel out, while MORE/MULTIPLY and LESS/DIVIDE if combined give 8-way growing/shrinking respectively!
 
 **SLIDE** - __Property__ Whenever this object moves, it moves as far as possible. Tested with you, move, shift, push and pull. 'ALL on ICE is SLIDE'  makes ice slippery!
 
