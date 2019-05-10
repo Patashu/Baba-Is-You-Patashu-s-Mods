@@ -89,7 +89,8 @@ mod.alltiles = {
 	"dizzy",
 	"flinch",
 	"eventurn",
-	"oddturn"
+	"oddturn",
+	"won"
 }
 
 function mod.addblock(tile)

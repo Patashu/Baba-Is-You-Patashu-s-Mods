@@ -894,6 +894,25 @@ function testcond(conds,unitid,x_,y_)
 				elseif (condtype == "oddturn" or condtype == "not eventurn") then
 					valid = true
 					result = #undobuffer % 2 == 1
+				elseif (condtype == "won") then
+					valid = true
+					result = false
+					if (unitid ~= 1 and name == "level") then
+						local unit = mmf.newObject(unitid)
+						result = unit.values[COMPLETED] > 2
+					else
+						local world = generaldata.strings[WORLD]
+						result = (tonumber(MF_read("save",world,generaldata.strings[CURRLEVEL])) or 0) > 2
+					end
+				elseif (condtype == "not won") then
+					valid = true
+					if (unitid ~= 1 and name == "level") then
+						local unit = mmf.newObject(unitid)
+						result = unit.values[COMPLETED] <= 2
+					else
+						local world = generaldata.strings[WORLD]
+						result = (tonumber(MF_read("save",world,generaldata.strings[CURRLEVEL])) or 0) <= 2
+					end
 				elseif (condtype == "lonely") then
 					valid = true
 				

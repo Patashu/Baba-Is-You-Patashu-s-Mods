@@ -8,12 +8,12 @@ local mod = activemod
 
 -- Properties
 mod.enabled["less"] = true
-mod.enabled["slide"] = false
+mod.enabled["slide"] = true
 mod.enabled["stuck"] = false
 mod.enabled["topple"] = false
-mod.enabled["phase"] = false
-mod.enabled["multiply"] = true
-mod.enabled["divide"] = true
+mod.enabled["phase"] = true
+mod.enabled["multiply"] = false
+mod.enabled["divide"] = false
 mod.enabled["faceaway"] = false
 mod.enabled["faceside"] = false
 mod.enabled["singlet"] = false
@@ -45,6 +45,7 @@ mod.enabled["dizzy"] = false
 mod.enabled["flinch"] = false
 mod.enabled["eventurn"] = false
 mod.enabled["oddturn"] = false
+mod.enabled["won"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -581,5 +582,19 @@ mod.tile["oddturn"] = {
 	colour = {3, 2},
 	active = {3, 3},
 	tile = {12, 14},
+	layer = 20,
+}
+
+mod.tile["won"] = {
+	name = "text_won",
+	sprite = "text_won",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {6, 1},
+	active = {2, 4},
+	tile = {13, 14},
 	layer = 20,
 }

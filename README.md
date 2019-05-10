@@ -40,6 +40,8 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **EVENTURN / ODDTURN** - __Condition (Prefix)__ True only on even numbered turns and odd numbered turns respectively.
 
+**WON** - __Condition (Prefix)__ - For a level noun: True if that level has been beaten. For anything else: True if the level currently being played has been beaten. (e.g. you can use this for meta-puzzles where cleared levels affect the map, or to make a puzzle easier/harder/different after being beaten)
+
 Baba is You Discord server: https://discord.gg/GGbUUse
 
 You may use these mods in your mod pack or custom world with attribution!
