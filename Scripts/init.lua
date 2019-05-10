@@ -90,7 +90,8 @@ mod.alltiles = {
 	"flinch",
 	"eventurn",
 	"oddturn",
-	"won"
+	"won",
+	"unwin"
 }
 
 function mod.addblock(tile)

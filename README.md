@@ -42,6 +42,8 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **WON** - __Condition (Prefix)__ - For a level noun: True if that level has been beaten. For anything else: True if the level currently being played has been beaten. (e.g. you can use this for meta-puzzles where cleared levels affect the map, or to make a puzzle easier/harder/different after being beaten)
 
+**UNWIN** __Property__ If YOU is on UNWIN, the currently played level becomes unbeaten, refunding you the flower puff you earned.
+
 Baba is You Discord server: https://discord.gg/GGbUUse
 
 You may use these mods in your mod pack or custom world with attribution!

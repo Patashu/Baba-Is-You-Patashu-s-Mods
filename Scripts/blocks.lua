@@ -1408,6 +1408,42 @@ function block(small_)
 				end
 			end
 			
+			local unwin = findfeature(nil,"is","unwin")
+			
+			if (unwin ~= nil) then
+				for a,b in ipairs(unwin) do
+					if (b[1] ~= "empty") then
+						local flag = findtype(b,x,y,0)
+						
+						if (#flag > 0) then
+							for c,d in ipairs(flag) do
+								if floating(d,unit.fixed) then
+									local world = generaldata.strings[WORLD]
+									local beaten = (tonumber(MF_read("save",world,generaldata.strings[CURRLEVEL])) or 0) > 2
+									if (beaten) then
+										print(generaldata.strings[PARENT])
+										local pmult = checkeffecthistory("unwin")
+										MF_particles("bonus",x,y,10 * pmult,4,1,1,1)
+										removalshort = sound
+										removalsound = 2
+										MF_playsound("bonus")
+										MF_store("save",world,generaldata.strings[CURRLEVEL],0)
+										local prizes = tonumber(MF_read("save",world .. "_prize","total")) or 1
+										MF_store("save",world .. "_prize","total",prizes-1)
+										local parent = generaldata.strings[PARENT]
+										if (parent ~= nil and parent ~= "") then
+											local prizes = tonumber(MF_read("save",world .. "_prize",parent)) or 1
+											MF_store("save",world .. "_prize",parent,prizes-1)
+										end
+										break
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+			
 			local win = findfeature(nil,"is","win")
 			
 			if (win ~= nil) then

@@ -11,7 +11,7 @@ mod.enabled["less"] = true
 mod.enabled["slide"] = true
 mod.enabled["stuck"] = false
 mod.enabled["topple"] = false
-mod.enabled["phase"] = true
+mod.enabled["phase"] = false
 mod.enabled["multiply"] = false
 mod.enabled["divide"] = false
 mod.enabled["faceaway"] = false
@@ -46,6 +46,7 @@ mod.enabled["flinch"] = false
 mod.enabled["eventurn"] = false
 mod.enabled["oddturn"] = false
 mod.enabled["won"] = true
+mod.enabled["unwin"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -596,5 +597,18 @@ mod.tile["won"] = {
 	colour = {6, 1},
 	active = {2, 4},
 	tile = {13, 14},
+	layer = 20,
+}
+
+mod.tile["unwin"] = {
+	name = "text_unwin",
+	sprite = "text_unwin",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 1},
+	active = {1, 2},
+	tile = {14, 14},
 	layer = 20,
 }
