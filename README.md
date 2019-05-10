@@ -42,7 +42,9 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **WON / CLEAR / COMPLETE** - __Condition (Prefix)__ - For a level noun: True if that level has been won/cleared/completed. For anything else: True if the level currently being played has been won/cleared/completed. (e.g. you can use this for meta-puzzles where cleared levels affect the map, or to make a puzzle easier/harder/different after being beaten)
 
-**UNWIN** __Property__ If YOU is on UNWIN, the currently played level becomes unbeaten, refunding you the flower puff you earned.
+**UNWIN** - __Property__ If YOU is on UNWIN, the currently played level becomes unbeaten, refunding you the flower puff you earned.
+
+**STRONG** - __Property__ STRONG objects behave as though everything else is WEAK to them. STRONG objects bulldoze walls and annihilate each other. (Use SAFE if you also want STRONG things to be indestructible!)
 
 Baba is You Discord server: https://discord.gg/GGbUUse
 

@@ -48,7 +48,8 @@ mod.enabled["oddturn"] = false
 mod.enabled["won"] = true
 mod.enabled["unwin"] = true
 mod.enabled["clear"] = true
-mod.enabled["complete"] = true
+mod.enabled["complete"] = false
+mod.enabled["strong"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -640,5 +641,18 @@ mod.tile["complete"] = {
 	colour = {6, 1},
 	active = {2, 4},
 	tile = {1, 15},
+	layer = 20,
+}
+
+mod.tile["strong"] = {
+	name = "text_strong",
+	sprite = "text_strong",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {5, 2},
+	active = {5, 3},
+	tile = {2, 15},
 	layer = 20,
 }

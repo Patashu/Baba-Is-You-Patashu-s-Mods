@@ -93,7 +93,8 @@ mod.alltiles = {
 	"won",
 	"unwin",
 	"clear",
-	"complete"
+	"complete",
+	"strong"
 }
 
 function mod.addblock(tile)

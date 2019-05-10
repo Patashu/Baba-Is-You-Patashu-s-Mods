@@ -1024,6 +1024,20 @@ function isgone(unitid)
 				end
 			end
 		end
+		
+		if (featureindex["strong"] ~= nil) then
+			local things = findallhere(x,y)
+			
+			if (things ~= nil) then
+				for i,v in ipairs(things) do
+					unit = mmf.newObject(v)
+					name = getname(unit)
+					if (v ~= unitid) and hasfeature(name,"is","strong",v) and (floating(v,unitid)) then
+						return true
+					end
+				end
+			end
+		end
 	end
 	
 	return false

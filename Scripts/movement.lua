@@ -619,9 +619,9 @@ function movecommand(ox,oy,dir_,playerid_)
 											data.state = math.max(data.state, 4)
 											result_check = true
 										else
-											local weak = hasfeature(name,"is","weak",data.unitid,x,y)
+											local weak = hasfeature(name,"is","weak",data.unitid,x,y) ~= nil or findfeatureat(nil,"is","strong",x+ox,y+oy) ~= nil
 											
-											if (weak ~= nil) then
+											if (weak == true) then
 												delete(data.unitid,x,y)
 												generaldata.values[SHAKE] = 3
 												
@@ -883,11 +883,13 @@ function check(unitid,x,y,dir,pulling_,reason)
 	end
 	
 	unitphase = nil
+	unitstrong = nil
 	
 	--implement STUCK
 	if (unitid ~= 2) then
 		local unitstuck = hasfeature(name,"is","stuck",unitid)
 		unitphase = hasfeature(name,"is","phase",unitid)
+		unitstrong = hasfeature(name,"is","strong",unitid)
 		if (unitstuck ~= nil) then
 			table.insert(result, 1)
 			table.insert(results, id)
@@ -967,6 +969,14 @@ function check(unitid,x,y,dir,pulling_,reason)
 					end
 				end
 				
+				local strong = hasfeature(name, "is", "strong", unitid)
+				if (strong ~= nil) and (pulling == false) then
+					if (issafe(id) == false) then
+						--valid = false
+						table.insert(specials, {id, "weak"})
+					end
+				end
+				
 				local iscollide
 				if (collide ~= nil) and (pulling == false) then
 					--print(name .. "..." .. obsname .. "..." .. tostring(unitid))
@@ -997,6 +1007,9 @@ function check(unitid,x,y,dir,pulling_,reason)
 						isstop = true
 					end
 					if (unitphase ~= nil) then
+						isstop = nil
+					end
+					if (unitstrong ~= nil) then
 						isstop = nil
 					end
 					
@@ -1062,6 +1075,14 @@ function check(unitid,x,y,dir,pulling_,reason)
 		
 		local weak = hasfeature(bname,"is","weak",2,x+ox,y+oy)
 		if (weak ~= nil) and (pulling == false) then
+			if (issafe(2,x+ox,y+oy) == false) then
+				--valid = false
+				table.insert(specials, {2, "weak"})
+			end
+		end
+		
+		local strong = hasfeature(name,"is","strong",unitid,x+ox,y+oy)
+		if (strong ~= nil) and (pulling == false) then
 			if (issafe(2,x+ox,y+oy) == false) then
 				--valid = false
 				table.insert(specials, {2, "weak"})
@@ -1138,9 +1159,11 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 	
 	local pulling = pulling_ or false
 	
-	local weak = hasfeature(name,"is","weak",unitid,x_,y_)
+	local weak = hasfeature(name,"is","weak",unitid,x,y) ~= nil
+	local strong = findfeatureat(nil,"is","strong",x+ox,y+oy)
+	weak = weak or (strong ~= nil and #strong > 0)
 
-	if (weak == nil) or pulling then
+	if (weak ~= true) or pulling then
 		local hmlist,hms,specials = check(unitid,x,y,dir,false,reason)
 		
 		local result = 0
@@ -1268,7 +1291,9 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 		local pullhmlist,pullhms,pullspecials = check(unitid,x,y,dir,true,reason)
 		local result = 0
 		
-		local weak = hasfeature(name,"is","weak",unitid,x_,y_)
+		local weak = hasfeature(name,"is","weak",unitid,x,y) ~= nil
+		local strong = findfeatureat(nil,"is","strong",x+ox,y+oy)
+		weak = weak or (strong ~= nil and #strong > 0)
 		
 			--MF_alert(name .. " is looking... (" .. tostring(unitid) .. ")" .. ", " .. tostring(pulling))
 		for i,obs in pairs(hmlist) do
@@ -1345,7 +1370,7 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 			elseif (result == 2) then
 				hm = 1
 				
-				if (weak ~= nil) then
+				if (weak == true) then
 					delete(unitid,x,y)
 					
 					local pmult,sound = checkeffecthistory("weak")

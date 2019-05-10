@@ -1042,6 +1042,33 @@ function block(small_)
 	
 	delthese,doremovalsound = handledels(delthese,doremovalsound)
 	
+	local isstrong = getunitswitheffect("strong",delthese)
+	
+	for id,unit in ipairs(isstrong) do
+		local x,y = unit.values[XPOS],unit.values[YPOS]
+		local stuff = findallhere(x,y)
+		
+		if (#stuff > 0) then
+			for i,v in ipairs(stuff) do
+				if floating(v,unit.fixed) and not issafe(v) then
+					local vunit = mmf.newObject(v)
+					local thistype = vunit.strings[UNITTYPE]
+					if (v ~= unit.fixed) then
+						local pmult,sound = checkeffecthistory("strong")
+						MF_particles("destroy",x,y,5 * pmult,0,3,1,1)
+						removalshort = sound
+						removalsound = 1
+						generaldata.values[SHAKE] = 4
+						table.insert(delthese, v)
+						break
+					end
+				end
+			end
+		end
+	end
+	
+	delthese,doremovalsound = handledels(delthese,doremovalsound)
+	
 	local isdestroy = getunitswitheffect("destroy",delthese)
 	
 	for id,unit in ipairs(isdestroy) do
@@ -1978,6 +2005,25 @@ function levelblock()
 								end
 							end
 						end
+					end
+				elseif (action == "strong") then
+					if (units ~= nil) then
+						delthese = {}
+						doremovalsound = true
+						for a,b in ipairs(units) do
+							print(b)
+							if (issafe(b.fixed) == false) and floating_level(b.fixed) then
+								local unit = b
+								local pmult,sound = checkeffecthistory("weak")
+								local x,y = unit.values[XPOS],unit.values[YPOS]
+								MF_particles("destroy",x,y,5 * pmult,0,3,1,1)
+								removalshort = sound
+								removalsound = 1
+								generaldata.values[SHAKE] = 4
+								table.insert(delthese, unit.fixed)
+							end
+						end
+						delthese,doremovalsound = handledels(delthese,doremovalsound)
 					end
 				elseif (action == "melt") then
 					local hots = findfeature(nil,"is","hot")
