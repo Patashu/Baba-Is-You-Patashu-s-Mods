@@ -40,7 +40,7 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **EVENTURN / ODDTURN** - __Condition (Prefix)__ True only on even numbered turns and odd numbered turns respectively.
 
-**WON** - __Condition (Prefix)__ - For a level noun: True if that level has been beaten. For anything else: True if the level currently being played has been beaten. (e.g. you can use this for meta-puzzles where cleared levels affect the map, or to make a puzzle easier/harder/different after being beaten)
+**WON / CLEAR / COMPLETE** - __Condition (Prefix)__ - For a level noun: True if that level has been won/cleared/completed. For anything else: True if the level currently being played has been won/cleared/completed. (e.g. you can use this for meta-puzzles where cleared levels affect the map, or to make a puzzle easier/harder/different after being beaten)
 
 **UNWIN** __Property__ If YOU is on UNWIN, the currently played level becomes unbeaten, refunding you the flower puff you earned.
 

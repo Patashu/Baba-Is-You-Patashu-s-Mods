@@ -7,8 +7,8 @@ local mod = activemod
 ---------------------------------------------------
 
 -- Properties
-mod.enabled["less"] = true
-mod.enabled["slide"] = true
+mod.enabled["less"] = false
+mod.enabled["slide"] = false
 mod.enabled["stuck"] = false
 mod.enabled["topple"] = false
 mod.enabled["phase"] = false
@@ -47,6 +47,8 @@ mod.enabled["eventurn"] = false
 mod.enabled["oddturn"] = false
 mod.enabled["won"] = true
 mod.enabled["unwin"] = true
+mod.enabled["clear"] = true
+mod.enabled["complete"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -610,5 +612,33 @@ mod.tile["unwin"] = {
 	colour = {1, 1},
 	active = {1, 2},
 	tile = {14, 14},
+	layer = 20,
+}
+
+mod.tile["clear"] = {
+	name = "text_clear",
+	sprite = "text_clear",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {6, 1},
+	active = {2, 4},
+	tile = {0, 15},
+	layer = 20,
+}
+
+mod.tile["complete"] = {
+	name = "text_complete",
+	sprite = "text_complete",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 3,
+	operatortype = "cond_start",
+	colour = {6, 1},
+	active = {2, 4},
+	tile = {1, 15},
 	layer = 20,
 }

@@ -91,7 +91,9 @@ mod.alltiles = {
 	"eventurn",
 	"oddturn",
 	"won",
-	"unwin"
+	"unwin",
+	"clear",
+	"complete"
 }
 
 function mod.addblock(tile)

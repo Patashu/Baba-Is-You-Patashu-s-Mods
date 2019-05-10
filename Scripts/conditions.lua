@@ -913,6 +913,48 @@ function testcond(conds,unitid,x_,y_)
 						local world = generaldata.strings[WORLD]
 						result = (tonumber(MF_read("save",world,generaldata.strings[CURRLEVEL])) or 0) <= 2
 					end
+				elseif (condtype == "clear") then
+					valid = true
+					result = false
+					if (unitid ~= 1 and name == "level") then
+						local unit = mmf.newObject(unitid)
+						local world = generaldata.strings[WORLD]
+						result = (tonumber(MF_read("save",world.."_clears",unit.strings[U_LEVELFILE])) or 0) > 0
+					else
+						local world = generaldata.strings[WORLD]
+						result = (tonumber(MF_read("save",world.."_clears",generaldata.strings[CURRLEVEL])) or 0) > 0
+					end
+				elseif (condtype == "not clear") then
+					valid = true
+					if (unitid ~= 1 and name == "level") then
+						local unit = mmf.newObject(unitid)
+						local world = generaldata.strings[WORLD]
+						result = (tonumber(MF_read("save",world.."_clears",unit.strings[U_LEVELFILE])) or 0) <= 0
+					else
+						local world = generaldata.strings[WORLD]
+						result = (tonumber(MF_read("save",world.."_clears",generaldata.strings[CURRLEVEL])) or 0) <= 0
+					end
+				elseif (condtype == "complete") then
+					valid = true
+					result = false
+					if (unitid ~= 1 and name == "level") then
+						local unit = mmf.newObject(unitid)
+						local world = generaldata.strings[WORLD]
+						result = (tonumber(MF_read("save",world.."_complete",unit.strings[U_LEVELFILE])) or 0) > 0
+					else
+						local world = generaldata.strings[WORLD]
+						result = (tonumber(MF_read("save",world.."_complete",generaldata.strings[CURRLEVEL])) or 0) > 0
+					end
+				elseif (condtype == "not complete") then
+					valid = true
+					if (unitid ~= 1 and name == "level") then
+						local unit = mmf.newObject(unitid)
+						local world = generaldata.strings[WORLD]
+						result = (tonumber(MF_read("save",world.."_complete",unit.strings[U_LEVELFILE])) or 0)
+					else
+						local world = generaldata.strings[WORLD]
+						result = (tonumber(MF_read("save",world.."_complete",generaldata.strings[CURRLEVEL])) or 0) <= 0
+					end
 				elseif (condtype == "lonely") then
 					valid = true
 				
