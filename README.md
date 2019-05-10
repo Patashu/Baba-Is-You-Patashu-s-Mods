@@ -1,7 +1,5 @@
 # Baba Is You Patashu's Mods
 
-Modding Baba is You for practice. I'll add more mods in future probably.
-
 To install: Extract the "Scripts" and "Sprites" folders into the world you wish to use the mod with. **Make sure lilybeeveeeeee's modloader is installed! (in #assets-are-share pins on Baba is You Discord server: https://discord.gg/GGbUUse)** Check Scripts/options.lua to enable or disable features!
 
 **LESS** - __Property__ The opposite of MORE. If an object *could* expand to surrounding tiles under MORE rules, then it is destroyed.
@@ -43,3 +41,5 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 **EVENTURN / ODDTURN** - __Condition (Prefix)__ True only on even numbered turns and odd numbered turns respectively.
 
 Baba is You Discord server: https://discord.gg/GGbUUse
+
+You may use these mods in your mod pack or custom world with attribution!
