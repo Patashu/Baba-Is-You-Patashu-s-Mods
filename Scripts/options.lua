@@ -7,12 +7,12 @@ local mod = activemod
 ---------------------------------------------------
 
 -- Properties
-mod.enabled["less"] = false
-mod.enabled["slide"] = true
+mod.enabled["less"] = true
+mod.enabled["slide"] = false
 mod.enabled["stuck"] = false
 mod.enabled["topple"] = false
 mod.enabled["phase"] = false
-mod.enabled["multiply"] = false
+mod.enabled["multiply"] = true
 mod.enabled["divide"] = false
 mod.enabled["faceaway"] = false
 mod.enabled["faceside"] = false
@@ -26,25 +26,25 @@ mod.enabled["strafe"] = false
 mod.enabled["collect"] = false
 mod.enabled["1st1"] = false
 mod.enabled["last1"] = false
-mod.enabled["maybe"] = false
-mod.enabled["rarely"] = false
+mod.enabled["maybe"] = true
+mod.enabled["rarely"] = true
 mod.enabled["megarare"] = false
 mod.enabled["gigarare"] = false
 mod.enabled["collide"] = false
 mod.enabled["saccade"] = false
 mod.enabled["destroy"] = false
-mod.enabled["send"] = false
-mod.enabled["receive"] = false
+mod.enabled["send"] = true
+mod.enabled["receive"] = true
 mod.enabled["crash"] = false
-mod.enabled["bounce"] = true
+mod.enabled["bounce"] = false
 mod.enabled["twist"] = false
 mod.enabled["untwist"] = false
-mod.enabled["reflect"] = true
-mod.enabled["funnel"] = true
+mod.enabled["reflect"] = false
+mod.enabled["funnel"] = false
 mod.enabled["dizzy"] = false
 mod.enabled["flinch"] = false
-mod.enabled["eventurn"] = true
-mod.enabled["oddturn"] = true
+mod.enabled["eventurn"] = false
+mod.enabled["oddturn"] = false
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--

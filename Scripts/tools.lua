@@ -1450,9 +1450,11 @@ function seed_rng(unitid, name, x, y, reason, reason_x, reason_y)
 	if (cache ~= nil) then
 		return cache
 	end
-	seedhash = CRC32.Hash(seedstring)
-	--print(seedstring..","..seedhash)
-	math.randomseed(seedhash)
+	if (not activemod.seed_rng_on_restart) then
+		seedhash = CRC32.Hash(seedstring)
+		--print(seedstring..","..seedhash)
+		math.randomseed(seedhash)
+	end
 	local result = math.random()
 	cached_seeds[seedstring] = result
 	return result
