@@ -47,6 +47,7 @@ function init(tilemapid,roomsizex_,roomsizey_,tilesize_,Xoffset_,Yoffset_,genera
 	ruledebug = false
 	maprotation = 0
 	mapdir = 3
+	last_key = 0
 	levelconversions = {}
 	
 	HACK_MOVES = 0
@@ -164,6 +165,7 @@ function clearunits()
 	updateundo = true
 	hiddenmap = nil
 	levelconversions = {}
+	last_key = 0
 	
 	HACK_MOVES = 0
 	
@@ -237,6 +239,8 @@ function command(key,player_)
 		local ox = drs[1]
 		local oy = drs[2]
 		local dir = keyid
+		
+		last_key = keyid
 		
 		movecommand(ox,oy,dir,player)
 		MF_update()

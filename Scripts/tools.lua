@@ -787,7 +787,7 @@ function inside(name,x,y,dir,unitid)
 					local bname = bunit.strings[UNITNAME]
 					
 					--MF_alert(name .. " is looking: " .. object .. ", " .. bname)
-					if ((object == "text") and (bname == "text_" .. name)) and (bname ~= name) then
+					if ((object == "text") and (bname == "text_" .. name)) and (bname ~= name) and (bname ~= "text_text") then
 						valid = false
 					end
 				end
@@ -1443,6 +1443,32 @@ function genflowercolour()
 	
 	return result,c1,c2
 end
+
+function gettiledata(id,data)
+	local tiledata = tileslist[id]
+	local changedata = changes[id] or {}
+	local result = ""
+	
+	local datapairs =
+	{
+		name = "name",
+	}
+	
+	if (tiledata[data] ~= nil) then
+		result = tiledata[data]
+		
+		local pairing = datapairs[data] or "null"
+		
+		if (changes[pairing] ~= nil) then
+			result = changes[pairing]
+		end
+	else
+		MF_alert("No tiledata found for " .. id .. " with name " .. data)
+	end
+	
+	return result
+end
+
 
 function seed_rng(unitid, name, x, y, reason, reason_x, reason_y)
 	local turncount = tostring(#undobuffer)
