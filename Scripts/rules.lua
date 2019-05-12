@@ -42,12 +42,8 @@ function code()
 		table.insert(featureindex["stop"], fulllevelstop)
 		table.insert(featureindex["is"], fulllevelstop)
 		
-		if (generaldata.strings[CURRLEVEL] ~= last_levelname) then		--print(tostring(last_levelrules)..","..tostring(current_levelrules)..","..tostring(was_sending)..","..tostring(#current_levelrules))
-			if (was_sending) then
-				last_levelrules = current_levelrules
-			else
-				last_levelrules = {}
-			end
+		if (generaldata.strings[CURRLEVEL] ~= last_levelname) then
+			last_levelrules = current_levelrules
 			last_levelname = generaldata.strings[CURRLEVEL]
 		end
 		
@@ -89,8 +85,9 @@ function code()
 			
 			docode(firstwords,wordunits)
 			
+			local is_receiving = findfeature(nil,"is","receive")
+			local is_resending = findfeature(nil,"is","resend")
 			local is_sending = findfeature(nil,"is","send")
-			--print("is_sending: "..tostring(is_sending))
 			
 			current_levelrules = {}
 			if (is_sending ~= nil) then
@@ -98,14 +95,18 @@ function code()
 				for k,v in ipairs(visualfeatures) do
 					if (v[1][3] ~= "send") then
 						if (level_send) then
-							v[4] = "sending"
+							v[4] = {}
+							v[4][1] = generaldata.strings[CURRLEVEL]
+							v[4][2] = "sending"
 							table.insert(current_levelrules, copyrule(v))
 						else
 							for a,b in ipairs(v[3]) do
 								local unitid = b[1]
 								local unit = mmf.newObject(unitid)
 								if hasfeature(getname(unit), "is", "send", unitid) then
-									v[4] = "sending"
+									v[4] = {}
+									v[4][1] = generaldata.strings[CURRLEVEL]
+									v[4][2] = "sending"
 									table.insert(current_levelrules, copyrule(v))
 									break
 								end
@@ -115,9 +116,6 @@ function code()
 				end
 			end
 			
-			was_sending = is_sending ~= nil;
-			local is_receiving = findfeature(nil,"is","receive")
-			
 			if (is_receiving ~= nil) then
 				for k,v in ipairs(last_levelrules) do
 					local rule = v[1]
@@ -126,8 +124,12 @@ function code()
 						for k,v in ipairs(finalconds) do
 							v[3] = nil
 						end
-						--print("a")
-						addoption(rule, deepcopy(finalconds), {}, true, nil, "received")
+						if (v[4][1] ~= generaldata.strings[CURRLEVEL]) then
+							addoption(rule, deepcopy(finalconds), {}, true, nil, {v[4][1], (is_resending ~= nil and "resending" or "received")})
+							if (is_resending ~= nil) then
+								table.insert(current_levelrules, copyrule(v))
+							end
+						end
 					end
 				end
 			end

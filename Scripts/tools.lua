@@ -614,9 +614,10 @@ function writerules(parent,name,x_,y_)
 			
 			text = text .. rule[2] .. " " .. rule[3]
 			
-			--print (#rule)
+			--print(extras)
 			if (extras ~= nil) then
-				text = text .. " (" .. extras .. ")"
+			text = text .. " (" .. extras[2] .. ")"
+				--text = text .. " (" .. extras[2] .. " - " .. extras[1] .. ")"
 			end
 			
 			writetext(text,0,x,y,name,true,2,true)

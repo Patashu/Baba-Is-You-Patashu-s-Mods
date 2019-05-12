@@ -58,7 +58,6 @@ function init(tilemapid,roomsizex_,roomsizey_,tilesize_,Xoffset_,Yoffset_,genera
 	last_levelname = nil
 	current_levelrules = {}
 	last_levelrules = {}
-	was_sending = false
 	
 	generatetiles()
 end

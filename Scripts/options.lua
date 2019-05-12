@@ -49,7 +49,8 @@ mod.enabled["won"] = true
 mod.enabled["unwin"] = true
 mod.enabled["clear"] = true
 mod.enabled["complete"] = false
-mod.enabled["strong"] = true
+mod.enabled["strong"] = false
+mod.enabled["resend"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -654,5 +655,18 @@ mod.tile["strong"] = {
 	colour = {5, 2},
 	active = {5, 3},
 	tile = {2, 15},
+	layer = 20,
+}
+
+mod.tile["resend"] = {
+	name = "text_resend",
+	sprite = "text_resend",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {4, 0},
+	active = {4, 1},
+	tile = {3, 15},
 	layer = 20,
 }

@@ -94,7 +94,8 @@ mod.alltiles = {
 	"unwin",
 	"clear",
 	"complete",
-	"strong"
+	"strong",
+	"resend"
 }
 
 function mod.addblock(tile)
