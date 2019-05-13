@@ -187,6 +187,12 @@ function code()
 					end
 				end
 			end
+			
+			-- In some cases Hempuli will assume that if wordunits is not empty then featureindex["word"] is not nil.
+			-- This is a fine assumption in Vanilla but our approach breaks this assumption.
+			if #wordunits > 0 then
+				featureindex["word"] = featureindex["word"] or {}
+			end
 		end
 	end
 end
