@@ -47,6 +47,10 @@ function code()
 			last_levelname = generaldata.strings[CURRLEVEL]
 		end
 		
+		if (last_levelrules == nil) then
+				last_levelrules = {}
+			end
+		
 		if (#codeunits > 0) then
 			for i,v in ipairs(codeunits) do
 				table.insert(checkthese, v)
