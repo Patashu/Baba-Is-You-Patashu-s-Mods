@@ -46,6 +46,12 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **STRONG** - __Property__ STRONG objects behave as though everything else is WEAK to them. STRONG objects bulldoze walls and annihilate each other. (Use SAFE if you also want STRONG things to be indestructible!)
 
+**FLIP** - __Property__ Flips facing direction 180 degrees before any movement for the turn.
+
+**YEET** - __Verb__ x YEET y means y is SHIFTed by x 99 times.
+
+**REVERSE / DRUNK** __Property__ Causes movement from YOU and MOVE to be 180 or 90 degrees 'wrong' respectively. Also causes other ways of being moved (like PUSH and PULL) to result in the 'wrong' facing direction, though the movement is still correct. Stacks!
+
 Baba is You Discord server: https://discord.gg/GGbUUse
 
 You may use these mods in your mod pack or custom world with attribution!

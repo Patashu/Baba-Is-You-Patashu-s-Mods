@@ -8,6 +8,34 @@ function movecommand(ox,oy,dir_,playerid_)
 	
 	multimoves = 0;
 	
+	rotatedness = {}
+	
+	local isreverse = findallfeature(nil,"is","reverse")
+	local isdrunk = findallfeature(nil,"is","drunk")
+	
+	for i,unit in ipairs(isreverse) do
+		id = unit
+		if (id > 2) then
+			if (rotatedness[id] == nil) then
+				rotatedness[id] = 2
+			else
+				rotatedness[id] = rotatedness[id] + 2
+			end
+			print("a:"..id)
+		end
+	end
+	for i,unit in ipairs(isdrunk) do
+		id = unit
+		if (id > 2) then
+			if (rotatedness[id] == nil) then
+				rotatedness[id] = 1
+			else
+				rotatedness[id] = rotatedness[id] + 1
+			end
+			print("b:"..id)
+		end
+	end
+	
 	local still_moving = {}
 	
 	local levelpush = -1
@@ -30,6 +58,15 @@ function movecommand(ox,oy,dir_,playerid_)
 			MF_scrollroom(ox * tilesize,oy * tilesize)
 			mapdir = dir_
 			updateundo = true
+		end
+	end
+	
+	local flip = findallfeature(nil,"is","flip",true)
+	for _,v in ipairs(flip) do
+		if v ~= 2 then
+			local unit = mmf.newObject(v)
+			local turndir = (unit.values[DIR] + 2) % 4
+			updatedir(unit.fixed,turndir)
 		end
 	end
 	
@@ -242,7 +279,6 @@ function movecommand(ox,oy,dir_,playerid_)
 				
 				for i,v in ipairs(shifts) do
 					if (v ~= 2) then
-						local affected = {}
 						local unit = mmf.newObject(v)
 						
 						local x,y = unit.values[XPOS],unit.values[YPOS]
@@ -258,8 +294,6 @@ function movecommand(ox,oy,dir_,playerid_)
 										
 										if (stuck == nil) then
 											updatedir(b, unit.values[DIR])
-										
-											--newunit.values[DIR] = unit.values[DIR]
 											
 											local moveadd = 1
 											
@@ -271,6 +305,42 @@ function movecommand(ox,oy,dir_,playerid_)
 												local this = moving_units[id]
 												this.moves = this.moves + moveadd
 											end
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+				
+				local yeeters = getunitswithverb("yeet")
+				
+				for id,ugroup in ipairs(yeeters) do
+					local v = ugroup[1]
+					
+					for a,unit in ipairs(ugroup[2]) do
+						local x,y = unit.values[XPOS],unit.values[YPOS]
+						local things = findtype({v,nil},x,y,unit.fixed)
+						
+						if (#things > 0) then
+							for a,b in ipairs(things) do
+								if floating(b,unit.fixed) and (b ~= unit.fixed) then
+									local newunit = mmf.newObject(b)
+									local unitname = getname(newunit)
+									local stuck = hasfeature(unitname,"is","stuck",b)
+									
+									if (stuck == nil) then
+										updatedir(b, unit.values[DIR])
+										
+										local moveadd = 99
+										
+										if (been_seen[b] == nil) then
+											table.insert(moving_units, {unitid = b, reason = "shift", state = 0, moves = moveadd, dir = unit.values[DIR], xpos = x, ypos = y})
+											been_seen[b] = #moving_units
+										else
+											local id = been_seen[b]
+											local this = moving_units[id]
+											this.moves = this.moves + moveadd
 										end
 									end
 								end
@@ -399,6 +469,9 @@ function movecommand(ox,oy,dir_,playerid_)
 						unitphase = hasfeature(name,"is","phase",data.unitid)
 						unitstrafe = hasfeature(name,"is","strafe",data.unitid)
 						dir = unitstrafe == nil and unit.values[DIR] or data.dir
+						if (rotatedness[data.unitid] ~= nil) then
+							dir = (dir + rotatedness[data.unitid]) % 4
+						end
 						x,y = unit.values[XPOS],unit.values[YPOS]
 					else
 						dir = data.dir
@@ -1544,6 +1617,9 @@ function move(unitid,ox,oy,dir,specials_,instant_,simulate_)
 		
 		if (gone == false) and (simulate == false) then
 			success = true
+			if (rotatedness[unitid] ~= nil) then
+				dir = (dir - rotatedness[unitid]) % 4
+			end
 			if instant then
 				update(unitid,x+ox,y+oy, strafe == nil and dir or unit.values[DIR])
 				MF_alert("Instant movement on " .. tostring(unitid))

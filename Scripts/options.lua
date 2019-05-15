@@ -45,12 +45,16 @@ mod.enabled["dizzy"] = false
 mod.enabled["flinch"] = false
 mod.enabled["eventurn"] = false
 mod.enabled["oddturn"] = false
-mod.enabled["won"] = true
-mod.enabled["unwin"] = true
-mod.enabled["clear"] = true
+mod.enabled["won"] = false
+mod.enabled["unwin"] = false
+mod.enabled["clear"] = false
 mod.enabled["complete"] = false
 mod.enabled["strong"] = false
-mod.enabled["resend"] = true
+mod.enabled["resend"] = false
+mod.enabled["flip"] = true
+mod.enabled["yeet"] = true
+mod.enabled["reverse"] = true
+mod.enabled["drunk"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -668,5 +672,58 @@ mod.tile["resend"] = {
 	colour = {4, 0},
 	active = {4, 1},
 	tile = {3, 15},
+	layer = 20,
+}
+
+mod.tile["flip"] = {
+	name = "text_flip",
+	sprite = "text_flip",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 3},
+	active = {1, 4},
+	tile = {4, 15},
+	layer = 20,
+}
+
+mod.tile["yeet"] = {
+	name = "text_yeet",
+	sprite = "text_yeet",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 1,
+	operatortype = "verb",
+	colour = {0, 1},
+	active = {0, 3},
+	tile = {5, 15},
+	layer = 20,
+}
+
+mod.tile["reverse"] = {
+	name = "text_reverse",
+	sprite = "text_reverse",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 3},
+	active = {1, 4},
+	tile = {6, 15},
+	layer = 20,
+}
+
+mod.tile["drunk"] = {
+	name = "text_drunk",
+	sprite = "text_drunk",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 3},
+	active = {1, 4},
+	tile = {7, 15},
 	layer = 20,
 }

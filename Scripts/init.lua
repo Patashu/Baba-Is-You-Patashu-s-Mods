@@ -95,7 +95,11 @@ mod.alltiles = {
 	"clear",
 	"complete",
 	"strong",
-	"resend"
+	"resend",
+	"flip",
+	"yeet",
+	"reverse",
+	"drunk",
 }
 
 function mod.addblock(tile)
