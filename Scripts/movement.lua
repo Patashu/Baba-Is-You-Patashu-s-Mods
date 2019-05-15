@@ -21,7 +21,6 @@ function movecommand(ox,oy,dir_,playerid_)
 			else
 				rotatedness[id] = rotatedness[id] + 2
 			end
-			print("a:"..id)
 		end
 	end
 	for i,unit in ipairs(isdrunk) do
@@ -32,7 +31,6 @@ function movecommand(ox,oy,dir_,playerid_)
 			else
 				rotatedness[id] = rotatedness[id] + 1
 			end
-			print("b:"..id)
 		end
 	end
 	
@@ -1216,6 +1214,12 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 	local unit = {}
 	local name = ""
 	
+	if (rotatedness[unitid] ~= nil) then
+		dir = (dir + rotatedness[unitid]) % 4
+		local ndrs = ndirs[dir + 1]
+		ox,oy = ndrs[1],ndrs[2]
+	end
+	
 	if (unitid == 0) then
 		return false
 	end
@@ -1282,7 +1286,11 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 	local name = ""
 	local pushsound = false
 	
-	
+	if (rotatedness[unitid] ~= nil) then
+		dir = (dir + rotatedness[unitid]) % 4
+		local ndrs = ndirs[dir + 1]
+		ox,oy = ndrs[1],ndrs[2]
+	end
 	
 	if (unitid ~= 2) then
 		unit = mmf.newObject(unitid)

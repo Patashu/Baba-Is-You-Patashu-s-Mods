@@ -50,7 +50,7 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **YEET** - __Verb__ x YEET y means y is SHIFTed by x 99 times.
 
-**REVERSE / DRUNK** __Property__ Causes movement from YOU and MOVE to be 180 or 90 degrees 'wrong' respectively. Also causes other ways of being moved (like PUSH and PULL) to result in the 'wrong' facing direction, though the movement is still correct. Stacks!
+**REVERSE / DRUNK** __Property__ Causes movement from YOU, MOVE, PUSH, PULL and SHIFT to be 180 or 90 degrees 'wrong' respectively. Stacks with itself and each other!
 
 Baba is You Discord server: https://discord.gg/GGbUUse
 
