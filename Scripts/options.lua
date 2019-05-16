@@ -53,7 +53,7 @@ mod.enabled["strong"] = false
 mod.enabled["resend"] = false
 mod.enabled["flip"] = true
 mod.enabled["yeet"] = true
-mod.enabled["reverse"] = true
+mod.enabled["moonwalk"] = true
 mod.enabled["drunk"] = true
 
 ---------------------------------------------------
@@ -702,9 +702,9 @@ mod.tile["yeet"] = {
 	layer = 20,
 }
 
-mod.tile["reverse"] = {
-	name = "text_reverse",
-	sprite = "text_reverse",
+mod.tile["moonwalk"] = {
+	name = "text_moonwalk",
+	sprite = "text_moonwalk",
 	sprite_in_root = false,
 	unittype = "text",
 	tiling = -1,

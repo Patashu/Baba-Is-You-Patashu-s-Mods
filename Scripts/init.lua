@@ -98,7 +98,7 @@ mod.alltiles = {
 	"resend",
 	"flip",
 	"yeet",
-	"reverse",
+	"moonwalk",
 	"drunk",
 }
 

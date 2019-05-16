@@ -10,10 +10,10 @@ function movecommand(ox,oy,dir_,playerid_)
 	
 	rotatedness = {}
 	
-	local isreverse = findallfeature(nil,"is","reverse")
+	local ismoonwalk = findallfeature(nil,"is","moonwalk")
 	local isdrunk = findallfeature(nil,"is","drunk")
 	
-	for i,unit in ipairs(isreverse) do
+	for i,unit in ipairs(ismoonwalk) do
 		id = unit
 		if (id > 2) then
 			if (rotatedness[id] == nil) then
