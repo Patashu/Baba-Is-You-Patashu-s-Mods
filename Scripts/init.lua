@@ -100,6 +100,8 @@ mod.alltiles = {
 	"yeet",
 	"moonwalk",
 	"drunk",
+	"slip",
+	"slippery"
 }
 
 function mod.addblock(tile)

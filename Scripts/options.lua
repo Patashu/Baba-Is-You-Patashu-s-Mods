@@ -51,10 +51,12 @@ mod.enabled["clear"] = false
 mod.enabled["complete"] = false
 mod.enabled["strong"] = false
 mod.enabled["resend"] = false
-mod.enabled["flip"] = true
-mod.enabled["yeet"] = true
+mod.enabled["flip"] = false
+mod.enabled["yeet"] = false
 mod.enabled["moonwalk"] = true
 mod.enabled["drunk"] = true
+mod.enabled["slip"] = true
+mod.enabled["slippery"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -725,5 +727,31 @@ mod.tile["drunk"] = {
 	colour = {1, 3},
 	active = {1, 4},
 	tile = {7, 15},
+	layer = 20,
+}
+
+mod.tile["slip"] = {
+	name = "text_slip",
+	sprite = "text_slip",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 3},
+	active = {1, 4},
+	tile = {8, 15},
+	layer = 20,
+}
+
+mod.tile["slippery"] = {
+	name = "text_slippery",
+	sprite = "text_slippery",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 3},
+	active = {1, 4},
+	tile = {9, 15},
 	layer = 20,
 }

@@ -32,11 +32,11 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **DESTROY** - __Property__ Objects that are DESTROY are destroyed immediately.
 
-**SEND / RECEIVE / RESEND:** __Property_ LEVEL IS SEND/TEXT IS SEND/TEXT NEAR TILE IS SEND sends all matching rules to the next level you enter, LEVEL IS RECEIVE/TEXT IS RECEIVE causes them to take effect. RESEND sends received rules to the next level - but rules sent back to the level they came from are ignored (no infinite stacking). Create meta puzzles spanning multiple levels!
+**SEND / RECEIVE / RESEND** - __Property_ LEVEL IS SEND/TEXT IS SEND/TEXT NEAR TILE IS SEND sends all matching rules to the next level you enter, LEVEL IS RECEIVE/TEXT IS RECEIVE causes them to take effect. RESEND sends received rules to the next level - but rules sent back to the level they came from are ignored (no infinite stacking). Create meta puzzles spanning multiple levels!
 
-**CRASH:** __Property__ If YOU is on CRASH, Baba Is You crashes.
+**CRASH** - __Property__ If YOU is on CRASH, Baba Is You crashes.
 
-**BOUNCE / TWIST / UNTWIST / REFLECT / FUNNEL:** __Property__ Any objects entering these tiles (even in the middle of a long SLIDE move) will have their direction altered as follows: BOUNCE rotates it 180 degrees, TWIST rotates it 90 degrees clockwise, UNTWIST rotates it 90 degrees counterclockwise, REFLECT mirrors it along the UL-DR axis if the REFLECT is facing horizontally or the DL-UR axis if the REFLECT is facing vertically (make appropriate sprites to indicate this), FUNNEL points it in the direction of the funnel. Put SLIDE-ing ice under the tile if you then want it to make a move in that direction!
+**BOUNCE / TWIST / UNTWIST / REFLECT / FUNNEL** - __Property__ Any objects entering these tiles (even in the middle of a long SLIDE move) will have their direction altered as follows: BOUNCE rotates it 180 degrees, TWIST rotates it 90 degrees clockwise, UNTWIST rotates it 90 degrees counterclockwise, REFLECT mirrors it along the UL-DR axis if the REFLECT is facing horizontally or the DL-UR axis if the REFLECT is facing vertically (make appropriate sprites to indicate this), FUNNEL points it in the direction of the funnel. Put SLIDE-ing ice under the tile if you then want it to make a move in that direction!
 
 **EVENTURN / ODDTURN** - __Condition (Prefix)__ True only on even numbered turns and odd numbered turns respectively.
 
@@ -50,7 +50,9 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **YEET** - __Verb__ x YEET y means y is SHIFTed by x 99 times.
 
-**MOONWALK / DRUNK** __Property__ Causes movement from YOU, MOVE, PUSH, PULL and SHIFT to be 180 or 90 degrees 'wrong' respectively. Stacks with itself and each other!
+**MOONWALK / DRUNK** - __Property__ Causes movement from YOU, MOVE, PUSH, PULL and SHIFT to be 180 or 90 degrees 'wrong' respectively. Stacks with itself and each other!
+
+**SLIP / SLIPPERY** - __Property__ Like slow SLIDE! Involuntary movement in the faced direction; prevents voluntary movement (YOU, MOVE) while you are slipping. Try 'ICE IS SLIPPERY' or ALL ON ICE IS SLIP' for ice physics!
 
 Baba is You Discord server: https://discord.gg/GGbUUse
 
