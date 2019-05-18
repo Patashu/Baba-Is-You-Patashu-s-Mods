@@ -8,7 +8,7 @@ local mod = activemod
 
 -- Properties
 mod.enabled["less"] = false
-mod.enabled["slide"] = false
+mod.enabled["slide"] = true
 mod.enabled["stuck"] = false
 mod.enabled["topple"] = false
 mod.enabled["phase"] = false
@@ -55,7 +55,7 @@ mod.enabled["flip"] = false
 mod.enabled["yeet"] = false
 mod.enabled["moonwalk"] = true
 mod.enabled["drunk"] = true
-mod.enabled["slip"] = true
+mod.enabled["slip"] = false
 mod.enabled["slippery"] = true
 mod.enabled["skip"] = true
 mod.enabled["drunker"] = true

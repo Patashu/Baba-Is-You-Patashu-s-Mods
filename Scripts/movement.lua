@@ -1237,10 +1237,15 @@ function check(unitid,x,y,dir,pulling_,reason,ox,oy)
 	return result,results,specials
 end
 
-function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
+function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid,alreadypushing_)
 	local x,y = 0,0
 	local unit = {}
 	local name = ""
+	
+	local alreadypushing = {}
+	if alreadypushing_ ~= nil then
+		alreadypushing = alreadypushing_
+	end
 	
 	if (unitid == 0) then
 		return false
@@ -1256,7 +1261,8 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 		name = "empty"
 	end
 	
-	dir, ox, oy = apply_moonwalk(unitid,x,y,dir,ox,oy,false) 
+	dir, ox, oy = apply_moonwalk(unitid,x,y,dir,ox,oy,false)
+	print("a:"..tostring(unitid)..","..tostring(x)..","..tostring(y)..","..tostring(dir)..","..tostring(ox)..","..tostring(oy))
 	
 	local pulling = pulling_ or false
 	
@@ -1285,8 +1291,18 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 						done = true
 					end
 				else
-					if (pulling == false) then
-						hm = trypush(hm,ox,oy,dir,pulling,x+ox,y+oy,reason,unitid)
+					-- don't cause a stack overflow for certain setups involving PUSH AND WRAP/PORTAL
+					local alreadypushed = false
+					for _,alreadypushedid in ipairs(alreadypushing) do
+						if hm == alreadypushedid[1] and x == alreadypushedid[2] and y == alreadypushedid[3] then
+							alreadypushed = true
+							break
+						end
+					end
+					if (pulling == false and alreadypushed == false) then
+						table.insert(alreadypushing,{hm,x,y})
+						hm = trypush(hm,ox,oy,dir,pulling,x+ox,y+oy,reason,unitid,alreadypushing)
+						table.remove(alreadypushing)
 					else
 						result = math.max(0, result)
 						done = true
@@ -1301,7 +1317,7 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 	end
 end
 
-function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
+function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid,alreadypushing_)
 	local pid2 = tostring(ox + oy * roomsizex) .. tostring(unitid)
 	pushedunits[pid2] = 1
 	
@@ -1320,7 +1336,14 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 		name = "empty"
 	end
 	
+	-- don't cause a stack overflow for certain setups involving PUSH AND WRAP/PORTAL
+	local alreadypushing = {}
+	if alreadypushing_ ~= nil then
+		alreadypushing = alreadypushing_
+	end
+	
 	dir, ox, oy = apply_moonwalk(unitid,x,y,dir,ox,oy,false) 
+	print("b:"..tostring(unitid)..","..tostring(x)..","..tostring(y)..","..tostring(dir)..","..tostring(ox)..","..tostring(oy))
 	
 	--print("In dopush: unitid = " .. tostring(unitid) .. ", x = " .. tostring(x) .. ", y = " .. tostring(y) .. ", reason = " .. tostring(reason))
 	
@@ -1446,7 +1469,19 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 							
 							if (pushedunits[pid] == nil) then
 								pushedunits[pid] = 1
-								hm = dopush(obs,ox,oy,dir,true,x-ox,y-oy,reason,unitid)
+								
+								for _,alreadypushedid in ipairs(alreadypushing) do
+									if obs == alreadypushedid[1] and x == alreadypushedid[2] and y == alreadypushedid[3] then
+										alreadypushed = true
+										break
+									end
+								end
+								
+								if not alreadypushed then
+									table.insert(alreadypushing,{obs,x,y})
+									hm = dopush(obs,ox,oy,dir,true,x-ox,y-oy,reason,unitid,alreadypushing)
+									table.remove(alreadypushing)
+								end
 							end
 						end
 					end
@@ -1458,7 +1493,20 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 						
 						if (pulling == false) or (pulling and (hms[i] ~= pusherid)) and (pushedunits[pid] == nil) then
 							pushedunits[pid] = 1
-							hm = dopush(v,ox,oy,dir,false,x+ox,y+oy,reason,unitid)
+							
+							local alreadypushed = false
+							for _,alreadypushedid in ipairs(alreadypushing) do
+								if v == alreadypushedid[1] and x == alreadypushedid[2] and y == alreadypushedid[3] then
+									alreadypushed = true
+									break
+								end
+							end
+							
+							if not alreadypushed then
+								table.insert(alreadypushing,{v,x,y})
+								hm = dopush(v,ox,oy,dir,false,x+ox,y+oy,reason,unitid,alreadypushing)
+								table.remove(alreadypushing)
+							end
 						end
 					end
 				end
@@ -1502,7 +1550,20 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 					
 					if (pushedunits[pid] == nil) then
 						pushedunits[pid] = 1
-						hm = dopush(obs,ox,oy,dir,pulling,x-ox,y-oy,reason,unitid)
+						
+						local alreadypushed = false
+						for _,alreadypushedid in ipairs(alreadypushing) do
+							if obs == alreadypushedid[1] and x == alreadypushedid[2] and y == alreadypushedid[3] then
+								alreadypushed = true
+								break
+							end
+						end
+						
+						if not alreadypushed then
+							table.insert(alreadypushing,{obs,x,y})
+							hm = dopush(obs,ox,oy,dir,pulling,x-ox,y-oy,reason,unitid,alreadypushing)
+							table.remove(alreadypushing)
+						end
 					end
 				end
 			end
