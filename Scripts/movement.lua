@@ -9,31 +9,6 @@ function movecommand(ox,oy,dir_,playerid_)
 	multimoves = 0;
 	
 	slipped = {}
-	rotatedness = {}
-	
-	local ismoonwalk = findallfeature(nil,"is","moonwalk")
-	local isdrunk = findallfeature(nil,"is","drunk")
-	
-	for i,unit in ipairs(ismoonwalk) do
-		id = unit
-		if (id > 2) then
-			if (rotatedness[id] == nil) then
-				rotatedness[id] = 2
-			else
-				rotatedness[id] = rotatedness[id] + 2
-			end
-		end
-	end
-	for i,unit in ipairs(isdrunk) do
-		id = unit
-		if (id > 2) then
-			if (rotatedness[id] == nil) then
-				rotatedness[id] = 1
-			else
-				rotatedness[id] = rotatedness[id] + 1
-			end
-		end
-	end
 	
 	local still_moving = {}
 	
@@ -511,9 +486,6 @@ function movecommand(ox,oy,dir_,playerid_)
 						unitphase = hasfeature(name,"is","phase",data.unitid)
 						unitstrafe = hasfeature(name,"is","strafe",data.unitid)
 						dir = unitstrafe == nil and unit.values[DIR] or data.dir
-						if (rotatedness[data.unitid] ~= nil) then
-							dir = (dir + rotatedness[data.unitid]) % 4
-						end
 						x,y = unit.values[XPOS],unit.values[YPOS]
 					else
 						dir = data.dir
@@ -550,12 +522,13 @@ function movecommand(ox,oy,dir_,playerid_)
 						
 						local ndrs = ndirs[dir + 1]
 						local ox,oy = ndrs[1],ndrs[2]
+						dir, ox, oy = apply_moonwalk(data.unitid,x,y,dir,ox,oy,false)
+						
 						local pushobslist = {}
+						local obslist,allobs,specials = check(data.unitid,x,y,dir,false,data.reason,ox,oy)
+						local pullobs,pullallobs,pullspecials = check(data.unitid,x,y,dir,true,data.reason,ox,oy)
 						
-						local obslist,allobs,specials = check(data.unitid,x,y,dir,false,data.reason)
-						local pullobs,pullallobs,pullspecials = check(data.unitid,x,y,dir,true,data.reason)
-						
-						local swap = hasfeature(name,"is","swap",data.unitid,x,y)
+						local swap = hasfeature(name,"is","swap",data.unitid,x,y,ox,oy)
 						
 						for c,obs in pairs(obslist) do
 							if (solved == false) then
@@ -766,7 +739,7 @@ function movecommand(ox,oy,dir_,playerid_)
 					unit = mmf.newObject(data.unitid)
 					dir = unit.values[DIR]
 					x,y = unit.values[XPOS],unit.values[YPOS]
-					local finalresult = check(data.unitid,x,y,dir,false,data.reason)
+					local finalresult = check(data.unitid,x,y,dir,false,data.reason,ox,oy)
 					--print(tostring(finalresult[1]))
 					if (finalresult[1] ~= -1) then
 						table.insert(movelist, {data.unitid,ox,oy,dir,specials, 1, data.reason})
@@ -961,7 +934,7 @@ function apply_reflect(unitid,x,y)
 	end
 end
 
-function check(unitid,x,y,dir,pulling_,reason)
+function check(unitid,x,y,dir,pulling_,reason,ox,oy)
 	local pulling = false
 	if (pulling_ ~= nil) then
 		pulling = pulling_
@@ -972,8 +945,15 @@ function check(unitid,x,y,dir,pulling_,reason)
 		dir_ = rotate(dir)
 	end
 	
-	local ndrs = ndirs[dir_ + 1]
-	local ox,oy = ndrs[1],ndrs[2]
+	if (ox ~= nil and oy ~= nil) then
+		if (pulling) then
+			ox = -ox
+			oy = -oy
+		end
+	else
+		ndrs = ndirs[dir_ + 1]
+		ox,oy = ndrs[1],ndrs[2]
+	end
 	
 	local result = {}
 	local results = {}
@@ -1262,12 +1242,6 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 	local unit = {}
 	local name = ""
 	
-	if (rotatedness[unitid] ~= nil) then
-		dir = (dir + rotatedness[unitid]) % 4
-		local ndrs = ndirs[dir + 1]
-		ox,oy = ndrs[1],ndrs[2]
-	end
-	
 	if (unitid == 0) then
 		return false
 	end
@@ -1282,6 +1256,8 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 		name = "empty"
 	end
 	
+	dir, ox, oy = apply_moonwalk(unitid,x,y,dir,ox,oy,false) 
+	
 	local pulling = pulling_ or false
 	
 	local weak = hasfeature(name,"is","weak",unitid,x,y) ~= nil
@@ -1289,7 +1265,7 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 	weak = weak or (strong ~= nil and #strong > 0)
 
 	if (weak ~= true) or pulling then
-		local hmlist,hms,specials = check(unitid,x,y,dir,false,reason)
+		local hmlist,hms,specials = check(unitid,x,y,dir,false,reason,ox,oy)
 		
 		local result = 0
 		
@@ -1334,12 +1310,6 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 	local name = ""
 	local pushsound = false
 	
-	if (rotatedness[unitid] ~= nil) then
-		dir = (dir + rotatedness[unitid]) % 4
-		local ndrs = ndirs[dir + 1]
-		ox,oy = ndrs[1],ndrs[2]
-	end
-	
 	if (unitid ~= 2) then
 		unit = mmf.newObject(unitid)
 		x,y = unit.values[XPOS],unit.values[YPOS]
@@ -1349,6 +1319,8 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 		y = y_
 		name = "empty"
 	end
+	
+	dir, ox, oy = apply_moonwalk(unitid,x,y,dir,ox,oy,false) 
 	
 	--print("In dopush: unitid = " .. tostring(unitid) .. ", x = " .. tostring(x) .. ", y = " .. tostring(y) .. ", reason = " .. tostring(reason))
 	
@@ -1416,8 +1388,8 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 	local hm = 0
 	
 	if (HACK_MOVES < 10000) then
-		local hmlist,hms,specials = check(unitid,x,y,dir,false,reason)
-		local pullhmlist,pullhms,pullspecials = check(unitid,x,y,dir,true,reason)
+		local hmlist,hms,specials = check(unitid,x,y,dir,false,reason,ox,oy)
+		local pullhmlist,pullhms,pullspecials = check(unitid,x,y,dir,true,reason,ox,oy)
 		local result = 0
 		
 		local weak = hasfeature(name,"is","weak",unitid,x,y) ~= nil
@@ -1515,7 +1487,7 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid)
 		end
 		
 		if pulling and (HACK_MOVES < 10000) then
-			hmlist,hms,specials = check(unitid,x,y,dir,pulling,reason)
+			hmlist,hms,specials = check(unitid,x,y,dir,pulling,reason,ox,oy)
 			hm = 0
 			
 			for i,obs in pairs(hmlist) do
@@ -1673,9 +1645,7 @@ function move(unitid,ox,oy,dir,specials_,instant_,simulate_)
 		
 		if (gone == false) and (simulate == false) then
 			success = true
-			if (rotatedness[unitid] ~= nil) then
-				dir = (dir - rotatedness[unitid]) % 4
-			end
+			dir = apply_moonwalk(unitid, x, y, dir, nil, nil, true)
 			if instant then
 				update(unitid,x+ox,y+oy, strafe == nil and dir or unit.values[DIR])
 				MF_alert("Instant movement on " .. tostring(unitid))
@@ -1823,4 +1793,96 @@ function add_moving_units(rule,newdata,data,been_seen,empty_)
 	end
 	
 	return result,seen
+end
+
+function apply_moonwalk(unitid, x, y, dir, ox, oy, reverse)
+	local name = "empty"
+	local sgn = reverse == true and -1 or 1
+	if (unitid ~= 2) then
+		local unit = mmf.newObject(unitid)
+		name = getname(unit)
+	end
+	local rotatedness = 0;
+	rotatedness = rotatedness + sgn*countfeature(name,"is","moonwalk",unitid,x,y)*2;
+	rotatedness = rotatedness + sgn*countfeature(name,"is","drunk",unitid,x,y);
+	rotatedness = rotatedness + sgn*countfeature(name,"is","drunker",unitid,x,y)*0.5;
+	local mag = 1;
+	mag = mag + countfeature(name,"is","skip",unitid,x,y);
+	if (dir ~= nil and ox ~= nil and oy ~= nil) then
+		dir = (dir + trunc(rotatedness)) % 4
+		ox, oy = dirtooxoy(oxoytodir(ox, oy) + rotatedness)
+		ox = ox * mag;
+		oy = oy * mag;
+		return dir, ox, oy
+	elseif (dir ~= nil) then
+		dir = (dir + trunc(rotatedness)) % 4
+		return dir
+	elseif (ox ~= nil and oy ~= nil) then
+		ox, oy = dirtooxoy(oxoytodir(ox, oy) + rotatedness)
+		ox = ox * mag;
+		oy = oy * mag;
+		return ox, oy
+	else
+		return nil
+	end
+end
+
+function oxoytodir(ox, oy)
+	ox = sign(ox)
+	oy = sign(oy)
+	if ox == 1 and oy == 0 then
+		return 0
+	elseif ox == 1 and oy == -1 then
+		return 0.5
+	elseif ox == 0 and oy == -1 then
+		return 1
+	elseif ox == -1 and oy == -1 then
+		return 1.5
+	elseif ox == -1 and oy == 0 then
+		return 2
+	elseif ox == -1 and oy == 1 then
+		return 2.5
+	elseif ox == 0 and oy == 1 then
+		return 3
+	elseif ox == 1 and oy == 1 then
+		return 3.5
+	end
+	return nil
+end
+
+function dirtooxoy(dir)
+	dir = dir % 4
+	if dir == math.floor(dir) then
+		local result = ndirs[dir+1]
+		return result[1], result[2]
+	elseif dir == 0.5 then
+		return 1, -1
+	elseif dir == 1.5 then
+		return -1, -1
+	elseif dir == 2.5 then
+		return -1, 1
+	elseif dir == 3.5 then
+		return 1, 1
+	end
+	return 0, 0
+end
+
+function sign(num)
+	if num > 0 then
+		return 1
+	elseif num < 0 then
+		return -1
+	else
+		return 0
+	end
+end
+
+function trunc(num)
+	if num > 0 then
+		return math.floor(num)
+	elseif num < 0 then
+		return math.ceil(num)
+	else
+		return 0
+	end
 end

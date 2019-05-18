@@ -29,6 +29,7 @@ function mod.load(dir)
 	loadscript(dir .. "rules")
 	loadscript(dir .. "map")
 	loadscript(dir .. "changes")
+	loadscript(dir .. "features")
 	
 	--and new stuff
 	loadscript(dir .. "crc32")
@@ -49,6 +50,7 @@ function mod.unload(dir)
 	loadscript("Data/rules")
 	loadscript("Data/map")
 	loadscript("Data/changes")
+	loadscript("Data/features")
 end
 
 mod.alltiles = {
@@ -101,7 +103,9 @@ mod.alltiles = {
 	"moonwalk",
 	"drunk",
 	"slip",
-	"slippery"
+	"slippery",
+	"skip",
+	"drunker"
 }
 
 function mod.addblock(tile)

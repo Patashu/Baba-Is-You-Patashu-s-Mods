@@ -50,7 +50,7 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **YEET** - __Verb__ x YEET y means y is SHIFTed by x 99 times.
 
-**MOONWALK / DRUNK** - __Property__ Causes movement from YOU, MOVE, PUSH, PULL and SHIFT to be 180 or 90 degrees 'wrong' respectively. Stacks with itself and each other!
+**DMOONWALK / DRUNK / DRUNKER / SKIP** - __Property__ Causes movement (YOU/MOVE/PUSH/PULL/SHIFT/SLIDE/SLIP/SLIPPERY) to be 180, 90 or 45 degrees 'wrong' respectively. SKIP makes movements go 2 tiles instead of 1! All 4 stack with each other and themselves!
 
 **SLIP / SLIPPERY** - __Property__ Like slow SLIDE! Involuntary movement in the faced direction; prevents voluntary movement (YOU, MOVE) while you are slipping. Try 'ICE IS SLIPPERY' or ALL ON ICE IS SLIP' for ice physics!
 

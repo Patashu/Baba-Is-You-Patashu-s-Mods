@@ -33,8 +33,8 @@ mod.enabled["gigarare"] = false
 mod.enabled["collide"] = false
 mod.enabled["saccade"] = false
 mod.enabled["destroy"] = false
-mod.enabled["send"] = true
-mod.enabled["receive"] = true
+mod.enabled["send"] = false
+mod.enabled["receive"] = false
 mod.enabled["crash"] = false
 mod.enabled["bounce"] = false
 mod.enabled["twist"] = false
@@ -57,6 +57,8 @@ mod.enabled["moonwalk"] = true
 mod.enabled["drunk"] = true
 mod.enabled["slip"] = true
 mod.enabled["slippery"] = true
+mod.enabled["skip"] = true
+mod.enabled["drunker"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -753,5 +755,31 @@ mod.tile["slippery"] = {
 	colour = {1, 3},
 	active = {1, 4},
 	tile = {9, 15},
+	layer = 20,
+}
+
+mod.tile["skip"] = {
+	name = "text_skip",
+	sprite = "text_skip",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 3},
+	active = {1, 4},
+	tile = {10, 15},
+	layer = 20,
+}
+
+mod.tile["drunker"] = {
+	name = "text_drunker",
+	sprite = "text_drunker",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {1, 3},
+	active = {1, 4},
+	tile = {11, 15},
 	layer = 20,
 }
