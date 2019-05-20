@@ -105,7 +105,9 @@ mod.alltiles = {
 	"slip",
 	"slippery",
 	"skip",
-	"drunker"
+	"drunker",
+	"stubborn",
+	"lazy"
 }
 
 function mod.addblock(tile)

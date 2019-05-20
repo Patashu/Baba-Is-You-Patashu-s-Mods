@@ -8,7 +8,7 @@ local mod = activemod
 
 -- Properties
 mod.enabled["less"] = false
-mod.enabled["slide"] = true
+mod.enabled["slide"] = false
 mod.enabled["stuck"] = false
 mod.enabled["topple"] = false
 mod.enabled["phase"] = false
@@ -37,7 +37,7 @@ mod.enabled["send"] = true
 mod.enabled["receive"] = true
 mod.enabled["crash"] = false
 mod.enabled["bounce"] = false
-mod.enabled["twist"] = true
+mod.enabled["twist"] = false
 mod.enabled["untwist"] = false
 mod.enabled["reflect"] = false
 mod.enabled["funnel"] = false
@@ -53,12 +53,14 @@ mod.enabled["strong"] = false
 mod.enabled["resend"] = true
 mod.enabled["flip"] = false
 mod.enabled["yeet"] = false
-mod.enabled["moonwalk"] = true
-mod.enabled["drunk"] = true
+mod.enabled["moonwalk"] = false
+mod.enabled["drunk"] = false
 mod.enabled["slip"] = false
-mod.enabled["slippery"] = false
+mod.enabled["slippery"] = true
 mod.enabled["skip"] = false
 mod.enabled["drunker"] = false
+mod.enabled["stubborn"] = true
+mod.enabled["lazy"] = true
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
@@ -785,5 +787,31 @@ mod.tile["drunker"] = {
 	colour = {1, 3},
 	active = {1, 4},
 	tile = {11, 15},
+	layer = 20,
+}
+
+mod.tile["stubborn"] = {
+	name = "text_stubborn",
+	sprite = "text_stubborn",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {6, 1},
+	active = {6, 2},
+	tile = {12, 15},
+	layer = 20,
+}
+
+mod.tile["lazy"] = {
+	name = "text_lazy",
+	sprite = "text_lazy",
+	sprite_in_root = false,
+	unittype = "text",
+	tiling = -1,
+	type = 2,
+	colour = {6, 1},
+	active = {6, 2},
+	tile = {13, 15},
 	layer = 20,
 }

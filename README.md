@@ -54,6 +54,10 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **SLIP / SLIPPERY** - __Property__ Like slow SLIDE! Involuntary movement in the faced direction; prevents voluntary movement (YOU, MOVE) while you are slipping. Try 'ICE IS SLIPPERY' or ALL ON ICE IS SLIP' for ice physics!
 
+**STUBBORN** - __Property__ Something that is MOVE and STUBBORN doesn't turn around when it hits a wall.
+
+**LAZY** - __Property__ Something that is LAZY can't push or pull. ROCK IS PUSH AND LAZY gives you sokoban style 'max 1' pushing. KEKE IS MOVE AND LAZY gives you moving actors that don't shive things around with them.
+
 Baba is You Discord server: https://discord.gg/GGbUUse
 
 You may use these mods in your mod pack or custom world with attribution!

@@ -518,11 +518,13 @@ function movecommand(ox,oy,dir_,playerid_)
 							end
 						elseif (state == 3) then
 							if ((data.reason == "move") or (data.reason == "chill")) then
-								dir = rotate(dir)
-								
-								if (data.unitid ~= 2) then
-									updatedir(data.unitid, dir)
-									--unit.values[DIR] = dir
+								if (not hasfeature(name,"is","stubborn",data.unitid,x,y)) then
+									dir = rotate(dir)
+
+									if (data.unitid ~= 2) then
+										updatedir(data.unitid, dir)
+										--unit.values[DIR] = dir
+									end
 								end
 							end
 						end
@@ -684,7 +686,7 @@ function movecommand(ox,oy,dir_,playerid_)
 									local finalpushobs = {}
 									
 									for c,pushobs in ipairs(pushobslist) do
-										local hm = trypush(pushobs,ox,oy,dir,false,x,y,data.reason)
+										local hm = trypush(pushobs,ox,oy,dir,false,x,y,data.reason,data.unitid)
 										if (hm == 0) then
 											table.insert(finalpushobs, pushobs)
 										elseif (hm == 1) or (hm == -1) then
@@ -698,7 +700,7 @@ function movecommand(ox,oy,dir_,playerid_)
 									if (result == 1) then
 										for c,pushobs in ipairs(finalpushobs) do
 											pushedunits = {}
-											dopush(pushobs,ox,oy,dir,false,x,y,data.reason)
+											dopush(pushobs,ox,oy,dir,false,x,y,data.reason,data.unitid)
 										end
 										result = 0
 									end
@@ -1277,6 +1279,13 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid,alreadypushing_
 	local weak = hasfeature(name,"is","weak",unitid,x,y) ~= nil
 	local strong = findfeatureat(nil,"is","strong",x+ox,y+oy)
 	weak = weak or (strong ~= nil and #strong > 0)
+	
+	local pushername = "empty";
+	if (pusherid > 2) then
+		local pusherunit = mmf.newObject(pusherid);
+		pushername = getname(pusherunit);
+	end
+	local lazypusher = hasfeature(pushername,"is","lazy",pusherid,x,y) ~= nil
 
 	if (weak ~= true) or pulling then
 		local hmlist,hms,specials = check(unitid,x,y,dir,false,reason,ox,oy)
@@ -1287,7 +1296,9 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid,alreadypushing_
 			local done = false
 			
 			while (done == false) do
-				if (hm == 0) then
+				if (lazypusher) then
+					return 1
+				elseif (hm == 0) then
 					result = math.max(0, result)
 					done = true
 				elseif (hm == 1) or (hm == -1) then
@@ -1300,6 +1311,7 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid,alreadypushing_
 					end
 				else
 					-- don't cause a stack overflow for certain setups involving PUSH AND WRAP/PORTAL
+					-- Patashu: using hm or pusherid here seems to be about equal at stack overflow protection
 					local alreadypushed = false
 					for _,alreadypushedid in ipairs(alreadypushing) do
 						if hm == alreadypushedid[1] and x == alreadypushedid[2] and y == alreadypushedid[3] then
@@ -1358,6 +1370,14 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid,alreadypushing_)
 	--print("In dopush: unitid = " .. tostring(unitid) .. ", x = " .. tostring(x) .. ", y = " .. tostring(y) .. ", reason = " .. tostring(reason))
 	
 	local moveadd = 1;
+	
+	local pushername = "empty";
+	if (pusherid > 2) then
+		local pusherunit = mmf.newObject(pusherid);
+		pushername = getname(pusherunit);
+	end
+	local lazypusher = hasfeature(pushername,"is","lazy",pusherid,x,y) ~= nil
+	local lazyid = hasfeature(name,"is","lazy",unitid,x,y) ~= nil
 	
 	local pulling = false
 	if (pulling_ ~= nil) then
@@ -1433,7 +1453,9 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid,alreadypushing_)
 		for i,obs in pairs(hmlist) do
 			local done = false
 			while (done == false) do
-				if (obs == 0) then
+				if (lazypusher) then
+					return 1
+				elseif (obs == 0) then
 					result = math.max(0, result)
 					done = true
 				elseif (obs == 1) or (obs == -1) then
@@ -1545,34 +1567,41 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid,alreadypushing_)
 		end
 		
 		if pulling and (HACK_MOVES < 10000) then
+			if (lazypusher) then
+					return 1
+			end
 			hmlist,hms,specials = check(unitid,x,y,dir,pulling,reason,ox,oy)
 			hm = 0
 			
 			for i,obs in pairs(hmlist) do
 				if (obs < -1) or (obs > 1) then
-					if (obs ~= 2) then
-						table.insert(movelist, {obs,ox,oy,dir,specials,1,reason})
-						pushsound = true
-						--move(obs,ox,oy,dir,specials)
-					end
-					
-					local pid = tostring(x-ox + (y-oy) * roomsizex) .. tostring(obs)
-					
-					if (pushedunits[pid] == nil) then
-						pushedunits[pid] = 1
-						
-						local alreadypushed = false
-						for _,alreadypushedid in ipairs(alreadypushing) do
-							if obs == alreadypushedid[1] and x == alreadypushedid[2] and y == alreadypushedid[3] then
-								alreadypushed = true
-								break
-							end
+					if (not lazyid) then
+						--Mostly the lazypusher stuff is self-explanatory - don't do a push if we're lazy.
+						--But in the case of pulling, the item one ahead of us does a pull 'early', so we have to stop it in advance.
+						if (obs ~= 2) then
+							table.insert(movelist, {obs,ox,oy,dir,specials,1,reason})
+							pushsound = true
+							--move(obs,ox,oy,dir,specials)
 						end
+
+						local pid = tostring(x-ox + (y-oy) * roomsizex) .. tostring(obs)
 						
-						if not alreadypushed then
-							table.insert(alreadypushing,{obs,x,y})
-							hm = dopush(obs,ox,oy,dir,pulling,x-ox,y-oy,reason,unitid,alreadypushing)
-							table.remove(alreadypushing)
+						if (pushedunits[pid] == nil) then
+							pushedunits[pid] = 1
+							
+							local alreadypushed = false
+							for _,alreadypushedid in ipairs(alreadypushing) do
+								if obs == alreadypushedid[1] and x == alreadypushedid[2] and y == alreadypushedid[3] then
+									alreadypushed = true
+									break
+								end
+							end
+							
+							if not alreadypushed then
+								table.insert(alreadypushing,{obs,x,y})
+								hm = dopush(obs,ox,oy,dir,pulling,x-ox,y-oy,reason,unitid,alreadypushing)
+								table.remove(alreadypushing)
+							end
 						end
 					end
 				end
