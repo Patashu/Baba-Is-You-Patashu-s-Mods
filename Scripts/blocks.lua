@@ -2011,7 +2011,7 @@ function levelblock()
 						delthese = {}
 						doremovalsound = true
 						for a,b in ipairs(units) do
-							print(b)
+							--print(b)
 							if (issafe(b.fixed) == false) and floating_level(b.fixed) then
 								local unit = b
 								local pmult,sound = checkeffecthistory("weak")

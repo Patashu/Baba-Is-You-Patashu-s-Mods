@@ -138,6 +138,21 @@ function code()
 				end
 			end
 			
+			if (is_resending ~= nil and is_receiving == nil) then
+				for k,v in ipairs(last_levelrules) do
+					local rule = v[1]
+					if (rule[3] ~= "send") then
+						local finalconds = v[2]
+						for k,v in ipairs(finalconds) do
+							v[3] = nil
+						end
+						if (v[4][1] ~= generaldata.strings[CURRLEVEL]) then
+							table.insert(current_levelrules, copyrule(v))
+						end
+					end
+				end
+			end
+			
 			grouprules()
 			postrules()
 			updatecode = 0
@@ -1480,7 +1495,7 @@ function copyrule(rule)
 	local newconds = {}
 	local newids = {}
 	
-	print(extra)
+	--print(extra)
 	newbaserule = {baserule[1],baserule[2],baserule[3]}
 	
 	if (#conds > 0) then

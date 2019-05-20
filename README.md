@@ -32,7 +32,7 @@ To install: Extract the "Scripts" and "Sprites" folders into the world you wish 
 
 **DESTROY** - __Property__ Objects that are DESTROY are destroyed immediately.
 
-**SEND / RECEIVE / RESEND** - __Property_ LEVEL IS SEND/TEXT IS SEND/TEXT NEAR TILE IS SEND sends all matching rules to the next level you enter, LEVEL IS RECEIVE/TEXT IS RECEIVE causes them to take effect. RESEND sends received rules to the next level - but rules sent back to the level they came from are ignored (no infinite stacking). Create meta puzzles spanning multiple levels!
+**SEND / RECEIVE / RESEND** - __Property_ LEVEL IS SEND/TEXT IS SEND/TEXT NEAR TILE IS SEND sends all matching rules to the next level you enter, LEVEL IS RECEIVE/TEXT IS RECEIVE causes them to take effect. RESEND sends received rules to the next level (even if they are not RECEIVED!) - but rules sent back to the level they came from are ignored (no infinite stacking). Create meta puzzles spanning multiple levels!
 
 **CRASH** - __Property__ If YOU is on CRASH, Baba Is You crashes.
 
