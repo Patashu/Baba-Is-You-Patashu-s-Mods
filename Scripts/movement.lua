@@ -81,10 +81,10 @@ function movecommand(ox,oy,dir_,playerid_)
 			local name = getname(unit);
 			x,y = unit.values[XPOS],unit.values[YPOS]
 			local rng = seed_rng(v, name, x, y, "text_flinch")
-			local dizzy_too = hasfeature(name,"is","dizzy",v) ~= nil)
+			local dizzy_too = hasfeature(name,"is","dizzy",v) ~= nil
 			local possible_dirs = {}
 			for i=1,4 do
-				if (not dizzy_too or i ~= dir + 1) then
+				if (not dizzy_too or i ~= unit.values[DIR] + 1) then
 					local drs = ndirs[i]
 					ox = drs[1]
 					oy = drs[2]
@@ -910,12 +910,12 @@ function apply_reflect(unitid,x,y)
 	end
 	local twist = findfeatureat(nil,"is","twist",x,y)
 	if (twist ~= nil) then
-		addaction(unitid,{"update",x,y,(unit.values[DIR] + 3*#bounce) % 4})
+		addaction(unitid,{"update",x,y,(unit.values[DIR] + 3*#twist) % 4})
 		--updatedir(unit.fixed, (unit.values[DIR] + 1) % 4)
 	end
 	local untwist = findfeatureat(nil,"is","untwist",x,y)
 	if (untwist ~= nil) then
-		addaction(unitid,{"update",x,y,(unit.values[DIR] + 1*#bounce) % 4})
+		addaction(unitid,{"update",x,y,(unit.values[DIR] + 1*#untwist) % 4})
 		--updatedir(unit.fixed, (unit.values[DIR] + 3) % 4)
 	end
 	local reflect = findfeatureat(nil,"is","reflect",x,y)

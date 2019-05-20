@@ -37,12 +37,12 @@ mod.enabled["send"] = false
 mod.enabled["receive"] = false
 mod.enabled["crash"] = false
 mod.enabled["bounce"] = false
-mod.enabled["twist"] = false
+mod.enabled["twist"] = true
 mod.enabled["untwist"] = false
 mod.enabled["reflect"] = false
 mod.enabled["funnel"] = false
-mod.enabled["dizzy"] = false
-mod.enabled["flinch"] = false
+mod.enabled["dizzy"] = true
+mod.enabled["flinch"] = true
 mod.enabled["eventurn"] = false
 mod.enabled["oddturn"] = false
 mod.enabled["won"] = false
@@ -56,9 +56,9 @@ mod.enabled["yeet"] = false
 mod.enabled["moonwalk"] = true
 mod.enabled["drunk"] = true
 mod.enabled["slip"] = false
-mod.enabled["slippery"] = true
-mod.enabled["skip"] = true
-mod.enabled["drunker"] = true
+mod.enabled["slippery"] = false
+mod.enabled["skip"] = false
+mod.enabled["drunker"] = false
 
 ---------------------------------------------------
 --[[           MECHANIC OPTIONS                ]]--
