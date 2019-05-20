@@ -58,15 +58,19 @@ function movecommand(ox,oy,dir_,playerid_)
 	local dizzy = findallfeature(nil,"is","dizzy",true)
 	for _,v in ipairs(dizzy) do
 		if v ~= 2 then
+			--implement dizzy+flinch in flinch
+			
 			local unit = mmf.newObject(v)
 			local name = getname(unit);
-			x,y = unit.values[XPOS],unit.values[YPOS]
-			local rng = seed_rng(v, name, x, y, "text_dizzy")
-			local newdir = math.floor(rng*3); --equal chance of 0, 1, 2
-			if (newdir >= unit.values[DIR]) then --skip the direction equal to our current one
-				newdir = newdir + 1
+			if (hasfeature(name,"is","flinch",v) == nil) then
+				x,y = unit.values[XPOS],unit.values[YPOS]
+				local rng = seed_rng(v, name, x, y, "text_dizzy")
+				local newdir = math.floor(rng*3); --equal chance of 0, 1, 2
+				if (newdir >= unit.values[DIR]) then --skip the direction equal to our current one
+					newdir = newdir + 1
+				end
+				updatedir(unit.fixed,newdir) 
 			end
-			updatedir(unit.fixed,newdir) 
 		end
 	end
 	
@@ -77,16 +81,19 @@ function movecommand(ox,oy,dir_,playerid_)
 			local name = getname(unit);
 			x,y = unit.values[XPOS],unit.values[YPOS]
 			local rng = seed_rng(v, name, x, y, "text_flinch")
+			local dizzy_too = hasfeature(name,"is","dizzy",v) ~= nil)
 			local possible_dirs = {}
 			for i=1,4 do
-				local drs = ndirs[i]
-				ox = drs[1]
-				oy = drs[2]
-				
-				local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
-				
-				if valid then
-					table.insert(possible_dirs, i-1)
+				if (not dizzy_too or i ~= dir + 1) then
+					local drs = ndirs[i]
+					ox = drs[1]
+					oy = drs[2]
+					
+					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, activemod.more_checks_nontangible_text, activemod.more_checks_empty)
+					
+					if valid then
+						table.insert(possible_dirs, i-1)
+					end
 				end
 			end
 			if (#possible_dirs > 0) then
@@ -522,7 +529,9 @@ function movecommand(ox,oy,dir_,playerid_)
 						
 						local ndrs = ndirs[dir + 1]
 						local ox,oy = ndrs[1],ndrs[2]
-						dir, ox, oy = apply_moonwalk(data.unitid,x,y,dir,ox,oy,false)
+						if (activemod.very_drunk or (data.reason ~= "shift" and data.reason ~= "yeet")) then
+							dir, ox, oy = apply_moonwalk(data.unitid,x,y,dir,ox,oy,false)
+						end
 						
 						local pushobslist = {}
 						local obslist,allobs,specials = check(data.unitid,x,y,dir,false,data.reason,ox,oy)
@@ -796,10 +805,7 @@ function movecommand(ox,oy,dir_,playerid_)
 						unit.values[XPOS] = unit.values[XPOS] + movelist[i][2]
 						unit.values[YPOS] = unit.values[YPOS] + movelist[i][3]
 						
-						if (hasfeature(unitname,"is","slide",unitid)) then
-							--print("Adding a move");
-							movesleft = movesleft + 1
-						end
+						movesleft = movesleft + countfeature(unitname,"is","slide",unitid);
 						
 						unit.values[XPOS] = unit.values[XPOS] - movelist[i][2]
 						unit.values[YPOS] = unit.values[YPOS] - movelist[i][3]
@@ -899,17 +905,17 @@ function apply_reflect(unitid,x,y)
 	local bounce = findfeatureat(nil,"is","bounce",x,y)
 	if (bounce ~= nil) then
 		--print(unit.values[DIR].."=>"..(unit.values[DIR] + 2) % 4)
-		addaction(unitid,{"update",x,y,(unit.values[DIR] + 2) % 4})
+		addaction(unitid,{"update",x,y,(unit.values[DIR] + 2*#bounce) % 4})
 		--updatedir(unit.fixed, (unit.values[DIR] + 2) % 4)
 	end
 	local twist = findfeatureat(nil,"is","twist",x,y)
 	if (twist ~= nil) then
-		addaction(unitid,{"update",x,y,(unit.values[DIR] + 3) % 4})
+		addaction(unitid,{"update",x,y,(unit.values[DIR] + 3*#bounce) % 4})
 		--updatedir(unit.fixed, (unit.values[DIR] + 1) % 4)
 	end
 	local untwist = findfeatureat(nil,"is","untwist",x,y)
 	if (untwist ~= nil) then
-		addaction(unitid,{"update",x,y,(unit.values[DIR] + 1) % 4})
+		addaction(unitid,{"update",x,y,(unit.values[DIR] + 1*#bounce) % 4})
 		--updatedir(unit.fixed, (unit.values[DIR] + 3) % 4)
 	end
 	local reflect = findfeatureat(nil,"is","reflect",x,y)
@@ -1261,8 +1267,10 @@ function trypush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid,alreadypushing_
 		name = "empty"
 	end
 	
-	dir, ox, oy = apply_moonwalk(unitid,x,y,dir,ox,oy,false)
-	print("a:"..tostring(unitid)..","..tostring(x)..","..tostring(y)..","..tostring(dir)..","..tostring(ox)..","..tostring(oy))
+	if (activemod.very_drunk) then
+		dir, ox, oy = apply_moonwalk(unitid,x,y,dir,ox,oy,false)
+	end
+	--print("a:"..tostring(unitid)..","..tostring(x)..","..tostring(y)..","..tostring(dir)..","..tostring(ox)..","..tostring(oy))
 	
 	local pulling = pulling_ or false
 	
@@ -1342,8 +1350,10 @@ function dopush(unitid,ox,oy,dir,pulling_,x_,y_,reason,pusherid,alreadypushing_)
 		alreadypushing = alreadypushing_
 	end
 	
-	dir, ox, oy = apply_moonwalk(unitid,x,y,dir,ox,oy,false) 
-	print("b:"..tostring(unitid)..","..tostring(x)..","..tostring(y)..","..tostring(dir)..","..tostring(ox)..","..tostring(oy))
+	if (activemod.very_drunk) then
+		dir, ox, oy = apply_moonwalk(unitid,x,y,dir,ox,oy,false) 
+	end
+	--print("b:"..tostring(unitid)..","..tostring(x)..","..tostring(y)..","..tostring(dir)..","..tostring(ox)..","..tostring(oy))
 	
 	--print("In dopush: unitid = " .. tostring(unitid) .. ", x = " .. tostring(x) .. ", y = " .. tostring(y) .. ", reason = " .. tostring(reason))
 	

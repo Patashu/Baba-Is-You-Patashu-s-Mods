@@ -64,11 +64,15 @@ mod.enabled["drunker"] = true
 --[[           MECHANIC OPTIONS                ]]--
 ---------------------------------------------------
 
---If true, restarting/starting a puzzle will generate a new rng seed for use with MAYBE et all, instead of using the puzzle's name as the seed.
+--If true, restarting/starting a puzzle will generate a new rng seed for use with MAYBE et all, instead of using the puzzle's name as the seed. Defaults to true.
 activemod.seed_rng_on_restart = true
---If true, MORE and related properties (LESS, MULTIPLY, DIVIDE, PRINT, MASSPROD) check empty as well as obstacles.
+--If true, MOONWALK and related properties (DRUNK, DRUNKER, SKIP) apply to PUSH, PULL, SHIFT and YEET in addition to basically everything else. Defaults to true.
+activemod.very_drunk = true
+--If true, MORE and related properties (LESS, MULTIPLY, DIVIDE, FLINCH) check empty as well as obstacles. Defaults to true. Vanilla behaviour is false.
 activemod.more_checks_empty = true
---debris copied from lily's mods, probably unnecessary?
+--If true, MORE and related properties check non-tangible text (e.g. that isn't push) as well as obstacles. Defaults to false. Vanilla behaviour is true.
+activemod.more_checks_nontangible_text = false
+--this will be relevant after merging with lily's mods I guess?
 activemod.condition_stacking = true
 activemod.auto_speed = 20
 

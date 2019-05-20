@@ -728,7 +728,7 @@ function block(small_)
 					ox = drs[1]
 					oy = drs[2]
 					
-					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, activemod.more_checks_nontangible_text, activemod.more_checks_empty)
 					
 					if valid then
 						local newunit = copy(unit.fixed,x+ox,y+oy)
@@ -745,7 +745,7 @@ function block(small_)
 					ox = drs[1]
 					oy = drs[2]
 					
-					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, activemod.more_checks_nontangible_text, activemod.more_checks_empty)
 					
 					if valid then
 						local newunit = copy(unit.fixed,x+ox,y+oy)
@@ -762,7 +762,7 @@ function block(small_)
 					ox = drs[1]
 					oy = drs[2]
 					
-					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, activemod.more_checks_nontangible_text, activemod.more_checks_empty)
 					
 					if valid then
 						local newunit = copy(unit.fixed,x+ox,y+oy)
@@ -782,7 +782,7 @@ function block(small_)
 						ox = drs[1]
 						oy = drs[2]
 						
-						local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+						local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, activemod.more_checks_nontangible_text, activemod.more_checks_empty)
 						
 						if valid then
 							could_grow = true
@@ -809,7 +809,7 @@ function block(small_)
 						ox = drs[1]
 						oy = drs[2]
 						
-						local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+						local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, activemod.more_checks_nontangible_text, activemod.more_checks_empty)
 						
 						if valid then
 							could_grow = true
@@ -836,7 +836,7 @@ function block(small_)
 						ox = drs[1]
 						oy = drs[2]
 						
-						local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+						local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, activemod.more_checks_nontangible_text, activemod.more_checks_empty)
 						
 						if valid then
 							could_grow = true
@@ -865,7 +865,7 @@ function block(small_)
 				ox = drs[1]
 				oy = drs[2]
 				
-				local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+				local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, activemod.more_checks_nontangible_text, activemod.more_checks_empty)
 				
 				if valid then
 					local newunit = copy(unit.fixed,x+ox,y+oy)
@@ -891,7 +891,7 @@ function block(small_)
 					ox = drs[1]
 					oy = drs[2]
 					
-					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, activemod.more_checks_nontangible_text, activemod.more_checks_empty)
 					
 					if valid then
 						could_grow = true
@@ -921,7 +921,7 @@ function block(small_)
 				ox = drs[1]
 				oy = drs[2]
 				
-				local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+				local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, activemod.more_checks_nontangible_text, activemod.more_checks_empty)
 				
 				if valid then
 					local newunit = copy(unit.fixed,x+ox,y+oy)
@@ -945,7 +945,7 @@ function block(small_)
 					ox = drs[1]
 					oy = drs[2]
 					
-					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, true, activemod.more_checks_empty)
+					local valid = simplecouldenter(unit.fixed, x, y, ox, oy, true, activemod.more_checks_nontangible_text, activemod.more_checks_empty)
 					
 					if valid then
 						could_grow = true
