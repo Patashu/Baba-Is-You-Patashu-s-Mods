@@ -8,6 +8,7 @@ function effects(timer)
 	doeffect(timer,"wonder","wonder",1,10,5,{0,3})
 	doeffect(timer,"sad","tear",1,2,20,{3,2})
 	doeffect(timer,"sleep","sleep",1,2,60,{3,2})
+	doeffect(timer,"power","electricity",2,5,8,{2,4})
 	
 	local rnd = math.random(2,4)
 	doeffect(timer,"end","unlock",1,1,10,{1,rnd},"inwards")

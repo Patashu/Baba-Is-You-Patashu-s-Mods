@@ -712,6 +712,7 @@ function docode(firstwords)
 								end
 							end
 							
+							--[[
 							local delconds = {}
 							
 							for c,cond in ipairs(conds) do
@@ -754,6 +755,7 @@ function docode(firstwords)
 								table.remove(conds, d - delcondoffset)
 								delcondoffset = delcondoffset + 1
 							end
+							]]--
 							
 							for c,group_object in ipairs(group_objects) do
 								local rule_object = group_object[1]
